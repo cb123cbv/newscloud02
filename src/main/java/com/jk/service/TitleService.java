@@ -10,9 +10,9 @@ public interface TitleService {
 
     SendPage queryJunShi(ReceivePage receivePage,JunShi junShi);
 
-    List<XingZuo> queryXingZuo(XingZuo xingZuo);
+    SendPage queryXingZuo(ReceivePage receivePage,XingZuo xingZuo);
 
-    List<YuEr> queryYuEr(YuEr yuEr);
+
 
 
     SendPage queryYuLe(ReceivePage receivePage, YuLe yuLe);
@@ -20,4 +20,5 @@ public interface TitleService {
     SendPage queryTiYu(ReceivePage receivePage, TiYu tiYu);
 
     SendPage queryCaiJing(ReceivePage receivePage, CaiJing caiJing);
+    SendPage queryYuEr(ReceivePage receivePage,YuEr yuEr);
 }

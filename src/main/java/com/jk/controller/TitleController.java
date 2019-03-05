@@ -27,15 +27,15 @@ public class TitleController {
 //星座
     @ResponseBody
     @RequestMapping("queryXingZuo")
-    public List<XingZuo> queryXingZuo(XingZuo xingZuo){
-        List<XingZuo>list=titleService.queryXingZuo(xingZuo);
+    public SendPage queryXingZuo(ReceivePage receivePage,XingZuo xingZuo){
+        SendPage list = titleService.queryXingZuo(receivePage,xingZuo);
         return list;
     }
 //育儿
     @ResponseBody
     @RequestMapping("queryYuEr")
-    public List<YuEr> queryYuEr(YuEr yuEr){
-        List<YuEr>list=titleService.queryYuEr(yuEr);
+    public SendPage queryYuEr(ReceivePage receivePage,YuEr yuEr){
+        SendPage list = titleService.queryYuEr(receivePage,yuEr);
         return list;
     }
 
