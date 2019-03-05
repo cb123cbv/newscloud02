@@ -29,12 +29,21 @@ public class TitleServiceImpl implements TitleService {
     }
 
     @Override
-    public List<XingZuo> queryXingZuo(XingZuo xingZuo) {
-        return titleMapper.queryXingZuo(xingZuo);
+    public SendPage queryXingZuo(ReceivePage receivePage,XingZuo xingZuo) {
+        List<XingZuo> count = titleMapper.queryXingZuo(xingZuo);
+        PageHelper.startPage(receivePage.getPage(),receivePage.getRows());
+        List<XingZuo> list = titleMapper.queryXingZuo(xingZuo);
+        SendPage sp= new SendPage(count.size(),list);
+        return sp;
     }
 
     @Override
-    public List<YuEr> queryYuEr(YuEr yuEr) {
-        return titleMapper.queryYuEr(yuEr);
+    public SendPage queryYuEr(ReceivePage receivePage,YuEr yuEr) {
+        List<YuEr> count = titleMapper.queryYuEr(yuEr);
+        PageHelper.startPage(receivePage.getPage(),receivePage.getRows());
+        List<YuEr> list = titleMapper.queryYuEr(yuEr);
+        SendPage sp= new SendPage(count.size(),list);
+        return sp;
     }
+
 }

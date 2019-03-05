@@ -6,14 +6,12 @@ import com.jk.bean.YuEr;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 
-import java.util.List;
 
 public interface TitleService {
 
     SendPage queryJunShi(ReceivePage receivePage,JunShi junShi);
 
-    List<XingZuo> queryXingZuo(XingZuo xingZuo);
+    SendPage queryXingZuo(ReceivePage receivePage,XingZuo xingZuo);
 
-    List<YuEr> queryYuEr(YuEr yuEr);
-
+    SendPage queryYuEr(ReceivePage receivePage,YuEr yuEr);
 }
