@@ -1,9 +1,7 @@
 package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.jk.bean.JunShi;
-import com.jk.bean.XingZuo;
-import com.jk.bean.YuEr;
+import com.jk.bean.*;
 import com.jk.mapper.TitleMapper;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
@@ -37,4 +35,33 @@ public class TitleServiceImpl implements TitleService {
     public List<YuEr> queryYuEr(YuEr yuEr) {
         return titleMapper.queryYuEr(yuEr);
     }
+
+    @Override
+    public SendPage queryYuLe(ReceivePage receivePage, YuLe yuLe) {
+        List<YuLe> count = titleMapper.queryYuLe(yuLe);
+        PageHelper.startPage(receivePage.getPage(),receivePage.getRows());
+        List<YuLe> list = titleMapper.queryYuLe(yuLe);
+        SendPage sp= new SendPage(count.size(),list);
+        return sp;
+    }
+
+    @Override
+    public SendPage queryTiYu(ReceivePage receivePage, TiYu tiYu) {
+        List<TiYu> count = titleMapper.queryTiYu(tiYu);
+        PageHelper.startPage(receivePage.getPage(),receivePage.getRows());
+        List<TiYu> list = titleMapper.queryTiYu(tiYu);
+        SendPage sp= new SendPage(count.size(),list);
+        return sp;
+    }
+
+    @Override
+    public SendPage queryCaiJing(ReceivePage receivePage, CaiJing caiJing) {
+        List<CaiJing> count = titleMapper.queryCaiJing(caiJing);
+        PageHelper.startPage(receivePage.getPage(),receivePage.getRows());
+        List<CaiJing> list = titleMapper.queryCaiJing(caiJing);
+        SendPage sp= new SendPage(count.size(),list);
+        return sp;
+    }
+
+
 }

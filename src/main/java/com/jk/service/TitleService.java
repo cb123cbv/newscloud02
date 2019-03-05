@@ -1,8 +1,6 @@
 package com.jk.service;
 
-import com.jk.bean.JunShi;
-import com.jk.bean.XingZuo;
-import com.jk.bean.YuEr;
+import com.jk.bean.*;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 
@@ -16,4 +14,10 @@ public interface TitleService {
 
     List<YuEr> queryYuEr(YuEr yuEr);
 
+
+    SendPage queryYuLe(ReceivePage receivePage, YuLe yuLe);
+
+    SendPage queryTiYu(ReceivePage receivePage, TiYu tiYu);
+
+    SendPage queryCaiJing(ReceivePage receivePage, CaiJing caiJing);
 }
