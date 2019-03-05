@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.TitleMapper">
+
+    <select id="queryJunShi" resultType="com.jk.bean.JunShi">
+        SELECT * FROM t_junshi
+    </select>
+
+    <select id="queryXingZuo" resultType="com.jk.bean.XingZuo">
+        SELECT * FROM t_xingzuo
+    </select>
+
+    <select id="queryYuEr" resultType="com.jk.bean.YuEr">
+        SELECT * FROM t_yuer
+    </select>
+
+    <select id="queryYuLe" resultType="com.jk.bean.YuLe">
+        SELECT * FROM t_yule where status=1
+    </select>
+
+    <select id="queryTiYu" resultType="com.jk.bean.TiYu">
+        SELECT * FROM t_tiyu where status=1
+    </select>
+
+    <select id="queryCaiJing" resultType="com.jk.bean.CaiJing">
+        SELECT * FROM t_caijing where status=1
+    </select>
+
+</mapper>
