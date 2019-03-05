@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--jquery-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+    <!--引入easyui的样式 -->
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
+    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
+
+    <script type="text/javascript" th:inline="none">
+        $(function () {
+            startDatagried();
+            $('#dialog').dialog('close'); //关闭新增对话框
+            addInfo();//新增
+        })
+        //-----------------------------------------查询
+        function startDatagried() {
+            $('#dg').datagrid({
+                url: '/title/queryList?name=t_tiyu',
+                pagination:true, //开启分页工具栏
+                striped: true, //斑马线效果
+                toolbar: '#tbtn',
+                checkOnSelect: false, //false，当用户仅在点击该复选框的时候才会呗选中或取消
+                pageList:[1,6,12,20],//下拉框条数
+                pageSize: 12, //默认显示多少条 这个值一定在pagelist中存在
+                columns: [[
+                    {field: 'id', title: '序号', width: 100, align: 'center'},
+                    {field: 'title', title: '标题', width: 300, align: 'center'},
+                    {field: 'author', title: '作者', width: 200, align: 'center'},
+                    {field: 'time', title: '时间', width: 200, align: 'center'}
+                ]]
+            });
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<!--列表展示信息 -->
+<table id="dg" fit=true></table>
+
+</body>
+</html>

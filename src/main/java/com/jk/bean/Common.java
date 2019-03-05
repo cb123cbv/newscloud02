@@ -3,7 +3,7 @@ package com.jk.bean;
 import lombok.Data;
 
 @Data
-public class JunShi {
+public class Common {
 
     private Integer id;
 
@@ -18,4 +18,6 @@ public class JunShi {
     private Integer status;
 
     private Integer userid;
+
+
 }

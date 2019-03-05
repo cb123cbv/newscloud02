@@ -1,16 +1,12 @@
 package com.jk.mapper;
 
-import com.jk.bean.JunShi;
-import com.jk.bean.XingZuo;
-import com.jk.bean.YuEr;
+import com.jk.bean.Common;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface TitleMapper {
 
-    List<JunShi> queryJunShi(JunShi junShi);
 
-    List<XingZuo> queryXingZuo(XingZuo xingZuo);
-
-    List<YuEr> queryYuEr(YuEr yuEr);
+    List<Common> queryList(@Param("common") Common common,@Param("name") String name);
 }
