@@ -7,9 +7,9 @@ import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 
 @Controller
@@ -25,6 +25,23 @@ public class TitleController {
     public SendPage queryList(ReceivePage receivePage, Common common,String name){
         SendPage list = titleService.queryList(receivePage,common,name);
         return list;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("toTitleInfo")
+    public Common toTitleInfo(Integer id, String name){
+       Common common=titleService.toTitleInfo(id,name);
+        return common;
+    }
+
+
+
+    @RequestMapping("toshowInfo")
+    public String toTitleInfo(Integer id, String name, Model model){
+        model.addAttribute("id",id);
+        model.addAttribute("name",name);
+        return "showInfo";
     }
 
 

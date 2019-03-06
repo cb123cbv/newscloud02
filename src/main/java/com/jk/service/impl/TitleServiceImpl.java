@@ -29,5 +29,12 @@ public class TitleServiceImpl implements TitleService {
         return sp;
     }
 
+    @Override
+    public Common toTitleInfo(Integer id, String name) {
+
+
+        return titleMapper.toTitleInfo(id,name);
+    }
+
 
 }

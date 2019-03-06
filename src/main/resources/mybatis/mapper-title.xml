@@ -7,6 +7,10 @@
         SELECT * FROM ${name}
     </select>
 
+    <!-- Common toTitleInfo(Integer id, String name);-->
+    <select id="toTitleInfo" resultType="com.jk.bean.Common">
+        SELECT * FROM ${name} where id=#{id}
+    </select>
 
 
 

@@ -14,4 +14,7 @@ public interface TitleService {
     SendPage queryList(ReceivePage receivePage, Common common, String name);
 
 
+    Common toTitleInfo(Integer id, String name);
+
+
 }

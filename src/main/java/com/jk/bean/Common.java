@@ -19,5 +19,5 @@ public class Common {
 
     private Integer userid;
 
-
+    private String img;
 }

@@ -13,4 +13,5 @@ public interface TitleMapper {
     List<Common> queryList(@Param("common") Common common, @Param("name") String name);
 
 
+    Common toTitleInfo(@Param("id")Integer id, @Param("name")String name);
 }
