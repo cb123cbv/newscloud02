@@ -14,4 +14,16 @@
         SELECT * FROM t_yuer
     </select>
 
+    <select id="queryYuLe" resultType="com.jk.bean.YuLe">
+        SELECT * FROM t_yule where status=1
+    </select>
+
+    <select id="queryTiYu" resultType="com.jk.bean.TiYu">
+        SELECT * FROM t_tiyu where status=1
+    </select>
+
+    <select id="queryCaiJing" resultType="com.jk.bean.CaiJing">
+        SELECT * FROM t_caijing where status=1
+    </select>
+
 </mapper>
