@@ -36,19 +36,17 @@
     <div class="leftbox">
         <div class="vcard box">
             <h2>个人资料</h2>
-            <img src="/showInfo/images/180.jpg" class="photo">
-            <p class="fn">姓名：杨青</p>
-            <p class="nickname">网名：DanceSmile | 即步非烟</p>
-            <p class="url">主页：www.yangqq.com</p>
-            <p class="address">现居：天津市―滨海新区</p>
-            <p class="role">职业：网站设计、网站制作</p>
+            <img  class="photo" id="vipheadimgid">
+            <img  class="photo" id="vipImgId" style="width: 40px">
+            <p class="fn" id="usernameid"></p>
+            <p class="nickname" id="vipaccountid"></p>
+
         </div>
 
         <div class="friends box">
             <h2>最近访客</h2>
             <ul>
-                <li><a href="/"><img src="/showInfo/images/01.jpg"></a></li>
-
+                <li></li>
             </ul>
         </div>
     </div>
@@ -58,13 +56,12 @@
         <ul class="text">
             <p id="infoid"></p>
 
-            <p class="textimg"><img src="/showInfo/images/text01.jpg"></p>
+            <p class="textimg"><img  id="htmlImgId" style="width: 500px"></p>
 
         </ul>
 
         <div class="textfoot"><a href="/">阅读全文</a><a href="/">评论</a><a href="/">转载</a></div>
-        <div class="pages"><span>1</span><a href="/" hidefocus="">2</a><a href="/" hidefocus="">3</a><a href="/"
-                                                                                                        class="next">下一页&gt;&gt;</a>
+        <div class="pages"><span>1</span><a href="/" hidefocus="">2</a><a href="/" hidefocus="">3</a><a href="/" class="next">下一页&gt;&gt;</a>
         </div>
     </div>
 </article>
@@ -72,27 +69,38 @@
 <script type="text/javascript">
     $(function () {
         toTitleInfo();
-        alert("进来了");
+
     })
 
-    function toTitleInfo(){
+    function toTitleInfo() {
         $.ajax({
-            url:"/title/toTitleInfo",
-            type:"POST",
-            async:true,
-            data:{id:$("#idInfo").val(),name:$("#nameInfo").val()},
-            success:function(result){
-                $("#titleid").html(result.title);
-                $("#infoid").html(result.imgtype);
+            url: "/title/toTitleInfo",
+            type: "POST",
+            async: true,
+            data: {id: $("#idInfo").val(), name: $("#nameInfo").val()},
+            success: function (result) {
+                $("#titleid").html(result.common.title);
+                $("#infoid").html(result.common.imgtype);
+                $("#usernameid").html("姓名:"+result.vip.vipname);
+                $("#vipaccountid").html("用户名:"+result.vip.vipaccount);
+
+                if(result.vip.role==1){
+                    $("#vipImgId").prop("src","/showInfo/images/vip.jpg");
+                }
+                if(result.vip.role==2){
+                    $("#vipImgId").prop("src","/showInfo/images/novip.jpg");
+                }
+
+                $("#vipheadimgid").prop("src",result.vip.vipheadimg);
+                $("#htmlImgId").prop("src",result.common.imgurl);
+
+
             },
-            error:function(){
+            error: function () {
                 alert("失败了");
             }
         });
     }
-
-
-
 
 
 </script>

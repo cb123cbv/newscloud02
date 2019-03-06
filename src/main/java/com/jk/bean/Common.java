@@ -20,4 +20,6 @@ public class Common {
     private Integer userid;
 
     private String tablename;
+
+    private String imgurl;
 }
