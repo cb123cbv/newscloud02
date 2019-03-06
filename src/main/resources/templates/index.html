@@ -120,6 +120,8 @@
     <script type="text/javascript">
         $(function(){
             getTree();
+            getjunshi();
+            queryList("t_yule",1);
         })
         function getTree(){
             $.ajax({
@@ -130,15 +132,69 @@
                         count+='<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
                         var count2='<li class="selec"><a href="http://blog.sina.com.cn/lm/top/all/day.html">总榜</a></li>';
                         $.each(result,function(index,obj){
-            		   	    count+="<li><a href='"+obj.url+"'>"+obj.title+"</a></li>"
+            		   	    count+="<li><a href='#'>"+obj.title+"</a></li>"
                             count+='<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
-            		   	    count2+='<li><a href="'+obj.url+'">'+obj.title+'</a></li>';
+            		   	    count2+='<li><a href="javascript:queryList(\'t_'+obj.url+'\',1)">'+obj.title+'</a></li>';
                         })
                         $("#li1").html(count);
                         $("#li2").html(count2);
             		},
             		error:function(){
             			alert("失败了");
+            		}
+            		})
+        }
+        function getjunshi(type){
+            var count=$("#cc").val();
+            if(type==1){
+                if(count==1){
+                    alert("已经是首页了")
+                }else{
+                    count--;
+                    $("#cc").val(count);
+                }
+            }
+            if(type==2){
+                var yeshu=$("#yeshu").html();
+               var ys=Math.ceil(parseInt(yeshu)/10);
+                if(ys==count){
+                    alert("已经是尾页了")
+                }else{
+                    count++;
+                    $("#cc").val(count);
+                }
+            }
+            var type='';
+            queryList(type,count);
+        }
+        var arr=[];
+        function queryList(type,count){
+            if(type==''){
+                type=arr[0];
+            }else{
+               arr[0]=type;
+            }
+            $.ajax({
+            		url:"/title/queryList",
+            		type:"POST",
+                    async:false,
+            		data:{name:type,page:count,rows:10},
+            		success:function(result){
+                        console.log(result.total)
+                        var count="<tr>";
+                        $.each(result.rows,function(index,obj){
+                            console.log(obj.tablename);
+                            console.log(obj.id);
+                            count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                            count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="#" target="_blank">'+obj.title+'</a></div></td>';
+                            count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.author+'</a></div></td>';
+                            count+='<td>'+obj.time+'</td><td></td></tr>';
+                        })
+                        $("#tr").html(count);
+                        $("#yeshu").html(result.total);
+            		},
+            		error:function(){
+            			//alert("失败了");
             		}
             		})
         }
@@ -372,47 +428,27 @@
                 <div class="conn">
                     <table width="593" border="0" cellspacing="0" cellpadding="0" class="table1" id="table_lit_bang_105">
 
-                        <tbody><tr>
+                        <thead><tr>
                             <th width="5%" align="center">序号</th>
                             <th width="60%">标题</th>
                             <th width="15%">作者</th>
                             <th width="10%">时间</th>
                             <th width="10%"></th>
                         </tr>
+      <!--                  <tr ><td style="text-align: center" colspan="4">
 
-                        <tr><td><div class="num"><span>1</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_4d89b8340102z7o5.html?tj=1" target="_blank">徐小明：周二操作策略</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1300871220">徐小明</a></div></td><td>03-04</td><td></td></tr>
-                        <tr><td><div class="num"><span>2</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_4d89b8340102z7ot.html?tj=1" target="_blank">徐小明：双左侧交易</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1300871220">徐小明</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>3</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_9ee0e6fb0102yov2.html?tj=1" target="_blank">3000点北上资金流向改变暗示机会与风险有变</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/2665539323">杜坤维</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>4</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_59b3f4ee0102yuvr.html?tj=1" target="_blank">冯矿伟：顶背离成立了吗</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1504965870">冯矿伟</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>5</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_606ca3a00102z3qd.html?tj=1" target="_blank">淘气天尊：确认3090点阶段高点后将大调整！</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1617732512">淘氣天尊</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>6</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_4d89b8340102z7on.html?tj=1" target="_blank">徐小明：3月5日盘前必读</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1300871220">徐小明</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>7</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_4c497d3a0102yld7.html?tj=1" target="_blank">提醒！三大纪律八项注意！</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1279884602">沙黾农</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>8</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_b0b8d3ab0102yio5.html?tj=1" target="_blank">周二重点关注的板块及个股（图）</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/2964902827">股海牧童</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>9</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_59b3f4ee0102yuuo.html?tj=1" target="_blank">冯矿伟：周二操作策略</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1504965870">冯矿伟</a></div></td><td>03-04</td><td></td></tr>
-                        <tr><td><div class="num"><span>10</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_6aae01540102ysv4.html?tj=1" target="_blank">3.5热点捕捉及牛股挖掘</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1789788500">浪子股侠</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>11</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_66dd17cd0102ylbm.html?tj=1" target="_blank">刀锋：今日大盘提示和热点前瞻（附股）</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1725765581">股市刀锋</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>12</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_678137d00102zagx.html?tj=1" target="_blank">今日大盘进入洗盘阶段</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1736521680">拾金客v</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>13</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_c23bd6650102yt2h.html?tj=1" target="_blank">周二热点概念与题材前瞻（附股）</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/3258701413">涨停有道</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>14</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_62dc4e590102yyji.html?tj=1" target="_blank">今天大盘还会冲高吗</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1658605145">趋势巡航</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>15</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_4c3036750102yi12.html?tj=1" target="_blank">徐文明：“多杀多”局面会出现吗？</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1278228085">上海市徐文明</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>16</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_8b99e08b0102zhp4.html?tj=1" target="_blank">2019年03月05日（周二）《分时解盘》</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/2342117515">数字江恩</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>17</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_59b3f4ee0102yuvm.html?tj=1" target="_blank">冯矿伟：3月5日消息面解析</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1504965870">冯矿伟</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>18</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_14273b6540102zoj0.html?tj=1" target="_blank">这次牛市跟以往不同，你的担心是多余的！</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/5409846868">飞杨看市</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>19</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_17eb585ad01030b3d.html?tj=1" target="_blank">今天重点关注此类个股！</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/6420792749">逍遥渔夫</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>20</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_c27e882f0102y495.html?tj=1" target="_blank">调整不会影响大的方向</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/3263072303">财富龙哥</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>21</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_49e003a40102z7nk.html?tj=1" target="_blank">这一危险性短线不得不防</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/1239417764">老乐说股</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td><div class="num"><span>22</span></div></td><td style="text-align: left;"><div class="link335bbd textL"><a href="http://blog.sina.com.cn/s/blog_9c1ddfd40102yjcz.html?tj=1" target="_blank">A股行情井喷牛途或已归来5类股望持续爆发</a></div></td><td><div class="link-ul"><a class="a02" target="_blank" href="http://blog.sina.com.cn/u/2619203540">巨丰财经</a></div></td><td>03-05</td><td></td></tr>
-                        <tr><td style="text-align: center" colspan="4">
-                            <div class="num">
-                            <a>上一页</a>
-                            <input style="width: 20px;text-align: center">
-                            <a>下一页</a>
-                            </div>
-                        </td></tr>
-                        </tbody></table>
+                        </td></tr>-->
+                        </thead>
+                        <tbody id="tr"></tbody>
+                    </table>
                 </div>
             </div>
-
+        </div>
+        <div class="num" style="text-align: center">
+            <a href="javascript:getjunshi('1')">上一页</a>
+            <input id="cc" style="width: 20px;text-align: center" disabled value="1">
+            <a href="javascript:getjunshi('2')">下一页</a>
+            <br>总<span id="yeshu"></span>条
         </div>
     </div>
     <!--主页面结束-->
