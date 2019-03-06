@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -198,6 +198,7 @@
             		}
             		})
         }
+
     </script>
 </head>
 <body><iframe id="IO_WEBPUSH4_LOCALCONN_IFRAME" src="https://current.sina.com.cn/theone/IO.WebPush4.localConn.html" style="display: none;"></iframe><div class="real-time-window" style="display: none; position: fixed; left: 0px; bottom: -49px;"></div>
@@ -228,11 +229,15 @@
                 <div class="sHLogo"><span><img src="/img/3331f0baa4a410ad49f8b08fb9d9426b.gif" width="20px"><b>云新闻</b>
                         </span></div>
                 <div class="sHLinks">
-                    博客首页<!--超连接-->
+                    <a href="javascript:void(0)">你好,<span id="username"></span></a>
+                    &nbsp;|&nbsp;
+                    <a href="/login/toLogin">用户登录</a>
                     &nbsp;|&nbsp;
                     新浪首页<!--超连接-->
                     &nbsp;|&nbsp;
                     新浪导航<!--超连接-->
+                    &nbsp;|&nbsp;
+                    <a href="javascript:clearSession()">退出</a>
                 </div>
             </div>
         </div>
@@ -264,7 +269,21 @@
 
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
-
+                $(function(){
+                    $("#username").append($("#ningzi").val())
+                })
+                function clearSession(){
+                    $.ajax({
+                        url:"/login/clearSession",
+                        type:"POST",
+                        success:function(data){
+                            location.reload()
+                        },
+                        error:function(){
+                            alert("失败了");
+                        }
+                    });
+                }
                 function blogsearch(fn,strName){if(fn.q.value==""||fn.q.value=="请输入查询词"){fn.q.value="请输入查询词";fn.q.focus();return false}if(strName!="blog"){return false}fn.submit();return false};
 
                 function blogsearch_change1(o){
@@ -423,7 +442,7 @@
                     </script>
                 </li>
             </ul>
-
+            <input type="hidden" id="ningzi" th:value="${session.user?.vipname}">
             <div class="if">
                 <div class="conn">
                     <table width="593" border="0" cellspacing="0" cellpadding="0" class="table1" id="table_lit_bang_105">
