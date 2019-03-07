@@ -608,12 +608,12 @@
 
     <script type="text/javascript">
         $(function () {
-            getTree();
+            getTree(1);
             getjunshi();
             queryList("t_yule", 1);
         })
-
-        function getTree() {
+        /*今日排行榜开始*/
+        function getTree(type){
             $.ajax({
                 url: "/getTree",
                 type: "POST",
@@ -624,7 +624,9 @@
                     $.each(result, function (index, obj) {
                         count += "<li><a href='#'>" + obj.title + "</a></li>"
                         count += '<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
-                        count2 += '<li><a href="javascript:queryList(\'t_' + obj.url + '\',1)">' + obj.title + '</a></li>';
+                        if(type==2){
+                            count2+='<li><a href="javascript:meizhourenqi(\'t_'+obj.url+'\')">'+obj.title+'</a></li>';}else{
+                            count2+='<li><a href="javascript:queryList(\'t_'+obj.url+'\',1)">'+obj.title+'</a></li>';}
                     })
                     $("#li1").html(count);
                     $("#li2").html(count2);
@@ -668,30 +670,118 @@
                 arr[0] = type;
             }
             $.ajax({
-                url: "/title/queryList",
-                type: "POST",
-                async: false,
-                data: {name: type, page: count, rows: 10},
-                success: function (result) {
-                    console.log(result.total)
-                    var count = "<tr>";
-                    $.each(result.rows, function (index, obj) {
-                        //console.log(obj.tablename);
-                        // console.log(obj.id);
-                        count += '<td><div class="num"><span>' + (index + 1) + '</span></div></td>';
-                        count += '<td style="text-align: left;"><div class="link335bbd textL"><a href="/title/toshowInfo?name=' + obj.tablename + '&id=' + obj.id + '" target="_blank">' + obj.title + '</a></div></td>';
-                        count += '<td><div class="link-ul"><a class="a02" target="_blank" href="#">' + obj.author + '</a></div></td>';
-                        count += '<td>' + obj.time + '</td><td></td></tr>';
+            		url:"/title/queryList",
+            		type:"POST",
+                    async:false,
+            		data:{name:type,page:count,rows:10},
+            		success:function(result){
+                        console.log(result.total)
+                        var count ='<thead><tr>';
+                        count+=" <th width=\"5%\" align=\"center\">序号</th>";
+                        count+='<th width="60%">标题</th>';
+                        count+='<th width="15%">作者</th>';
+                        count+=' <th width="10%">时间</th>';
+                        count+='<th width="10%"></th></tr>';
+                        count+='</thead><tbody>';
+                        $.each(result.rows,function(index,obj){
+                            count+="<tr>";
+                            count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                            count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="/getInfoById/toshowInfo?name='+obj.tablename+'&id='+obj.id+'" target="_blank">'+obj.title+'</a></div></td>';
+                            count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.vipname+'</a></div></td>';
+                            count+='<td>'+obj.time+'</td><td></td></tr>';
+                        })
+                        count+='</tbody>';
+                        $("#table_lit_bang_105").html(count);
+                        $("#yeshu").html(result.total);
+                        getTree();
+            		},
+            		error:function(){
+            			//alert("失败了");
+            		}
+            		})
+        }
+        /*今日排行榜结束*/
+        function aaa(obj) {
+            $("#biaoti").html($(obj).html());
+            $("#title_105").html($(obj).html());
+            if($(obj).html()!='每日排行榜'){
+                $("#div111").hide();
+            }else {
+                $("#div111").show();
+            }
+            /*var bbb = $()*/
+        }
+        /*总关注度榜开始*/
+        function zongguanzhu(){
+
+            $.ajax({
+                url:"/follow/queryList",
+                type:"POST",
+                async:false,
+                data:{page:1,rows:10},
+                success:function(result){
+                    console.log(result)
+                    var count2= '<li><a href="#">总榜</a></li>';
+                    count2 += '<li><a href="#">月榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"5%\" align=\"center\">排名</th>";
+                    count+='<th width="20%">昵称</th>';
+                    count+='<th width="25%">认证信息</th>';
+                    count+=' <th width="20%">关注数</th>';
+                    count+='<th width="20%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result.rows,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: center;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px"><a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
+                        count+='<td><div class="w270"></div></td>';
+                        count+='<td>'+obj.sl+'</td>';
+                        count+='<td><button>加关注</button></td></tr>';
                     })
-                    $("#tr").html(count);
-                    $("#yeshu").html(result.total);
+                    count+='</tbody>';
+                    $("#li2").html(count2);
+                    $("#table_lit_bang_105").html(count);
                 },
-                error: function () {
+                error:function(){
                     //alert("失败了");
                 }
             })
         }
+        /*总关注度榜结束*/
+        /*总关注度榜开始*/
+        function meizhourenqi(name){
 
+            $.ajax({
+                url:"/page/getDjl",
+                type:"POST",
+                async:false,
+                data:{page:1,rows:10,tablename:name},
+                success:function(result){
+                    console.log(result)
+                    var count2='<li class="selec"><a href="http://blog.sina.com.cn/lm/top/all/day.html">总榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"5%\" align=\"center\">排名</th>";
+                    count+='<th width="30%">昵称</th>';
+                    count+=' <th width="30%">点击量</th>';
+                    count+='<th width="35%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result.rows,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: center;"><div class="w170"><a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>'
+                        count+='<td>'+obj.co+'</td>';
+                        count+='</tr>';
+                    })
+                    count+='</tbody>';
+                    getTree(2);
+                    $("#table_lit_bang_105").html(count);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+        /*总关注度榜结束*/
     </script>
 </head>
 <body>
@@ -786,7 +876,7 @@
     <!-- 标准二级导航_博客 end -->
 
     <div id="banner">
-        <h1>今日新闻总排行</h1>
+        <h1 id="biaoti">每日排行榜</h1>
     </div>
     <div class="hScape"></div>
     <div id="nav2">
@@ -801,12 +891,12 @@
     <!--主页面开始-->
     <div class="hScape"></div>
     <ul class="menuStyle link3164bf">
-        <li><a href="#" style="font-weight:normal;">排行榜首页</a></li>
-        <li><a href="#" style="font-weight:normal;">总流量排行</a></li>
-        <li class="selectd" style="font-weight:normal;">每日排行榜</li>
-        <li><a href="#" style="font-weight:normal;">每周人气榜</a></li>
-        <li><a href="#">总关注度榜</a></li>
-        <li><a href="#">月关注度榜</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">排行榜首页</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">总流量排行</a></li>
+        <li><a href="javascript:queryList('t_yule',1)" onclick="aaa(this)" name="a1" style="font-weight:normal;">每日排行榜</a></li>
+        <li><a href="javascript:meizhourenqi()"  onclick="aaa(this)" style="font-weight:normal;">每周人气榜</a></li>
+        <li><a href="javascript:zongguanzhu()"  onclick="aaa(this)" name="a1">总关注度榜</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1">月关注度榜</a></li>
 
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
@@ -921,13 +1011,15 @@
         </div>
         <div class="ri">
             <ul class="menuStyleIn">
-                <li style="width:550px; background:none; text-align:left;"><h2><span id="title_105" title="总榜 all">每日博文总排行</span>
-                </h2></li>
-                <li class="selectd">日</li>
-                <li><a href="http://blog.sina.com.cn/lm/top/all/week.html">周</a></li>
-                <li><a href="http://blog.sina.com.cn/lm/top/all/mon.html">月</a></li>
+                <li style="width:550px; background:none; text-align:left;"><h2><span id="title_105" title="总榜 all">每日排行榜</span></h2></li>
+                <div id="div111">
+                    <li class="selectd">日</li>
+                    <li><a href="http://blog.sina.com.cn/lm/top/all/week.html">周</a></li>
+                    <li><a href="http://blog.sina.com.cn/lm/top/all/mon.html">月</a></li>
 
-                <li style="width:140px; float:right; background:none; font-weight:normal;">
+                    <li style="width:140px; float:right; background:none; font-weight:normal;">
+                </div>
+
                     <!--以下往日新闻的选择条-->
                     <style>
                         .SinaCalendar_Cnl {

@@ -4,12 +4,19 @@ import lombok.Data;
 
 @Data
 public class Vip {
-  Integer id;
-  String vipname;
-  String vipaccount;
-  String vippassword;
-  String vipheadimg;
-  Integer role;
 
+    private Integer id;
+
+    private String vipname;
+
+    private String vipaccount;
+
+    private String vippassword;
+
+    private String vipheadimg;
+
+    private Integer role;
+
+    private Integer sl;
 
 }

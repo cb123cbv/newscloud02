@@ -12,9 +12,9 @@ public class PageView {
     String tablename;
     Integer userid;
 
-    //-------------zhang
-    Integer co;
     String vipname;
+    Integer co;
+    //-------------zhang
     String titlename;
     //-------------zhang
 
