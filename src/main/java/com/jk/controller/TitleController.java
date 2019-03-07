@@ -2,19 +2,20 @@ package com.jk.controller;
 
 
 import com.jk.bean.Common;
-import com.jk.bean.Info;
+import com.jk.bean.PageView;
 import com.jk.bean.QueryParam;
+import com.jk.bean.Vip;
+import com.jk.service.ArticleRankService;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -23,6 +24,8 @@ public class TitleController {
 
     @Autowired
     private TitleService titleService;
+    @Autowired
+    private ArticleRankService articleRankService;
 
 
     @ResponseBody
@@ -37,8 +40,22 @@ public class TitleController {
 
     @ResponseBody
     @RequestMapping("toTitleInfo")
-    public QueryParam toTitleInfo(String id, String name){
+    public QueryParam toTitleInfo(String id, String name, HttpSession session){
         QueryParam queryParam = titleService.toTitleInfo(id, name);
+
+        Vip vip = (Vip) session.getAttribute("user");
+        PageView pageView = new PageView();
+        if(vip!=null){
+            pageView.setUserid(vip.getId());
+        }
+        if(vip==null){
+            pageView.setUserid(0);
+        }
+        pageView.setTitleid(queryParam.getCommon().getId());
+        pageView.setTablename(queryParam.getCommon().getTablename());
+        pageView.setVipid(queryParam.getVip().getId());
+        articleRankService.addArticle(pageView);
+
         return queryParam;
     }
 
