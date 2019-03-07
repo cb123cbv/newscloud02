@@ -24,7 +24,7 @@ public class TitleController {
     @ResponseBody
     @RequestMapping("queryList")
     public SendPage queryList(ReceivePage receivePage, Common common,String name){
-        if(name==null){
+        if(name==null&&name==""){
             name="t_yule";
         }
         SendPage list = titleService.queryList(receivePage,common,name);

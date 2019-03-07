@@ -15,7 +15,7 @@
 
 <!--void queryArticleList(QueryParam queryParam);-->
     <select id="queryArticleList" resultType="com.jk.bean.PageView">
-select vip.vipname,dian.co,dian.titleid,dian.tablename FROM t_vip vip,
+select vip.vipname,dian.co,dian.titleid,dian.tablename,vip.id vipid FROM t_vip vip,
 (select count(*) co,d.titleid,d.vipid,d.tablename from t_dianjiliang d
 <where>
     <if test="queryParam.flag==1">

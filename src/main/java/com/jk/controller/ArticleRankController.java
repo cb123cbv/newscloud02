@@ -22,10 +22,6 @@ public class ArticleRankController {
     @ResponseBody
     @RequestMapping("addArticle")
     public void addArticle(PageView pageView){
-        if (pageView.getUserid()==null) {
-            pageView.setUserid(0);
-        }
-
         articleRankService.addArticle(pageView);
     }
 
@@ -33,7 +29,7 @@ public class ArticleRankController {
     @RequestMapping("queryArticleList")
     public List<PageView> queryArticleList(QueryParam queryParam){
         if(queryParam.getFlag()==null){
-            queryParam.setFlag(1);
+            queryParam.setFlag(3);
         }
         List<PageView> pageViews=articleRankService.queryArticleList(queryParam);
         return pageViews;

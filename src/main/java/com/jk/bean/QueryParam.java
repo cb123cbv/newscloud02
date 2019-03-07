@@ -10,6 +10,8 @@ public class QueryParam {
     private PageView pageView;
     private Integer flag;
     private String tablename;
+    private String vipid;
+
 
 
 }

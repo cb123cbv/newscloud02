@@ -18,6 +18,11 @@ public class ArticleRankServiceImpl implements ArticleRankService {
 
     @Override
     public void addArticle(PageView pageView) {
+        if (pageView.getUserid()==null) {
+            pageView.setUserid(0);
+        }
+
+
         articleRankMapper.addArticle(pageView);
     }
 
