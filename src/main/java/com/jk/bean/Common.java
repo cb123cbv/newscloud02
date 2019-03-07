@@ -21,5 +21,7 @@ public class Common {
 
     private String tablename;
 
+    private String imgurl;
+
     private String vipname;
 }

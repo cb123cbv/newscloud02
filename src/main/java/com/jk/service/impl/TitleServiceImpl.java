@@ -1,9 +1,9 @@
 package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
-
 import com.jk.bean.Common;
-
+import com.jk.bean.QueryParam;
+import com.jk.bean.Vip;
 import com.jk.mapper.TitleMapper;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
@@ -34,10 +34,14 @@ public class TitleServiceImpl implements TitleService {
     }
 
     @Override
-    public Common toTitleInfo(Integer id, String name) {
+    public QueryParam toTitleInfo(Integer id, String name) {
 
-
-        return titleMapper.toTitleInfo(id,name);
+        Common common = titleMapper.toTitleInfo(id, name);
+        Vip vip = titleMapper.queryUser(common.getUserid());
+        QueryParam queryParam = new QueryParam();
+        queryParam.setCommon(common);
+        queryParam.setVip(vip);
+        return queryParam;
     }
 
 
