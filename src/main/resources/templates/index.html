@@ -611,6 +611,11 @@
             getTree();
             getjunshi();
             queryList("t_yule", 1);
+            $("#button1").click(function(){
+                $("#button1").attr("disabled",true)
+                $("#button1").text("已关注")
+            })
+
         })
         /*今日排行榜开始*/
         function getTree(){
@@ -720,7 +725,7 @@
                 success:function(result){
                     console.log(result)
                     var count2= '<li><a href="#">总榜</a></li>';
-                    count2 += '<li><a href="#">月榜</a></li>';
+                    count2 += '<li><a href="javascript:yueguanzhu()">月榜</a></li>';
                     var count ='<thead><tr>';
                     count+=" <th width=\"10%\" align=\"center\">排名</th>";
                     count+='<th width="20%">昵称</th>';
@@ -734,7 +739,7 @@
                         count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
                         count+='<td><div class="w270"></div></td>';
                         count+='<td>'+obj.sl+'</td>';
-                        count+='<td><button>加关注</button></td></tr>';
+                        count+='<td><button id="button1" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
                     })
                     count+='</tbody>';
                     $("#li2").html(count2);
@@ -746,6 +751,65 @@
             })
         }
         /*总关注度榜结束*/
+        /*月关注度榜开始*/
+        function yueguanzhu(){
+
+            $.ajax({
+                url:"/monthGuanzhu/monthRank",
+                type:"POST",
+                async:false,
+                success:function(result){
+                    console.log(result)
+                    var count2= '<li><a href="#">总榜</a></li>';
+                    count2 += '<li><a href="javascript:yueguanzhu()">月榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"10%\" align=\"center\">排名</th>";
+                    count+='<th width="20%">昵称</th>';
+                    count+='<th width="30%">认证信息</th>';
+                    count+=' <th width="20%">关注数</th>';
+                    count+='<th width="20%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.imgurl+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.auname+'</a></div></td>';
+                        count+='<td><div class="w270"></div></td>';
+                        count+='<td>'+obj.shuliang+'</td>';
+                        count+='<td><button onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                    })
+                    count+='</tbody>';
+                    $("#li2").html(count2);
+                    $("#table_lit_bang_105").html(count);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+
+        /*月关注度榜结束*/
+        /*加关注*/
+        function addGuanzhu(authorid) {
+            $.ajax({
+                url:"/monthGuanzhu/addGuanzhu",
+                type:"POST",
+                data:{auid:authorid},
+                success:function(result){
+                    if(result==0){
+                        alert("请先登录")
+                    }if(result==1){
+                        alert("关注成功")
+                    }if(result==2){
+                        alert("已经关注过,不能重复关注")
+                    }if(result==3){
+                        alert("不能自己关注自己")
+                    }
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -860,7 +924,7 @@
         <li><a href="javascript:queryList('t_yule',1)" onclick="aaa(this)" name="a1" style="font-weight:normal;">每日排行榜</a></li>
         <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">每周人气榜</a></li>
         <li><a href="javascript:zongguanzhu()" onclick="aaa(this)" name="a1">总关注度榜</a></li>
-        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1">月关注度榜</a></li>
+        <li><a href="javascript:yueguanzhu()" onclick="aaa(this)" name="a1">月关注度榜</a></li>
 
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
