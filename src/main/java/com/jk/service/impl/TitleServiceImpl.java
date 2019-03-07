@@ -25,6 +25,10 @@ public class TitleServiceImpl implements TitleService {
         List<Common> count = titleMapper.queryList(common, name);
         PageHelper.startPage(receivePage.getPage(), receivePage.getRows());
         List<Common> list = titleMapper.queryList(common, name);
+        for (Common common1 : list) {
+           String authorName = titleMapper.queryAuthorName(common1.getVipid());
+           common1.setVipname(authorName);
+        }
         SendPage sp = new SendPage(count.size(), list);
         return sp;
     }
