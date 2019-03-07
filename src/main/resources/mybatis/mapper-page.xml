@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.PageMapper">
+
+    <select id="getPageList" resultType="com.jk.bean.PageView">
+  SELECT
+	ss.id,
+	ss.vipname,
+	count(ss.djl) co
+FROM
+	(
+		SELECT
+			d.id,
+			d.time,
+			v.vipname,
+			d.djl,
+			d.tablename
+		FROM
+			t_dianjiliang d,
+			t_title t,
+			t_vip v
+		WHERE
+			d.titleid = t.id
+		AND d.vipid = v.id
+	) ss
+        <where>
+            YEARWEEK(
+            date_format(ss.time, '%Y-%m-%d')
+            ) = YEARWEEK(now())
+            <if test="tablename!=null">
+                AND ss.tablename = #{tablename}
+            </if>
+        </where>
+GROUP BY
+	ss.vipname order by count(ss.djl) desc
+
+    </select>
+
+
+</mapper>
