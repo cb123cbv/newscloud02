@@ -7,6 +7,9 @@ public class QueryParam {
 
     private Common common;
     private Vip vip;
+    private PageView pageView;
+    private Integer flag;
+    private String tablename;
 
 
 }
