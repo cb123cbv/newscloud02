@@ -2,6 +2,7 @@ package com.jk.controller;
 
 
 import com.jk.bean.Common;
+import com.jk.bean.QueryParam;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
@@ -23,6 +24,9 @@ public class TitleController {
     @ResponseBody
     @RequestMapping("queryList")
     public SendPage queryList(ReceivePage receivePage, Common common,String name){
+        if(name==null){
+            name="t_yule";
+        }
         SendPage list = titleService.queryList(receivePage,common,name);
         return list;
     }
@@ -30,9 +34,9 @@ public class TitleController {
 
     @ResponseBody
     @RequestMapping("toTitleInfo")
-    public Common toTitleInfo(Integer id, String name){
-       Common common=titleService.toTitleInfo(id,name);
-        return common;
+    public QueryParam toTitleInfo(Integer id, String name){
+        QueryParam queryParam = titleService.toTitleInfo(id, name);
+        return queryParam;
     }
 
 
