@@ -12,6 +12,11 @@
         SELECT * FROM ${name} where id=#{id}
     </select>
 
+    <!--  Vip queryUser(Integer userid);-->
+    <select id="queryUser" resultType="com.jk.bean.Vip">
+        SELECT * FROM t_vip where id=#{userid}
+    </select>
+
 
 
 

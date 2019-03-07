@@ -9,10 +9,9 @@ public class ViewController {
 
 
     @RequestMapping("toView")
-    public String toView(String url){
+    public String toView(String url) {
         return url;
     }
-
 
 
 }
