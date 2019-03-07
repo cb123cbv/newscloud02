@@ -119,11 +119,46 @@
 
     <script type="text/javascript">
         $(function(){
-            getTree();
+            getTree(1);
             getjunshi();
             queryList("t_yule",1);
         })
-        function getTree(){
+        /*总关注度榜开始*/
+        function meizhourenqi(name){
+
+            $.ajax({
+                url:"/page/getDjl",
+                type:"POST",
+                async:false,
+                data:{page:1,rows:10,tablename:name},
+                success:function(result){
+                    console.log(result)
+                    var count2='<li class="selec"><a href="http://blog.sina.com.cn/lm/top/all/day.html">总榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"5%\" align=\"center\">排名</th>";
+                    count+='<th width="30%">昵称</th>';
+                    count+=' <th width="30%">点击量</th>';
+                    count+='<th width="35%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result.rows,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: center;"><div class="w170"><a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>'
+                        count+='<td>'+obj.co+'</td>';
+                        count+='</tr>';
+                    })
+                    count+='</tbody>';
+                    getTree(2);
+                    $("#table_lit_bang_105").html(count);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+        /*总关注度榜结束*/
+
+        function getTree(type){
             $.ajax({
             		url:"/getTree",
             		type:"POST",
@@ -134,7 +169,9 @@
                         $.each(result,function(index,obj){
             		   	    count+="<li><a href='#'>"+obj.title+"</a></li>"
                             count+='<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
-            		   	    count2+='<li><a href="javascript:queryList(\'t_'+obj.url+'\',1)">'+obj.title+'</a></li>';
+            		   	    if(type==2){
+            		   	    count2+='<li><a href="javascript:meizhourenqi(\'t_'+obj.url+'\')">'+obj.title+'</a></li>';}else{
+            		   	    count2+='<li><a href="javascript:queryList(\'t_'+obj.url+'\',1)">'+obj.title+'</a></li>';}
                         })
                         $("#li1").html(count);
                         $("#li2").html(count2);
@@ -263,12 +300,13 @@
         <li><a href="#" style="font-weight:normal;">排行榜首页</a></li>
         <li><a href="#" style="font-weight:normal;">总流量排行</a></li>
         <li class="selectd" style="font-weight:normal;">每日排行榜</li>
-        <li><a href="#" style="font-weight:normal;">每周人气榜</a></li>
+        <li><a href="#" onclick="meizhourenqi()" style="font-weight:normal;">每周人气榜</a></li>
         <li><a href="#">总关注度榜</a></li>
         <li><a href="#">月关注度榜</a></li>
 
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
+
                 $(function(){
                     $("#username").append($("#ningzi").val())
                 })
