@@ -140,7 +140,7 @@ KindEditor.lang({
 	'image.imgTitle' : 'Title',
 	'image.upload' : 'Browse',
 	'image.viewServer' : 'Browse',
-	'multiimage.uploadDesc' : 'Allows users to upload <%=uploadLimit%> images, single image size not exceeding <%=sizeLimit%>',
+	'multiimage.uploadDesc' : 'Allows users to upload <%=uploadLimit%> /showInfo/images, single image size not exceeding <%=sizeLimit%>',
 	'multiimage.startUpload' : 'Start upload',
 	'multiimage.clearAll' : 'Clear all',
 	'multiimage.insertAll' : 'Insert all',

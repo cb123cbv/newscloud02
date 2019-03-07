@@ -199,8 +199,8 @@ KindEditor.plugin('multiimage', function(K) {
 	var self = this, name = 'multiimage',
 		formatUploadUrl = K.undef(self.formatUploadUrl, true),
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
-		imgPath = self.pluginsPath + 'multiimage/images/',
-		imageSizeLimit = K.undef(self.imageSizeLimit, '1MB'),
+		imgPath = self.pluginsPath + 'multiimage//showInfo/images/',
+		/showInfo/imagesizeLimit = K.undef(self./showInfo/imagesizeLimit, '1MB'),
 		imageFileTypes = K.undef(self.imageFileTypes, '*.jpg;*.gif;*.png'),
 		imageUploadLimit = K.undef(self.imageUploadLimit, 20),
 		filePostName = K.undef(self.filePostName, 'imgFile'),
@@ -208,7 +208,7 @@ KindEditor.plugin('multiimage', function(K) {
 
 	self.plugin.multiImageDialog = function(options) {
 		var clickFn = options.clickFn,
-			uploadDesc = K.tmpl(lang.uploadDesc, {uploadLimit : imageUploadLimit, sizeLimit : imageSizeLimit});
+			uploadDesc = K.tmpl(lang.uploadDesc, {uploadLimit : imageUploadLimit, sizeLimit : /showInfo/imagesizeLimit});
 		var html = [
 			'<div style="padding:20px;">',
 			'<div class="swfupload">',
@@ -256,7 +256,7 @@ KindEditor.plugin('multiimage', function(K) {
 			fileTypes : '*.jpg;*.jpeg;*.gif;*.png;*.bmp',
 			fileTypesDesc : 'Image Files',
 			fileUploadLimit : imageUploadLimit,
-			fileSizeLimit : imageSizeLimit,
+			fileSizeLimit : /showInfo/imagesizeLimit,
 			postParams :  K.undef(self.extraFileUploadParams, {}),
 			queueLimitExceeded : lang.queueLimitExceeded,
 			fileExceedsSizeLimit : lang.fileExceedsSizeLimit,

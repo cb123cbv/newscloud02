@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.FollowMapper">
+
+    <!--List<Vip> queryList(Vip vip);-->
+    <select id="queryList" resultType="com.jk.bean.Vip">
+        select
+          a.vipname,
+          b.sl,
+          a.vipheadimg
+        from
+          t_vip a,
+        (select
+          authorid,
+          count(*) sl
+        from
+          t_guanzhu
+        GROUP BY
+          authorid) b
+        where
+          a.id=b.authorid
+          ORDER BY b.sl DESC
+    </select>
+
+
+
+</mapper>

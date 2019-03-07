@@ -116,13 +116,14 @@
     <style type="text/css">.real-time-window .rtw2-lt,.real-time-window .rtw2-close,.real-time-window .rtw2-close-btn,.real-time-window .rtw2-lt-sina{background:url(//n.sinaimg.cn/default/7919a7ba/20160621/realtime.png) 0 0 no-repeat}.real-time-window{z-index:60000;display:block;height:46px;line-height:46px;overflow:hidden;zoom:1;font-family:"Microsoft YaHei","微软雅黑","SimHei","黑体"!important}.real-time-window .rtw2-in{height:46px;line-height:46px;overflow:hidden}.real-time-window .rtw2-lt{display:inline;float:left;width:82px;height:46px;background-color:#f9f5ec;zoom:1}.real-time-window .rtw2-md{display:inline;float:left;background:#f9f5ec;height:44px;line-height:44px;padding-right:5px;zoom:1;border-top:1px solid #f6e3c9;border-bottom:1px solid #f6e3c9}.real-time-window .rtw2-md-title{display:inline-block;height:44px;line-height:44px;padding:0 7px;font-size:16px}.real-time-window .rtw2-md-title:link{color:#122E67!important;text-decoration:none!important}.real-time-window .rtw2-md-title:hover{color:#ff8400!important;text-decoration:underline!important}.real-time-window .rtw2-md-title:visited{color:#52687e!important;text-decoration:none!important}.real-time-window .rtw2-close{display:inline;width:76px;height:48px;float:left;background-position:-82px 0;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=scale,src="//n.sinaimg.cn/default/7919a7ba/20160621/realtime_right.png");_background:none;zoom:1;position:relative}.real-time-window .rtw2-close-btn{position:absolute;right:2px;top:10px;width:26px;height:25px;display:block;background-position:-88px -47px}.real-time-window .rtw2-close-btn:hover{filter:alpha(opacity=80);opacity:0.8}.real-time-window .rtw2-lt-sina{width:36px;height:36px;display:block;text-indent:-9999px;background-position:2px -46px}.real-time-window .rtw2-lt-sina:hover{background-position:-35px -46px}.real-time-window .rtw2-close-more{padding-left:9px}.real-time-window .rtw2-close-more:link{font-size:14px!important;line-height:46px;color:#866755;text-decoration:none!important}.real-time-window .rtw2-close-more:visited{color:#866755!important;text-decoration:none!important}.real-time-window .rtw2-close-more:hover{color:#e01700!important;text-decoration:underline!important}</style>
     <!-- 导入 jquery包  -->
     <script src="/js/jquery-2.1.1.min.js"></script>
-    
+
     <script type="text/javascript">
         $(function(){
             getTree();
             getjunshi();
             queryList("t_yule",1);
         })
+        /*今日排行榜开始*/
         function getTree(){
             $.ajax({
             		url:"/getTree",
@@ -181,23 +182,78 @@
             		data:{name:type,page:count,rows:10},
             		success:function(result){
                         console.log(result.total)
-                        var count="<tr>";
+                        var count ='<thead><tr>';
+                        count+=" <th width=\"5%\" align=\"center\">序号</th>";
+                        count+='<th width="60%">标题</th>';
+                        count+='<th width="15%">作者</th>';
+                        count+=' <th width="10%">时间</th>';
+                        count+='<th width="10%"></th></tr>';
+                        count+='</thead><tbody>';
                         $.each(result.rows,function(index,obj){
-                            console.log(obj.tablename);
-                            console.log(obj.id);
+                            count+="<tr>";
                             count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
-                            count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="#" target="_blank">'+obj.title+'</a></div></td>';
-                            count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.author+'</a></div></td>';
+                            count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.id+'" target="_blank">'+obj.title+'</a></div></td>';
+                            count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.vipname+'</a></div></td>';
                             count+='<td>'+obj.time+'</td><td></td></tr>';
                         })
-                        $("#tr").html(count);
+                        count+='</tbody>';
+                        $("#table_lit_bang_105").html(count);
                         $("#yeshu").html(result.total);
+                        getTree();
             		},
             		error:function(){
             			//alert("失败了");
             		}
             		})
         }
+        /*今日排行榜结束*/
+        function aaa(obj) {
+            $("#biaoti").html($(obj).html());
+            $("#title_105").html($(obj).html());
+            if($(obj).html()!='每日排行榜'){
+                $("#div111").hide();
+            }else {
+                $("#div111").show();
+            }
+            /*var bbb = $()*/
+        }
+        /*总关注度榜开始*/
+        function zongguanzhu(){
+
+            $.ajax({
+                url:"/follow/queryList",
+                type:"POST",
+                async:false,
+                data:{page:1,rows:10},
+                success:function(result){
+                    console.log(result)
+                    var count2= '<li><a href="#">总榜</a></li>';
+                    count2 += '<li><a href="#">月榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"5%\" align=\"center\">排名</th>";
+                    count+='<th width="20%">昵称</th>';
+                    count+='<th width="25%">认证信息</th>';
+                    count+=' <th width="20%">关注数</th>';
+                    count+='<th width="20%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result.rows,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: center;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px"><a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
+                        count+='<td><div class="w270"></div></td>';
+                        count+='<td>'+obj.sl+'</td>';
+                        count+='<td><button>加关注</button></td></tr>';
+                    })
+                    count+='</tbody>';
+                    $("#li2").html(count2);
+                    $("#table_lit_bang_105").html(count);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+        /*总关注度榜结束*/
     </script>
 </head>
 <body><iframe id="IO_WEBPUSH4_LOCALCONN_IFRAME" src="https://current.sina.com.cn/theone/IO.WebPush4.localConn.html" style="display: none;"></iframe><div class="real-time-window" style="display: none; position: fixed; left: 0px; bottom: -49px;"></div>
@@ -240,7 +296,7 @@
     <!-- 标准二级导航_博客 end -->
 
     <div id="banner">
-        <h1>今日新闻总排行</h1>
+        <h1 id="biaoti">每日排行榜</h1>
     </div>
     <div class="hScape"></div>
     <div id="nav2">
@@ -255,12 +311,12 @@
     <!--主页面开始-->
     <div class="hScape"></div>
     <ul class="menuStyle link3164bf">
-        <li><a href="#" style="font-weight:normal;">排行榜首页</a></li>
-        <li><a href="#" style="font-weight:normal;">总流量排行</a></li>
-        <li class="selectd" style="font-weight:normal;">每日排行榜</li>
-        <li><a href="#" style="font-weight:normal;">每周人气榜</a></li>
-        <li><a href="#">总关注度榜</a></li>
-        <li><a href="#">月关注度榜</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">排行榜首页</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">总流量排行</a></li>
+        <li><a href="javascript:queryList('t_yule',1)" onclick="aaa(this)" name="a1" style="font-weight:normal;">每日排行榜</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">每周人气榜</a></li>
+        <li><a href="javascript:zongguanzhu()" onclick="aaa(this)" name="a1">总关注度榜</a></li>
+        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1">月关注度榜</a></li>
 
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
@@ -332,11 +388,14 @@
         <div class="ri">
             <ul class="menuStyleIn">
                 <li style="width:550px; background:none; text-align:left;"><h2><span id="title_105" title="总榜 all">每日博文总排行</span></h2></li>
-                <li class="selectd">日</li>
-                <li><a href="http://blog.sina.com.cn/lm/top/all/week.html">周</a></li>
-                <li><a href="http://blog.sina.com.cn/lm/top/all/mon.html">月</a></li>
+                <div id="div111">
+                    <li class="selectd">日</li>
+                    <li><a href="http://blog.sina.com.cn/lm/top/all/week.html">周</a></li>
+                    <li><a href="http://blog.sina.com.cn/lm/top/all/mon.html">月</a></li>
 
-                <li style="width:140px; float:right; background:none; font-weight:normal;">
+                    <li style="width:140px; float:right; background:none; font-weight:normal;">
+                </div>
+
                     <!--以下往日新闻的选择条-->
                     <style>
                         .SinaCalendar_Cnl{width:140px; line-height:22px; padding:2px 0 0 0; text-align:center; color:#576379; background:url(http://i1.sinaimg.cn/dy/20061220_calendar/RLT_ws_001.gif) no-repeat; cursor: pointer; font-size:12px;}

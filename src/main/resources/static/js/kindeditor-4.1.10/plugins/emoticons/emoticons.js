@@ -9,7 +9,7 @@
 
 KindEditor.plugin('emoticons', function(K) {
 	var self = this, name = 'emoticons',
-		path = (self.emoticonsPath || self.pluginsPath + 'emoticons/images/'),
+		path = (self.emoticonsPath || self.pluginsPath + 'emoticons//showInfo/images/'),
 		allowPreview = self.allowPreviewEmoticons === undefined ? true : self.allowPreviewEmoticons,
 		currentPageNum = 1;
 	self.clickToolbar(name, function() {

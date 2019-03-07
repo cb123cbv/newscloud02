@@ -1,9 +1,7 @@
 package com.jk.controller;
 
-
-import com.jk.bean.Common;
-import com.jk.service.TitleService;
-import com.jk.service.TitleServiceTwo;
+import com.jk.bean.Vip;
+import com.jk.service.FollowService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +9,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Controller
-@RequestMapping("title")
-public class TitleControllerTwo {
+@RequestMapping("follow")
+public class FollowController {
 
     @Autowired
-    private TitleServiceTwo titleServiceTwo;
+    private FollowService followService;
 
-
-    @ResponseBody
     @RequestMapping("queryList")
-    public SendPage queryList(ReceivePage receivePage, Common common,String name){
-        SendPage list = titleServiceTwo.queryList(receivePage,common,name);
+    @ResponseBody
+    public SendPage queryList(ReceivePage receivePage, Vip vip){
+        SendPage list = followService.queryList(receivePage, vip);
         return list;
     }
-
-
 }

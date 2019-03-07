@@ -6489,7 +6489,7 @@ KindEditor.plugin('code', function(K) {
 
 KindEditor.plugin('emoticons', function(K) {
 	var self = this, name = 'emoticons',
-		path = (self.emoticonsPath || self.pluginsPath + 'emoticons/images/'),
+		path = (self.emoticonsPath || self.pluginsPath + 'emoticons//showInfo/images/'),
 		allowPreview = self.allowPreviewEmoticons === undefined ? true : self.allowPreviewEmoticons,
 		currentPageNum = 1;
 	self.clickToolbar(name, function() {
@@ -6619,7 +6619,7 @@ KindEditor.plugin('emoticons', function(K) {
 KindEditor.plugin('filemanager', function(K) {
 	var self = this, name = 'filemanager',
 		fileManagerJson = K.undef(self.fileManagerJson, self.basePath + 'php/file_manager_json.php'),
-		imgPath = self.pluginsPath + name + '/images/',
+		imgPath = self.pluginsPath + name + '//showInfo/images/',
 		lang = self.lang(name + '.');
 	function makeFileTitle(filename, filesize, datetime) {
 		return filename + ' (' + Math.ceil(filesize / 1024) + 'KB, ' + datetime + ')';
@@ -6974,7 +6974,7 @@ KindEditor.plugin('image', function(K) {
 		allowFileManager = K.undef(self.allowFileManager, false),
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
 		imageTabIndex = K.undef(self.imageTabIndex, 0),
-		imgPath = self.pluginsPath + 'image/images/',
+		imgPath = self.pluginsPath + 'image//showInfo/images/',
 		extraParams = K.undef(self.extraFileUploadParams, {}),
 		filePostName = K.undef(self.filePostName, 'imgFile'),
 		fillDescAfterUploadImage = K.undef(self.fillDescAfterUploadImage, false),
@@ -8035,8 +8035,8 @@ KindEditor.plugin('multiimage', function(K) {
 	var self = this, name = 'multiimage',
 		formatUploadUrl = K.undef(self.formatUploadUrl, true),
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
-		imgPath = self.pluginsPath + 'multiimage/images/',
-		imageSizeLimit = K.undef(self.imageSizeLimit, '1MB'),
+		imgPath = self.pluginsPath + 'multiimage//showInfo/images/',
+		/showInfo/imagesizeLimit = K.undef(self./showInfo/imagesizeLimit, '1MB'),
 		imageFileTypes = K.undef(self.imageFileTypes, '*.jpg;*.gif;*.png'),
 		imageUploadLimit = K.undef(self.imageUploadLimit, 20),
 		filePostName = K.undef(self.filePostName, 'imgFile'),
@@ -8044,7 +8044,7 @@ KindEditor.plugin('multiimage', function(K) {
 
 	self.plugin.multiImageDialog = function(options) {
 		var clickFn = options.clickFn,
-			uploadDesc = K.tmpl(lang.uploadDesc, {uploadLimit : imageUploadLimit, sizeLimit : imageSizeLimit});
+			uploadDesc = K.tmpl(lang.uploadDesc, {uploadLimit : imageUploadLimit, sizeLimit : /showInfo/imagesizeLimit});
 		var html = [
 			'<div style="padding:20px;">',
 			'<div class="swfupload">',
@@ -8092,7 +8092,7 @@ KindEditor.plugin('multiimage', function(K) {
 			fileTypes : '*.jpg;*.jpeg;*.gif;*.png;*.bmp',
 			fileTypesDesc : 'Image Files',
 			fileUploadLimit : imageUploadLimit,
-			fileSizeLimit : imageSizeLimit,
+			fileSizeLimit : /showInfo/imagesizeLimit,
 			postParams :  K.undef(self.extraFileUploadParams, {}),
 			queueLimitExceeded : lang.queueLimitExceeded,
 			fileExceedsSizeLimit : lang.fileExceedsSizeLimit,

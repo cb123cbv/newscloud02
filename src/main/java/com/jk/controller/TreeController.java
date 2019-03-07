@@ -20,8 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 /** &lt;pre&gt;(这里用一句话描述这个方法的作用)
  * @Author：陈斌
- * 创建时间：     
- * &lt;/pre&gt;    
+ * 创建时间：
+ * &lt;/pre&gt;
  */
 @Controller
 public class TreeController {

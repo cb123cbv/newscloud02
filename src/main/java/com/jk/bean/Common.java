@@ -9,7 +9,7 @@ public class Common {
 
     private String title;
 
-    private String author;
+    private Integer vipid;
 
     private String time;
 
@@ -21,4 +21,5 @@ public class Common {
 
     private String tablename;
 
+    private String vipname;
 }
