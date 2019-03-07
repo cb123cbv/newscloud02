@@ -2,11 +2,15 @@ package com.jk.controller;
 
 
 import com.jk.bean.Common;
+import com.jk.bean.Info;
 import com.jk.bean.QueryParam;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +35,9 @@ public class TitleController {
         return list;
     }
 
-
     @ResponseBody
     @RequestMapping("toTitleInfo")
-    public QueryParam toTitleInfo(Integer id, String name){
+    public QueryParam toTitleInfo(String id, String name){
         QueryParam queryParam = titleService.toTitleInfo(id, name);
         return queryParam;
     }
@@ -42,7 +45,7 @@ public class TitleController {
 
 
     @RequestMapping("toshowInfo")
-    public String toTitleInfo(Integer id, String name, Model model){
+    public String toTitleInfo(String id, String name, Model model){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         return "showInfo";

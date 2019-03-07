@@ -1,6 +1,8 @@
 package com.jk.controller;
 
 import com.jk.bean.Info;
+import com.jk.bean.QueryParam;
+import com.jk.service.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -25,13 +27,12 @@ public class InfoController {
     private MongoTemplate mongoTemplate;
 
     @RequestMapping("getInfoById")
-    public List<Info> getInfoById(String titleId,String tableName){
+    public Info getInfoById(String titleId,String tableName){
         Query query = new Query();
         query.addCriteria(Criteria.where("titleId").is(titleId));
         query.addCriteria(Criteria.where("tableName").is(tableName));
-       List<Info> list= mongoTemplate.find(query, Info.class);
-
-        return list;
+        Info info = mongoTemplate.findOne(query, Info.class);
+        return info;
     }
 
 }
