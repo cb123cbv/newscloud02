@@ -7,9 +7,10 @@
         select
           a.vipname,
           b.sl,
-          a.vipheadimg
+          a.vipheadimg,
+          b.authorid
         from
-          t_vip a,
+          t_vip a LEFT JOIN
         (select
           authorid,
           count(*) sl
@@ -17,9 +18,9 @@
           t_guanzhu
         GROUP BY
           authorid) b
-        where
+        ON
           a.id=b.authorid
-          ORDER BY b.sl DESC
+        ORDER BY b.sl DESC
     </select>
 
 

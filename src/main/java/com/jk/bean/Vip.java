@@ -19,4 +19,6 @@ public class Vip {
 
     private Integer sl;
 
+    private Integer authorid;
+
 }
