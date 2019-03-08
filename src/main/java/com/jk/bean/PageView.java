@@ -14,4 +14,8 @@ public class PageView {
 
     String vipname;
     Integer co;
+    //-------------zhang
+    String titlename;
+    //-------------zhang
+
 }
