@@ -13,4 +13,8 @@ public interface MonthGuanzhuService {
     List<Guanzhu> getAuthorByVip(Vip user);
 
     void addGuanzhu(Vip user, Integer auid);
+
+    List<Integer> queryGuanZhuByVipId(Integer id);
+
+    void removeGuanzhu(Integer id, Integer auid);
 }

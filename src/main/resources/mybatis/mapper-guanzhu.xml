@@ -21,5 +21,12 @@
         insert into t_guanzhu(authorid,userid,createtime) VALUES(#{auid},#{id},now())
     </insert>
 
+    <select id="queryGuanZhuByVipId" resultType="int">
+        select authorid from t_guanzhu where userid=#{id}
+    </select>
+<!--void removeGuanzhu(Integer id, Integer auid);-->
+    <delete id="removeGuanzhu">
+        delete from t_guanzhu where authorid=#{auid} and userid=#{id}
+    </delete>
 
 </mapper>
