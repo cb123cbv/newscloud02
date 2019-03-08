@@ -5,12 +5,13 @@
 
     <!--List<Guanzhu> monthAttention();-->
     <select id="monthAttention" resultType="com.jk.bean.Guanzhu">
-       select a.*, a.co shuliang,v.vipname auname, v.vipheadimg imgurl from
-        (select g.*, count(*) co from t_guanzhu g
-             where DATE_FORMAT(createtime, '%Y%m' ) = DATE_FORMAT(CURDATE( ) , '%Y%m' )
-         group by g.authorid
-        ) a ,t_vip v WHERE v.id=a.authorid
-         order by a.co desc
+      select a.*, a.co shuliang,v.vipname auname, v.vipheadimg imgurl from t_vip v LEFT JOIN
+ (select g.*, count(*) co from t_guanzhu g
+      where DATE_FORMAT(createtime, '%Y%m' ) = DATE_FORMAT(CURDATE( ) , '%Y%m' )
+  group by g.authorid
+ ) a ON v.id=a.authorid
+  order by a.co desc
+
     </select>
     <!--List<Guanzhu> getAuthorByVip(Integer vid);-->
     <select id="getAuthorByVip" resultType="com.jk.bean.Guanzhu">
