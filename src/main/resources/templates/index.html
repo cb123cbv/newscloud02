@@ -622,7 +622,7 @@
                 url: "/getTree",
                 type: "POST",
                 success: function (result) {
-                    var count = "<li><a href='#'>首页</a></li>";
+                    var count = "<li><a href='/toView?url=shouye'>首页</a></li>";
                     count += '<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
                     var count2 = '<li class="selec"><a href="http://blog.sina.com.cn/lm/top/all/day.html">总榜</a></li>';
                     $.each(result, function (index, obj) {
@@ -1142,7 +1142,7 @@
                 }
                 
                 function  getInfoAndTileInfo() {
-                    $.ajax({
+                    /*$.ajax({
                         url:"/getInfoAndTileInfo",
                         type:"POST",
                         data:{
@@ -1157,12 +1157,13 @@
                         error:function(){
                             alert("失败了");
                         }
-                    });
+                    });*/
+                    location.href="/toView?url=searchInfo"
                 }
                 
             </script>
             <form id="blogsearch_f1" name="blogsearch_f1" target="_blank">
-                <a href="javascript:void(0)" target="_blank" style="text-decoration:none;">新闻搜索</a>：<input type="text"
+                <!--<a href="javascript:void(0)" target="_blank" style="text-decoration:none;">新闻搜索</a>：<input type="text"
                                                                                                            id="k"
                                                                                                            style="width:133px;"
                                                                                                            value="请输入查询词"
@@ -1174,7 +1175,7 @@
                     <option value="2">文章标题</option>
                     <option value="3">博客作者</option>
                     <option value="4">标签</option>
-                </select>
+                </select>-->
                 <input type="button"   value="搜索" onclick="getInfoAndTileInfo()">
             </form>
         </li>
