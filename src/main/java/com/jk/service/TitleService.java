@@ -13,7 +13,7 @@ public interface TitleService {
     SendPage queryList(ReceivePage receivePage, Common common, String name);
 
 
-    QueryParam toTitleInfo(Integer id, String name);
+    QueryParam toTitleInfo(String id, String name);
 
 
 }

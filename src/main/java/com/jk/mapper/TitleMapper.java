@@ -14,10 +14,11 @@ public interface TitleMapper {
     List<Common> queryList(@Param("common") Common common, @Param("name") String name);
 
 
-    Common toTitleInfo(@Param("id") Integer id, @Param("name") String name);
+    Common toTitleInfo(@Param("id") String id, @Param("name") String name);
 
     Vip queryUser(Integer userid);
 
     @Select("select vipname from t_vip where id = #{vipid}")
     String queryAuthorName(Integer vipid);
+
 }

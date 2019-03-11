@@ -609,8 +609,12 @@
     <script type="text/javascript">
         $(function () {
             getTree(1);
-            getjunshi();
             queryList("t_yule", 1);
+            $("#button1").click(function(){
+                $("#button1").attr("disabled",true)
+                $("#button1").text("已关注")
+            })
+
         })
         /*今日排行榜开始*/
         function getTree(type){
@@ -625,8 +629,14 @@
                         count += "<li><a href='#'>" + obj.title + "</a></li>"
                         count += '<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
                         if(type==2){
-                            count2+='<li><a href="javascript:meizhourenqi(\'t_'+obj.url+'\')">'+obj.title+'</a></li>';}else{
+                            count2+='<li><a href="javascript:meizhourenqi(\'t_'+obj.url+'\')">'+obj.title+'</a></li>';}
+                        if(type==1){
                             count2+='<li><a href="javascript:queryList(\'t_'+obj.url+'\',1)">'+obj.title+'</a></li>';}
+                        if(type==10){
+                            count2+='<li><a href="javascript:queryArticleList(null,\'t_'+obj.url+'\')">'+obj.title+'</a></li>';
+                        }
+
+
                     })
                     $("#li1").html(count);
                     $("#li2").html(count2);
@@ -657,18 +667,14 @@
                     $("#cc").val(count);
                 }
             }
-            var type = '';
+            var type =null;
             queryList(type, count);
         }
 
         var arr = [];
 
         function queryList(type, count) {
-            if (type == '') {
-                type = arr[0];
-            } else {
-                arr[0] = type;
-            }
+
             $.ajax({
             		url:"/title/queryList",
             		type:"POST",
@@ -686,20 +692,79 @@
                         $.each(result.rows,function(index,obj){
                             count+="<tr>";
                             count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
-                            count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="/getInfoById/toshowInfo?name='+obj.tablename+'&id='+obj.id+'" target="_blank">'+obj.title+'</a></div></td>';
+                            count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.id+'" target="_blank">'+obj.title+'</a></div></td>';
                             count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.vipname+'</a></div></td>';
                             count+='<td>'+obj.time+'</td><td></td></tr>';
                         })
                         count+='</tbody>';
                         $("#table_lit_bang_105").html(count);
                         $("#yeshu").html(result.total);
-                        getTree();
+                        getTree(1);
             		},
             		error:function(){
             			//alert("失败了");
             		}
             		})
         }
+
+        var flag2=null;
+        var tablename2=undefined;
+        //月周日排行榜start
+        function queryArticleList(flag,tablename) {
+
+            if(flag!=null){
+                flag2=flag;
+            }
+            if(flag==null){
+                flag=flag2;
+            }
+
+            if(tablename!=undefined){
+                tablename2=tablename;
+            }
+            if(tablename==undefined){
+                tablename=tablename2;
+            }
+            $.ajax({
+                url:"/article/queryArticleList",
+                type:"POST",
+                async:false,
+                data:{flag:flag,tablename:tablename},
+                success:function(result){
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"5%\" align=\"center\">序号</th>";
+                    count+='<th width="55%">标题</th>';
+                    count+='<th width="15%">作者</th>';
+                    count+='<th width="5%">点击量</th>';
+                    count+=' <th width="10%">时间</th>';
+                    count+='<th width="10%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: left;"><div class="link335bbd textL"><a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.titleid+'" target="_blank">'+obj.titlename+'</a></div></td>';
+                        count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.vipname+'</a></div></td>';
+                        count+='<td><div class="link-ul"><a class="a02" target="_blank" href="#">'+obj.co+'</a></div></td>';
+                        count+='<td>'+obj.time+'</td><td></td></tr>';
+                    })
+                    count+='</tbody>';
+                    $("#table_lit_bang_105").html(count);
+                    getTree(10);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+
+        //月周日排行榜end
+
+
+
+
+
+
+
         /*今日排行榜结束*/
         function aaa(obj) {
             $("#biaoti").html($(obj).html());
@@ -722,21 +787,21 @@
                 success:function(result){
                     console.log(result)
                     var count2= '<li><a href="#">总榜</a></li>';
-                    count2 += '<li><a href="#">月榜</a></li>';
+                    count2 += '<li><a href="javascript:yueguanzhu()">月榜</a></li>';
                     var count ='<thead><tr>';
-                    count+=" <th width=\"5%\" align=\"center\">排名</th>";
+                    count+=" <th width=\"10%\" align=\"center\">排名</th>";
                     count+='<th width="20%">昵称</th>';
-                    count+='<th width="25%">认证信息</th>';
+                    count+='<th width="30%">认证信息</th>';
                     count+=' <th width="20%">关注数</th>';
                     count+='<th width="20%"></th></tr>';
                     count+='</thead><tbody>';
                     $.each(result.rows,function(index,obj){
                         count+="<tr>";
                         count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
-                        count+='<td style="text-align: center;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px"><a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
+                        count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
                         count+='<td><div class="w270"></div></td>';
                         count+='<td>'+obj.sl+'</td>';
-                        count+='<td><button>加关注</button></td></tr>';
+                        count+='<td><button id="button1" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
                     })
                     count+='</tbody>';
                     $("#li2").html(count2);
@@ -748,7 +813,7 @@
             })
         }
         /*总关注度榜结束*/
-        /*总关注度榜开始*/
+        /*每周人气榜开始*/
         function meizhourenqi(name){
 
             $.ajax({
@@ -781,7 +846,89 @@
                 }
             })
         }
-        /*总关注度榜结束*/
+        /*每周人气榜结束*/
+        /*月关注度榜开始*/
+        function yueguanzhu(){
+
+            $.ajax({
+                url:"/monthGuanzhu/monthRank",
+                type:"POST",
+                async:false,
+                success:function(result){
+                    console.log(result)
+                    var count2= '<li><a href="#">总榜</a></li>';
+                    count2 += '<li><a href="javascript:yueguanzhu()">月榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"10%\" align=\"center\">排名</th>";
+                    count+='<th width="20%">昵称</th>';
+                    count+='<th width="30%">认证信息</th>';
+                    count+=' <th width="20%">关注数</th>';
+                    count+='<th width="20%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result,function(index,obj){
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
+                        count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.imgurl+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.auname+'</a></div></td>';
+                        count+='<td><div class="w270"></div></td>';
+                        count+='<td>'+obj.shuliang+'</td>';
+                        if(obj.state==1){//1 已关注
+                           count+='<td><button style="background-color: #67b168;width: 80px" onclick="removeGuanzhu('+obj.authorid+')">取消关注</button></td></tr>';
+                        }if(obj.state==0){//2 未关注
+                           count+='<td><button style="background-color: #6b9cde;width: 80px" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        }
+
+                    })
+                    count+='</tbody>';
+                    $("#li2").html(count2);
+                    $("#table_lit_bang_105").html(count);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+
+        /*月关注度榜结束*/
+        /*加关注*/
+        function addGuanzhu(authorid) {
+            $.ajax({
+                url:"/monthGuanzhu/addGuanzhu",
+                type:"POST",
+                data:{auid:authorid},
+                success:function(result){
+                    if(result==0){
+                        alert("请先登录")
+                    }if(result==1){
+                        alert("关注成功")
+                    }if(result==2){
+                        alert("已经关注过,不能重复关注")
+                    }if(result==3){
+                        alert("不能自己关注自己")
+                    }
+                    yueguanzhu();
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+        }
+        /*取消关注*/
+        function removeGuanzhu(authorid) {
+            $.ajax({
+            	url:"/monthGuanzhu/removeGuanzhu",
+            	type:"POST",
+                data:{auid:authorid},
+            	success:function(result){
+                    yueguanzhu();
+            	},
+            	error:function(){
+            		alert("失败了");
+            	}
+            });
+        }
+
+
+
     </script>
 
 </head>
@@ -894,10 +1041,10 @@
     <ul class="menuStyle link3164bf">
         <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">排行榜首页</a></li>
         <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1" style="font-weight:normal;">总流量排行</a></li>
-        <li><a href="javascript:queryList('t_yule',1)" onclick="aaa(this)" name="a1" style="font-weight:normal;">每日排行榜</a></li>
-        <li><a href="javascript:meizhourenqi()"  onclick="aaa(this)" style="font-weight:normal;">每周人气榜</a></li>
-        <li><a href="javascript:zongguanzhu()"  onclick="aaa(this)" name="a1">总关注度榜</a></li>
-        <li><a href="javascript:void(0)" onclick="aaa(this)" name="a1">月关注度榜</a></li>
+        <li><a href="javascript:queryArticleList()" onclick="aaa(this)" name="a1" style="font-weight:normal;">每日排行榜</a></li>
+        <li><a href="javascript:meizhourenqi()" onclick="aaa(this)" name="a1" style="font-weight:normal;">每周人气榜</a></li>
+        <li><a href="javascript:zongguanzhu()" onclick="aaa(this)" name="a1">总关注度榜</a></li>
+        <li><a href="javascript:yueguanzhu()" onclick="aaa(this)" name="a1">月关注度榜</a></li>
 
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
@@ -1033,10 +1180,9 @@
             <ul class="menuStyleIn">
                 <li style="width:550px; background:none; text-align:left;"><h2><span id="title_105" title="总榜 all">每日排行榜</span></h2></li>
                 <div id="div111">
-                    <li class="selectd">日</li>
-                    <li><a href="http://blog.sina.com.cn/lm/top/all/week.html">周</a></li>
-                    <li><a href="http://blog.sina.com.cn/lm/top/all/mon.html">月</a></li>
-
+                    <li class="selectd" ><a href="javascript:void(0)"  onclick="queryArticleList(3)">日</a></li>
+                    <li><a href="javascript:void(0)"  onclick="queryArticleList(2)">周</a></li>
+                    <li><a href="javascript:void(0)"  onclick="queryArticleList(1)">月</a></li>
                     <li style="width:140px; float:right; background:none; font-weight:normal;">
                 </div>
 
@@ -1122,19 +1268,9 @@
                     <table width="593" border="0" cellspacing="0" cellpadding="0" class="table1"
                            id="table_lit_bang_105">
 
-                        <thead>
-                        <tr>
-                            <th width="5%" align="center">序号</th>
-                            <th width="60%">标题</th>
-                            <th width="15%">作者</th>
-                            <th width="10%">时间</th>
-                            <th width="10%"></th>
-                        </tr>
-                        <!--                  <tr ><td style="text-align: center" colspan="4">
 
-                                          </td></tr>-->
-                        </thead>
-                        <tbody id="tr"></tbody>
+
+
                     </table>
                 </div>
             </div>
