@@ -23,4 +23,6 @@ public class TiYu {
 
     private String imgurl;
 
+    private String info=null;
+
 }

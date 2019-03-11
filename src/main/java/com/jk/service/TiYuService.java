@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.bean.LanMuBiaoTi;
+import com.jk.bean.TiYu;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface TiYuService {
     List<LanMuBiaoTi> getFive(String tablename);
 
     List<LanMuBiaoTi> getSix(String tablename);
+
+    List<TiYu> getTiYu(String tablename);
 }

@@ -885,9 +885,9 @@
                             count+='<td>'+obj.shuliang+'</td>';
                         }
                         if(obj.state==1){//1 已关注
-                           count+='<td><button style="background-color: #67b168" onclick="removeGuanzhu('+obj.authorid+')">已关注</button></td></tr>';
+                           count+='<td><button style="background-color: #67b168;width: 80px" onclick="removeGuanzhu('+obj.authorid+')">取消关注</button></td></tr>';
                         }if(obj.state==0){//2 未关注
-                             count+='<td><button style="background-color: #6b9cde" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                           count+='<td><button style="background-color: #6b9cde;width: 80px" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
                         }
                     })
                     count+='</tbody>';

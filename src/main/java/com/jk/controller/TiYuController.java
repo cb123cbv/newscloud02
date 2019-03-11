@@ -1,6 +1,7 @@
 package com.jk.controller;
 
 import com.jk.bean.LanMuBiaoTi;
+import com.jk.bean.TiYu;
 import com.jk.service.TiYuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,13 @@ public class TiYuController {
 
     @Autowired
     private TiYuService tiYuService;
+
+    @ResponseBody
+    @RequestMapping("getTiYu")
+    public List<TiYu> getTiYu(String tablename){
+
+        return tiYuService.getTiYu(tablename);
+    }
 
     @ResponseBody
     @RequestMapping("getOne")
