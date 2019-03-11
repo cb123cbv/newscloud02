@@ -942,6 +942,7 @@
 
 
     </script>
+
 </head>
 <body>
 <iframe id="IO_WEBPUSH4_LOCALCONN_IFRAME" src="https://current.sina.com.cn/theone/IO.WebPush4.localConn.html"
@@ -1139,6 +1140,26 @@
                         document.forms["iask_f"].action = "http://search.blog.sina.com.cn/blog/search";
                     }
                 }
+                
+                function  getInfoAndTileInfo() {
+                    $.ajax({
+                        url:"/getInfoAndTileInfo",
+                        type:"POST",
+                        data:{
+                            queryString:$("#k").val(),
+                            status:$("#by").val()
+                        },
+                        success:function(pageUtil){
+
+                              location.href="/toView?url=searchInfo"
+
+                        },
+                        error:function(){
+                            alert("失败了");
+                        }
+                    });
+                }
+                
             </script>
             <form id="blogsearch_f1" name="blogsearch_f1" target="_blank">
                 <a href="javascript:void(0)" target="_blank" style="text-decoration:none;">新闻搜索</a>：<input type="text"
@@ -1148,14 +1169,13 @@
                                                                                                            name="q"
                                                                                                            onclick="javascript:if(this.value=='请输入查询词')this.value='';"><input
                     type="hidden" name="c" value="blog"><input type="hidden" name="range" value="article">
-                <!--<select style="width:77px;" onchange="blogsearch_change1(this);" size="1" name="by">
-                    <option value="all" selected="">博客全文</option>
-                    <option value="title">文章标题</option>
-                    <option value="nick">博客作者</option>
-                    <option value="tag">标签</option>
-                </select>-->
-                <input name="" type="image" src="http://i2.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_005.gif"
-                       onclick="alert('1')">
+               <select style="width:77px;" onchange="blogsearch_change1(this);" size="1" name="by"  id="by">
+                    <option value="1" selected="">博客全文</option>
+                    <option value="2">文章标题</option>
+                    <option value="3">博客作者</option>
+                    <option value="4">标签</option>
+                </select>
+                <input type="button"   value="搜索" onclick="getInfoAndTileInfo()">
             </form>
         </li>
     </ul>
