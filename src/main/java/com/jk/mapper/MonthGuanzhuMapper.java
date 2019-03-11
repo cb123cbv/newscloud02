@@ -12,4 +12,9 @@ public interface MonthGuanzhuMapper {
     List<Guanzhu> getAuthorByVip(Integer id);
 
     void addGuanzhu(@Param("id") Integer id, @Param("auid") Integer auid);
+
+
+    List<Integer> queryGuanZhuByVipId(Integer id);
+
+    void removeGuanzhu(@Param("id") Integer id, @Param("auid") Integer auid);
 }

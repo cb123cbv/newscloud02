@@ -21,4 +21,6 @@ public class Vip {
 
     private Integer authorid;
 
+    private Integer state=0;//1 已关注 0 未关注
+
 }

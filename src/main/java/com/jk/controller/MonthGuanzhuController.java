@@ -22,11 +22,20 @@ public class MonthGuanzhuController {
     // 月关注榜
     @RequestMapping("monthRank")
     @ResponseBody
-    public List<Guanzhu> monthAttention() {
+    public List<Guanzhu> monthAttention(HttpSession session) {
+        Vip user = (Vip) session.getAttribute("user");
         List<Guanzhu> rankInfo = monthGuanzhuService.monthAttention();
+        if (user == null) {//未登录 查询所有
+            return rankInfo;
+        }
 
+        List<Integer> author = monthGuanzhuService.queryGuanZhuByVipId(user.getId());
         for (Guanzhu guanzhu : rankInfo) {
-            System.out.println(guanzhu);
+            if (author.contains(guanzhu.getAuthorid())) {
+                guanzhu.setState(1);//已关注
+            }else{
+                guanzhu.setState(0);//未关注
+            }
         }
         return rankInfo;
     }
@@ -55,4 +64,15 @@ public class MonthGuanzhuController {
         monthGuanzhuService.addGuanzhu(user, auid);
         return "1";// 1关注成功
     }
+
+
+   //取消关注
+    @RequestMapping("removeGuanzhu")
+    @ResponseBody
+    public String removeGuanzhu(HttpSession session, Integer auid){
+        Vip user = (Vip) session.getAttribute("user");
+        monthGuanzhuService.removeGuanzhu(user.getId(),auid);
+        return "";
+    }
+
 }

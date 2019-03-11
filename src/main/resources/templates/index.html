@@ -805,7 +805,12 @@
                         }else{
                             count+='<td>'+obj.sl+'</td>';
                         }
-                        count+='<td><button id="button1" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        if(obj.state==1){//1 已关注
+                            count+='<td><button style="background-color: #67b168" onclick="removeGuanzhu('+obj.authorid+')">已关注</button></td></tr>';
+                        }if(obj.state==0){//2 未关注
+                            count+='<td><button style="background-color: #6b9cde" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        }
+                        //count+='<td><button id="button1" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
                     })
                     count+='</tbody>';
                     $("#li2").html(count2);
@@ -879,7 +884,11 @@
                         }else{
                             count+='<td>'+obj.shuliang+'</td>';
                         }
-                        count+='<td><button onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        if(obj.state==1){//1 已关注
+                           count+='<td><button style="background-color: #67b168" onclick="removeGuanzhu('+obj.authorid+')">已关注</button></td></tr>';
+                        }if(obj.state==0){//2 未关注
+                             count+='<td><button style="background-color: #6b9cde" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        }
                     })
                     count+='</tbody>';
                     $("#li2").html(count2);
@@ -903,18 +912,35 @@
                         alert("请先登录")
                     }if(result==1){
                         alert("关注成功")
-                        location.reload();
                     }if(result==2){
                         alert("已经关注过,不能重复关注")
                     }if(result==3){
                         alert("不能自己关注自己")
                     }
+                    yueguanzhu();
                 },
                 error:function(){
                     alert("失败了");
                 }
             });
         }
+        /*取消关注*/
+        function removeGuanzhu(authorid) {
+            $.ajax({
+            	url:"/monthGuanzhu/removeGuanzhu",
+            	type:"POST",
+                data:{auid:authorid},
+            	success:function(result){
+                    yueguanzhu();
+            	},
+            	error:function(){
+            		alert("失败了");
+            	}
+            });
+        }
+
+
+
     </script>
 </head>
 <body>
