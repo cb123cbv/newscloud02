@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.TuiJianMapper">
+
+    <!--void addTuiJian(TuiJian tuiJian);-->
+    <insert id="addTuiJian">
+        insert into t_tuijian(tname,tlink,tauthor,blogaddr,pindao,lanmu,state,tuitime,userid)
+        values (#{tname},#{tlink},#{tauthor},#{blogaddr},#{pindao},#{lanmu},0,now(),#{userid})
+    </insert>
+    <!--void queryYuleFive(); 转图 前5条数据-->
+    <select id="queryYuleFive" resultType="com.jk.bean.Common">
+        SELECT * from t_yule y, t_lanmu_biaoti lb
+        where lb.biaotiid = y.id
+        ORDER BY y.time desc LIMIT 5
+    </select>
+    <!--List<Common> shenDuRead(); 深度阅读-->
+    <select id="shenDuRead" resultType="com.jk.bean.Common">
+        select * from t_yule y, t_lanmu_biaoti lb,t_lanmu l
+        where lb.biaotiid = y.id  and lb.lanmuid = l.id and l.id=#{flag}
+        ORDER BY y.time desc
+    </select>
+    <!--List<Common> jingBaoNews(Integer flag); 劲爆热点-->
+    <select id="jingBaoNews" resultType="com.jk.bean.Common">
+        select * from t_yule y, t_lanmu_biaoti lb,t_lanmu l
+        where lb.biaotiid = y.id  and lb.lanmuid = l.id and l.id=#{flag}
+        ORDER BY y.time desc LIMIT 5
+    </select>
+
+    <!--List<Common> blogRank(Integer flag);-->
+    <select id="blogRank" resultType="com.jk.bean.Common">
+        select * from t_yule y, t_lanmu_biaoti lb,t_lanmu l
+        where lb.biaotiid = y.id  and lb.lanmuid = l.id and l.id=#{flag}
+        and YEARWEEK(date_format(y.time,'%Y-%m-%d')) = YEARWEEK(now())
+        ORDER BY y.time desc LIMIT 10
+    </select>
+<!--List<LanMu> queryLanmu();-->
+    <select id="queryLanmu" resultType="com.jk.bean.LanMu">
+        select * from t_lanmu l where l.tablename = #{tablename}
+    </select>
+
+
+</mapper>
