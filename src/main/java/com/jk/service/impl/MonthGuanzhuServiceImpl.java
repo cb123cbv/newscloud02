@@ -30,4 +30,14 @@ public class MonthGuanzhuServiceImpl implements MonthGuanzhuService {
         monthGuanzhuMapper.addGuanzhu(user.getId(),auid);
     }
 
+    @Override
+    public List<Integer> queryGuanZhuByVipId(Integer id) {
+        return monthGuanzhuMapper.queryGuanZhuByVipId(id);
+    }
+
+    @Override
+    public void removeGuanzhu(Integer id, Integer auid) {
+        monthGuanzhuMapper.removeGuanzhu(id,auid);
+    }
+
 }

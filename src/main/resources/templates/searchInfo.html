@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="apple-touch-icon" href="http://i2.sinaimg.cn/dy/deco/2010/0709/icon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+    <title>博客搜索_新浪搜索_新浪网</title>
+    <meta name="keywords" content="博客搜索,新浪搜索,新浪网">
+    <meta name="description" content="新浪博客搜索">
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale=1.0">
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.min.css" type="text/css"></link>
+    <!-- suggest by liusong@20110105 $-->
+    <script type="text/javascript">
+        $(function () {
+            var hh="[[${param.text}]]";
+            $("#keyword").val(hh);
+            radis();
+            if(hh!=""&&hh!=null){
+                query();
+            }
+        })
+
+
+        function  radis(){
+            $.ajax({
+                url:"/getInfo",
+                type:"post",
+                success:function (result) {
+
+                    var  info="";
+                    if(result!=null&&result!=""){
+                        info+=""
+                        $.each(result, function (index, obj) {
+                            info+='<li>'+obj+'</li>'
+                        })
+
+
+                    }else {
+
+
+                        info += '<li>没有搜索记录</li>'
+                    }
+                    $("#his01").html(info)
+                }
+            })
+
+        }
+
+
+        function query(){
+            var text=$("#keyword").val();
+            var tyid= $("input[type='radio']:checked").val();
+            if(tyid==undefined||tyid==null){
+                tyid=2;
+            }
+            $.ajax({
+                url:"/getInfoAndTileInfo?queryString="+text+"&status="+tyid,
+                type:"post",
+
+                success:function (result) {
+                    var  info="";
+                    var  ina="";
+                    if(result!=null&&result!="") {
+                        $.each(result, function (index, obj) {
+                            var tttt = obj.info.substring(0, 20);
+                            info += '<div class="box-result clearfix" data-sudaclick="blk_blog_1_index">';
+                            info += ' <h2 class="r-info-blog-tit"><a href="javascript:void(0)"  onclick=querytite("'+obj.titleinfo+'")><span style="color:#C03"  >' + obj.titleinfo + '</span></a></h2>'
+                            info += ' <div class="clearfix">';
+                            info += ' <div class="r-info r-info-blog r-info-blog-full">';
+                            info += '<p class="content"><span style="line-height: 18.2px;">' + tttt + '...</span></p><p>'
+                            info += ' <span class="fgray_time">2016-12-09 14:20:54</span><span class="fgray">博主：</span><a  href="javascript:void(0)"  onclick=queryuser("'+obj.username+'") target="_blank" class="rib-author">' + obj.username + '</a>'
+                            info += '</div></div></div>';
+                        })
+                    }else{
+                        info+=' <div class="noresult">';
+                        info+='<h4>未找到和<span>'+text+'</span>相关的博客。</h4>'
+                        info+='<p>建议您</p>';
+                        info+='<ul><li>尝试重新查找</li> <li>简化字词继续查询</li> <li>检查输入的文字是否有误</li> </ul>'
+                        info+=' </div>';
+                    }
+
+                    $("#nav_result_container").html(info);
+                    radis()
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        <!--//--><![CDATA[//><!--
+        //ipad不需要背景变色
+        if( !(/\((iPhone|iPad|iPod)/i.test(navigator.userAgent)) ){
+            $(document).ready(function () {
+                $('.box-result').hover(
+                    function () {
+                        $(this).addClass("hover");
+                    },
+                    function () {
+                        $(this).removeClass("hover");
+                    }
+                );
+            });
+        }
+
+        function  shan(){
+            $.ajax({
+                url:"/deleteInfo",
+                type:"post",
+                success:function () {
+                    radis()
+                }
+            })
+
+        }
+        function  querytite(text){
+            location.href="/view/toview?view=xiang2&text="+text;
+        }
+        function  querytite(text){
+            location.href="/view/toview?view=xiang2&text="+text;
+        }
+        function queryuser(text){
+            location.href="/view/toview?view=user2&text="+text;
+        }
+        //--><!]]>
+    </script>
+    <iframe src="http://beacon.sina.com.cn/ckctl.html" id="ckctlFrame" scrolling="no" style="height: 0px; width: 1px; overflow: hidden;"></iframe><style type="text/css">.tn-title-login-custom{float:left!important;font-family: "Microsoft YaHei","微软雅黑","SimSun","宋体"!important;position:relative!important;}
+.tn-title-login-custom .tn-user-custom{float:left!important;font-size:12px!important;}
+.tn-title-login-custom .tn-user-greet{float:left!important;height:17px!important;padding:12px 0!important;width:51px!important; line-height:17px!important;overflow:hidden!important;}
+.tn-title-login-custom .tn-tab-custom{position:relative!important;float:left!important;border-width:0 1px!important;border-style:solid!important;width:85px!important;height:17px!important;padding:12px 0!important;_padding:14px 0 10px!important;text-align:center!important;font-style:normal!important;text-decoration:none!important; vertical-align:top!important;}
+.tn-title-login-custom .tn-tab-custom-login{width:57px!important;_float:left;}
+.tn-title-login-custom .tn-tab-custom i{font-style:normal!important;}
+.tn-title-login-custom .tn-tab-custom:hover{text-decoration:none!important;}
+.tn-title-login-custom .tn-tab-custom .tn-new-custom{display:none;position:absolute!important;right:2px!important;margin-top:-10px!important;height:11px!important;width:13px!important;padding-left:3px!important;font-size:8px!important;overflow:hidden!important;line-height:10px!important;text-align:center!important;-webkit-text-size-adjust:none!important;font-style:normal!important;}
+.tn-title-login-custom .tn-tab-custom .tn-arrow-custom{display: inline-block!important;font-size: 12px!important;height: 5px!important;line-height: 13px!important;margin: 0 0 0 5px!important;overflow: hidden!important;transform: none!important;vertical-align: middle!important;width:9px!important;font-style:normal!important;}
+.tn-title-login-custom .tn-topmenulist-custom{position:absolute!important;right:0!important;top:41px!important;border-width:1px 1px 0!important;border-style:solid!important;width:85px!important;overflow:hidden!important;}
+.tn-title-login-custom .tn-topmenulist-custom .tn-text-list{margin-bottom:-2px!important;margin:0!important;padding:0!important;}
+.tn-title-login-custom .tn-topmenulist-custom li{border-bottom-width:1px!important;border-bottom-style:solid!important;line-height:31px!important; list-style:none!important;margin:0!important;padding:0!important;}
+.tn-title-login-custom .tn-topmenulist-custom a{display:block!important;padding:0 15px!important;text-decoration:none!important;text-align:left!important;}
+.tn-title-login-custom .tn-topmenulist-custom a em{float:right!important;font-style:normal!important;}
+.tn-title-login-custom .tn-topmenulist-custom a:hover{text-decoration:none!important;}
+.tn-title-login-custom .tn-topmenulist-custom a.tn-user-custom-logout{background:#f2f2f2!important;color:#0a8cd2!important;}
+.tn-title-login-custom .tn-topmenulist-custom a.tn-user-custom-logout:hover{text-decoration:underline!important;}
+/*可覆盖样式区域*/
+.tn-title-login-custom .tn-user-custom{background:#f7f7f7;}
+.tn-title-login-custom .tn-tab-custom{border-color:#f7f7f7;color:#ff8601;}
+.tn-title-login-custom .tn-tab-custom:hover,
+.tn-title-login-custom .tn-tab-custom-onmouse{background:#eaeaea;border-color:#ff8503;color:#ff8601;}
+.tn-title-login-custom .tn-tab-custom .tn-new-custom{background:url(https://i.sso.sina.com.cn/images/login/icon_custom.png) no-repeat 0 -30px;color:#fff;text-align:center;-webkit-text-size-adjust: none;}
+.tn-title-login-custom .tn-tab-custom .tn-arrow-custom{ background:url(https://i.sso.sina.com.cn/images/login/icon_custom.png) no-repeat scroll 0 0 transparent; }
+.tn-title-login-custom .tn-topmenulist-custom{border-color:#ff8601;background:#fff;}
+.tn-title-login-custom .tn-topmenulist-custom li{border-bottom-color:#ff8601;}
+.tn-title-login-custom .tn-topmenulist-custom a{color:#000;}
+.tn-title-login-custom .tn-topmenulist-custom a em{color:#ff8603;}
+.tn-title-login-custom .tn-topmenulist-custom a:hover{background:#fff6d9;color:#ff8601;}</style><style type="text/css">.outlogin_layerbox_bylx,
+.outlogin_layerbox_bylx p,
+.outlogin_layerbox_bylx div,
+.outlogin_layerbox_bylx li,
+.outlogin_layerbox_bylx input{font: 12px/1.125 "Simsun", "Arial Narrow", "HELVETICA"!important;}
+.outlogin_layerbox_bylx{width:292px!important;position:absolute;border-width:1px!important;border-style:solid!important;text-align:left!important;z-index:1000;overflow:visible!important;}
+.outlogin_layerbox_bylx .cur_move{position:relative!important;width:477px!important;height:17px!important;cursor:move;left:0!important;clear:both!important;overflow:visible!important;}
+.outlogin_layerbox_bylx a.layerbox_close{position:absolute!important;right:8px!important;top:8px!important;width:12px!important;height:11px!important;padding:5px!important;font:700 12px "Simsun"!important;text-decoration:none!important;overflow:hidden!important;z-index:10!important;}
+.outlogin_layerbox_bylx .close_loginname{position:absolute!important;width:11px!important;height:11px!important;padding:5px!important;left:182px!important;top:4px!important;font:700 12px "Simsun"!important;text-decoration:none!important;overflow:hidden!important;background:#fff;}
+.outlogin_layerbox_bylx a.layerbox_close:hover{text-decoration:none!important;}
+.outlogin_layerbox_bylx .layerbox_left{width:259px!important;display:inline!important;float:right!important;margin-top:-17px!important;height:260px;padding:17px 0 17px 30px!important;border-right-width:1px!important;border-right-style:solid!important;}
+.outlogin_layerbox_bylx .layerbox_left .titletips{padding:8px 0 35px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist{list-style:none!important;padding:0!important;margin:0!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li{width:260px!important; clear:both!important; padding-bottom:12px!important;*padding-bottom:11px!important; vertical-align:top;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist .sub_wrap_r{height:20px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist .ndrelativewrap{position:relative!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li .btn_wrap{float:left!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li input.styles{margin:0!important;border-style:solid!important;border-width:1px!important;width: 178px!important;height:14px!important;padding:6px 20px 7px 4px!important;outline-style:none!important;vertical-align:middle!important;overflow:hidden!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li input.styles::-ms-clear{display:none!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist input.styles:focus::-webkit-input-placeholder {color:transparent!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist input.styles:focus::-moz-placeholder {color:transparent!important;}
+.outlogin_layerbox_bylx .layerbox_left .pre_name{display:block!important;;padding-top:50px!important;width:205px!important;; white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important;font-size:18px!important;height:25px!important;}
+.outlogin_layerbox_bylx .layerbox_left .chg_ac{display:block!important;height:16px!important;font-size:14px!important;text-decoration:none!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li.loginform_yzm{height:28px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li.loginform_yzm input.styles{width:90px!important; float:left!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li.loginform_yzm .disability_voice{display:inline-block;
+    width:35px;height:29px;vertical-align:middle!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li.loginform_yzm img.yzm{float:left!important;margin-left:12px!important;height:28px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li.loginform_yzm .reload-code{float:left!important;margin:7px 0 0 5px!important;width:24px!important;height:18px!important;cursor:pointer!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist a.login_btn{float:left!important;margin-right:6px!important;padding:7px 18px!important;text-decoration:none!important;font-size:14px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist a.register_lnk{text-decoration:none;vertical-align:middle;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist a.register_lnk:hover{text-decoration:underline; }
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist .auto_checkbox{vertical-align:-2px!important;_vertical-align:-1px!important;margin:0 5px 0 0!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist label{margin:0 0 0 0!important;vertical-align:middle!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist a.forget_Pwd{margin-right:10px!important;text-decoration:none!important;vertical-align:middle!important;_vertical-align:-1px!important;}
+.outlogin_layerbox_bylx .layerbox_left .log_option{float:left!important;padding:7px 20px 0 0!important;*padding-top:12px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist a.forget_Pwd:hover{text-decoration:underline!important;}
+.outlogin_layerbox_bylx .association{position:absolute!important;left:30px;top:94px;margin:0;border-width:1px!important;border-style:solid!important;width:230px;overflow:hidden!important;padding:0;clear:both!important;}
+.outlogin_layerbox_bylx .association li{margin:0 1px!important;padding:3px!important;line-height:1.2!important;list-style:none!important;white-space:nowrap!important;}
+.outlogin_layerbox_bylx .association li.note_item{margin:4px!important;padding:0!important;}
+.outlogin_layerbox_bylx .association li a{display:block!important;text-decoration:none!important;}
+.outlogin_layerbox_bylx .login_error_tips{position:absolute; top:42px; left:215px; z-index:10;margin:0 0 10px 0!important;width:225px!important;padding:5px!important;}
+.outlogin_layerbox_bylx .login_recom_tips{position:absolute; top:42px; left:215px; z-index:10; border:1px #797979 solid; background:#ffffcc; margin:0 0 10px 0!important;padding:5px; white-space:nowrap;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li .rmb_login{float:left;padding:8px 0 0 10px;}
+.outlogin_LoginBtn:hover{text-decoration:underline!important;}
+.outlogin_LoginBtn .LoginIcon{display:inline-block!important;height:15px!important;width:16px!important;vertical-align:middle!important;}
+.outlogin_LoginBtn .LoginTx{vertical-align:middle!important;padding-left:5px!important;cursor:pointer!important;}
+.outlogin_layerbox_bylx .otwo_d_wrap{width:185px!important;height:260px!important;_width:182px!important;}
+.outlogin_layerbox_bylx .otwo_d_wrap .otwo_tl{height:40px!important;padding:8px 0 0 26px!important;}
+.outlogin_layerbox_bylx .otwo_d_wrap .td_wrap{border-right:1px solid #ededed!important;height:128px!important;padding-right:30px!important;text-align:right!important;overflow:visible!important;}
+.outlogin_layerbox_bylx .otwo_d_wrap .td_wrap img{border:none!important;display:inline!important;}
+.outlogin_layerbox_bylx .otwo_d_wrap .thumb{float:right;;border:2px solid #dfdfdf;-webkit-border-radius:60px;-moz-border-radius:60px;border-radius:60px;width:120px;height:120px;overflow:hidden; box-shadow:0 0 2px 3px hsla(0,0%,20%,.05)}
+.outlogin_layerbox_bylx .otwo_d_wrap .thumb img{width:120px;height:120px;-webkit-border-radius:60px;-moz-border-radius:60px;border-radius:60px;}
+.outlogin_layerbox_bylx .otwo_hlp{position:absolute!important;left:175px!important;top:59px!important;width:229px!important;height:329px!important;background:#ebebeb!important;background:hsla(0,0%,0%,.08)!important;z-index:16!important;}
+.outlogin_layerbox_bylx .otwo_hlp .hlp_cnt{margin:3px!important;border:1px solid #dadada!important;height:310px!important;padding:10px 0 0 0px!important;background:#fff;!important}
+.outlogin_layerbox_bylx .otwo_hlp .otwo_hlp_tl{height:23px!important;line-height:1!important;}
+.outlogin_layerbox_bylx .otwo_hlp .ot_arrow{position:absolute!important;top:68px!important;left:-7px!important;width:11px!important;height:16px!important;background:url(https://i.sso.sina.com.cn/images/login/arrow.png) no-repeat 0 0!important;}
+.outlogin_layerbox_bylx .swip_check{position:absolute!important;left:10px!important;top:25px!important;border:1px solid #ccc!important;width:204px!important;height:46px!important;background:#fffae1!important; box-shadow:0 0 3px hsla(0,0%,0%,.2)!important; border-radius:3px!important;}
+.outlogin_layerbox_bylx .swip_check_cls,
+.outlogin_layerbox_bylx .swip_check_icon,
+.outlogin_layerbox_bylx .swip_check_btmarow{background-image:url(https://i.sso.sina.com.cn/images/login/swip_icon.gif)!important;background-repeat:no-repeat!important;overflow:hidden!important;}
+.outlogin_layerbox_bylx .swip_check_cls{float:right!important;display:inline!important;margin:9px!important;width:10px!important;height:10px!important;background-position:1px -27px!important;}
+.outlogin_layerbox_bylx .swip_check_icon{float:left!important;margin:5px!important;width:15px!important;height:15px!important;background-position:0 -8px!important; }
+.outlogin_layerbox_bylx .swip_check_txt{ margin:4px 0 0!important;overflow:hidden!important;line-height:18px!important;}
+.swip_check_btmarow{position:absolute!important;bottom:-6px!important;left:50%!important;margin-left:-3px!important;width:10px!important;height:6px!important;background-position:0 0!important;}
+.outlogin_layerbox_bylx{width:477px!important;border-color:#ffc525;color:#434242;box-shadow:4px 4px 0 rgba(0,0,0,.1);background-color:#fff;}
+.outlogin_layerbox_bylx a.layerbox_close{color:#666;}
+.outlogin_layerbox_bylx a.layerbox_close:hover{color:#3f7bc1;}
+.outlogin_layerbox_bylx .close_loginname{color:#666;}
+.outlogin_layerbox_bylx .close_loginname:hover{color:#DA0000;}
+.outlogin_layerbox_bylx .layerbox_left{border-right-color:#fff;background:#fff;}
+.outlogin_layerbox_bylx .layerbox_left input.styles{border-color:#d0d0d0;background:#FFF;}
+.outlogin_layerbox_bylx .layerbox_left .disability_voice{background:url(https://i.sso.sina.com.cn/images/login/voice.gif) no-repeat 50% 50%;}
+.outlogin_layerbox_bylx .layerbox_left a.login_btn{background:#ff8500;color:#fff;}
+.outlogin_layerbox_bylx .layerbox_left a.login_btn:hover{background:#ff931d;}
+.outlogin_layerbox_bylx .layerbox_left a.register_lnk{color:#a87a2c;}
+.outlogin_layerbox_bylx .layerbox_left a.login_lnk:hover{color:#a87a2c;}
+.outlogin_layerbox_bylx .layerbox_left a.forget_Pwd{color:#a87a2c;}
+.outlogin_layerbox_bylx .association{border-color:#ddd;background:#fff;}
+.outlogin_layerbox_bylx .association .note_item{color:#999;}
+.outlogin_layerbox_bylx .association a{color:#999;}
+.outlogin_layerbox_bylx .association .current{background:#f4f5f7;}
+.outlogin_layerbox_bylx .login_error_tips{color:#DA0000; }
+.outlogin_layerbox_bylx .login_recom_tips{color:#000; }
+.outlogin_LoginBtn .LoginIcon{background:url(https://i.sso.sina.com.cn/images/login/loginButton_16a.png) no-repeat 0 0;}
+.outlogin_layerbox_bylx li.loginform_yzm .reload-code{background:url(https://i.sso.sina.com.cn/images/login/verify_refresh.png) no-repeat 0 0;}
+.outlogin_layerbox_bylx li.loginform_yzm .reload-code:hover{background-position:0 -18px;}
+.outlogin_layerbox_bylx .chg_ac{color:#ff8500;}
+.outlogin_layerbox_bylx .layerbox_left .qq_spanoption{float:left!important;padding:8px 20px 0 0!important;*padding-top:8px!important;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li span a.qq_login_h{margin-right:10px!important;text-decoration:none;vertical-align:middle!important;_vertical-align:-1px!important;color:#000;}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li span a.qq_login_h:hover{color:#ff8500;text-decoration:underline !important}
+.outlogin_layerbox_bylx .layerbox_left ul.loginformlist li span a span.qq_login_logo {display: inline-block;width: 16px;height: 16px;margin-right: 5px;background-image: url(https://i.sso.sina.com.cn/images/login/qq.png);background-repeat: no-repeat;vertical-align: middle;}</style><style type="text/css">.ui-outlogin-shake {-webkit-animation:outlogin-layer-shake 600ms;}
+@-webkit-keyframes outlogin-layer-shake {
+    0% {-webkit-transform:translateX(0px);-webkit-animation-timing-function:ease-out;}
+    10% {-webkit-transform:translateX(-16px);-webkit-animation-timing-function:ease-in;}
+    20% {-webkit-transform:translateX(0px);-webkit-animation-timing-function:ease-out;}
+    30% {-webkit-transform:translateX(8px);-webkit-animation-timing-function:ease-in;}
+    40% {-webkit-transform:translateX(0px);-webkit-animation-timing-function:ease-out;}
+    50% {-webkit-transform:translateX(-4px);-webkit-animation-timing-function:ease-in;}
+    60% {-webkit-transform:translateX(0px);-webkit-animation-timing-function:ease-out;}
+    70% {-webkit-transform:translateX(2px);-webkit-animation-timing-function:ease-in;}
+    80% {-webkit-transform:translateX(0px);-webkit-animation-timing-function:ease-out;}
+    90% {-webkit-transform:translateX(-1px);-webkit-animation-timing-function:ease-in;}
+    100% {-webkit-transform:translateX(0px);-webkit-animation-timing-function:ease-out;}
+}
+</style>
+    <link rel="stylesheet" href="/css/ka.css">
+</head>
+<body><div class="side-btns-wrap" style="display: block;"><div class="side-btns-top"><a class="side-btns-top-btn" href="javascript:;" title="返回顶部" suda-uatrack="key=channel_index_up_to_top&amp;value=news" hidefocus="">返回顶部</a><a class="side-btns-top-close" href="javascript:;" title="关闭" suda-uatrack="key=channel_index_up_to_top&amp;value=news_close" hidefocus="">关闭</a></div></div>
+
+<div class="topWrap">
+    <div style="position:relative;z-index:10000" id="top_column">
+        <div class="top clearfix">
+            <div class="l">
+                <div class="l">
+
+                    <h1 class="l"><a href="/?t=news"><img src="/img/newLog.png" alt="新浪搜索"></a></h1>
+
+
+                    <div class="navType l">
+                        <a rel="/?q=[keyword]&amp;c=news" href="/?q=%C0%EE%CC%FA%D6%F9&amp;c=news" id="tab">新闻</a>
+                        <a rel="/?q=[keyword]&amp;c=zt" href="/?q=%C0%EE%CC%FA%D6%F9&amp;c=zt&amp;range=title" id="tab0">专题</a>
+                        <a rel="/?q=[keyword]&amp;c=blog" href="/?q=%C0%EE%CC%FA%D6%F9&amp;c=blog" class="selected" id="tab03">博客</a>
+                        <a rel="http://s.weibo.com/weibo/[keyword]" href="http://s.weibo.com/weibo/%E6%9D%8E%E9%93%81%E6%9F%B1" target="_blank" id="ta04">微博</a>
+
+                        <a rel="/?q=[keyword]&amp;c=img" href="/?q=%C0%EE%CC%FA%D6%F9&amp;c=img" id="tab07">图片</a>
+
+
+                        <a rel="/?q=[keyword]&amp;c=video" href="/?q=%C0%EE%CC%FA%D6%F9&amp;c=video&amp;range=title" id="tab02">视频</a>
+                        <!-- <a rel="http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=&q=[keyword]&name=%CD%F2%BF%C6A&t=keyword&c=all&k=%CD%F2%BF%C6A&range=all&col=1_7&from=channel" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=&q=%C0%EE%CC%FA%D6%F9&name=%CD%F2%BF%C6A&t=keyword&c=all&k=%CD%F2%BF%C6A&range=all&col=1_7&from=channel" target="_blank" id="tab05">股票</a> -->
+                        <!-- <a rel="http://music.sina.com.cn/yueku/search/s.php?t=all&k=[keyword]" href="http://music.sina.com.cn/yueku/search/s.php?t=all&k=%C0%EE%CC%FA%D6%F9" target="_blank" id="tab06">音乐</a>
+                        <a rel="/?q=[keyword]&c=product" href="/?q=%C0%EE%CC%FA%D6%F9&c=product" id="tab08">产品库</a>
+                        <a href="zl/search.php?q=%C0%EE%CC%FA%D6%F9" title="专栏搜索" target="_BLANK">专栏</a> -->
+                        <a rel="http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=&amp;q=[keyword]&amp;name=s&amp;t=keyword&amp;c=all&amp;k=s&amp;range=all&amp;col=1_7&amp;from=channel" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=&amp;q=%C0%EE%CC%FA%D6%F9&amp;name=s&amp;t=keyword&amp;c=all&amp;k=s&amp;range=all&amp;col=1_7&amp;from=channel" target="_blank" id="tab04">股票</a>
+                        <a href="?c=more" id="topamore">更多&gt;&gt;</a>
+                    </div>
+                </div>
+            </div>
+            <div class="r">
+                <a href="http://www.sina.com.cn" suda-uatrack="key=SearchHeader&amp;value=sinahomepage">新浪首页</a>
+            </div>
+
+
+            <!--0422 login-->
+            <div class="login-frame">
+                <a href="javascript:;" class="login-button" id="JS_Login_Btn"><span style="cursor:pointer;">登录</span></a>
+                <div class="logined-wrap fl" id="JS_Logined_Wrap"></div>
+                <div id="JS_Login_Layer" style="display:none"><div class="top-nav" style=""><div class="tn-title-login-custom" node-type="userInfoContainer"><div class="tn-user-custom"><a href="javascript:void(0);" class="tn-tab-custom tn-tab-custom-login" node-type="login"><i><span>登录</span></i></a><span class="tn-user-greet" style="display:none;" node-type="greet">欢迎你，</span><a node-type="nickCon" style="display:none;" href="http://weibo.com" target="_blank" class="tn-tab-custom"><i><span node-type="nick">&nbsp;</span><em class="tn-new-custom" node-type="totalMsg"></em><em class="tn-arrow tn-arrow-custom"></em></i></a><div class="tn-topmenulist-custom" node-type="infoList" style="display:none;"><ul class="tn-text-list"><li><a href="http://weibo.com/messages?topnav=1&amp;wvr=4" target="_blank"><em node-type="pm"></em>私信</a></li><li><a href="http://weibo.com/comment/inbox?topnav=1&amp;wvr=4&amp;f=1" target="_blank"><em node-type="comment"></em>评论</a></li><li><a href="http://weibo.com/at/weibo?topnav=1&amp;wvr=4" target="_blank"><em node-type="atme"></em>@我</a></li><li><a href="javascript:void(0);" node-type="logout" class="tn-user-custom-logout">退出</a></li></ul></div></div><div node-type="css_check" class="userpanel-checkload" style="display:none;"></div></div></div></div>
+            </div>
+            <!--0422 login-->
+        </div>
+        <div class="list-more" id="topcmore" style="left:292px;top:26px;display:none;"><!-- left:485px -->
+            <div class="more-arr"></div>
+            <div class="more-link">
+                <a rel="http://biz.finance.sina.com.cn/suggest/lookup_n.php?suggest_radio=lookupn&amp;country=&amp;q=[keyword]&amp;t=keyword&amp;c=all&amp;k=[keyword]&amp;name=[keyword]" href="http://biz.finance.sina.com.cn/suggest/lookup_n.php?suggest_radio=lookupn&amp;country=&amp;q=%C0%EE%CC%FA%D6%F9&amp;t=keyword&amp;c=all&amp;k=%C0%EE%CC%FA%D6%F9&amp;name=%C0%EE%CC%FA%D6%F9" target="_blank">股票</a>
+                <a rel="http://php.weather.sina.com.cn/search.php?city=[keyword]&amp;c=1&amp;f=1&amp;dpc=1" href="http://php.weather.sina.com.cn/search.php?city=%C0%EE%CC%FA%D6%F9&amp;c=1&amp;f=1&amp;dpc=1" target="_blank">天气</a>
+                <a rel="http://map.sina.com.cn/#city=北京!type=0!cr=12,11639794,3990817!k=[keyword]!strt=0!snum=10" href="http://map.sina.com.cn/#city=北京!type=0!cr=12,11639794,3990817!k=李铁柱!strt=0!snum=10" target="_blank">地图</a>
+                <a rel="http://yingxun.ent.sina.com.cn/search_key.php?keyword=[keyword]" href="http://yingxun.ent.sina.com.cn/search_key.php?keyword=%C0%EE%CC%FA%D6%F9" target="_blank">影讯</a>
+                <a rel="http://data.ent.sina.com.cn/show/search.php?keyword=[keyword]" href="http://data.ent.sina.com.cn/show/search.php?keyword=%C0%EE%CC%FA%D6%F9" target="_blank">演出</a>
+                <a href="http://bbs.sina.com.cn/" target="_blank" class="line-dot">论坛</a>
+                <a href="?c=more" class="line-dot">更多&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="top2">
+        <!-- 		<h1 class="l"><a href="/?t=blog"><img src="/images/logo_new_yan.png" alt="博客搜索" /></a></h1> -->
+
+        <div class="search-form l">
+
+            <form method="get" action="/" onsubmit="return submit_form(this)">
+                <input name="c" type="hidden" value="blog">
+                <input type="text" name="q" maxlength="100" class="ipt-02" onblur="set_top_column_href(this.value);" id="keyword" autocomplete="off">
+                <button type="button" class="btn btn-success" onclick="query()">搜索</button>
+                <p>
+
+                    <input type="radio"  name="radio"    value="1"  >搜文章
+                    <input type="radio"  name="radio"  value="2">搜博主
+                    <input type="radio" name="radio"   value="3">搜标题
+
+                </p>
+                <input name="by" type="hidden" value="">
+                <input name="sort" type="hidden" value="time">
+            </form>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+
+<div class="nav clearfix">
+
+    <span id="correct_box"></span>
+    <script type="text/javascript">
+        <!--//--><![CDATA[//><!--
+
+        $(document).ready(function(){
+            var url = "/iframe/correct.php?c=blog&q=%C0%EE%CC%FA%D6%F9&range=article&col=&source=&from=&country=&size=&time=&a=&sort=time&tpl_c=";
+            $('#correct_box').load(url);
+        });
+
+        //--><!]]>
+    </script>
+
+    <!--0422 search_bar-->
+    <div class="search_bar clearfix">
+
+        <div class="search_type clearfix">
+            <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time" class="cur">全部</a>
+            <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=viparticle&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time" suda-uatrack="key=SearchBlogBody&amp;value=Searchbyviparticle">名博</a>
+        </div>
+
+        <div class="search_filter">
+            <div class="left">
+                <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time&amp;by=all" class="cur" hidefocus="true">按全文</a>
+                <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time&amp;by=title" suda-uatrack="key=SearchBlogBody&amp;value=bytitle" hidefocus="true">按标题</a>
+                <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time&amp;by=nick" suda-uatrack="key=SearchBlogBody&amp;value=bynick" hidefocus="true">按作者</a>
+                <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time&amp;by=tag" suda-uatrack="key=SearchBlogBody&amp;value=bytag" hidefocus="true">按标签</a>
+            </div>
+            <div class="right">
+                <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=time" class="cur">按时间</a>
+                <a href="?c=blog&amp;q=%C0%EE%CC%FA%D6%F9&amp;range=article&amp;col=&amp;source=&amp;from=&amp;country=&amp;size=&amp;time=&amp;a=&amp;sort=rel" suda-uatrack="key=SearchBody&amp;value=relsort">按相关性</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrap" id="wrap">
+    <div class="main clearfix">
+        <div id="result" class="result">
+            <div id="nav_result_container">
+                <div class="noresult">
+                    <h4> <span>祝您搜索愉快 </span></h4>
+                    <p>建议您</p>
+                    <ul><li>开心</li> <li>快乐</li> <li>对待这个服务</li> </ul>
+                </div>x
+            </div>
+
+
+
+        </div>
+        <div class="blk_right">
+            <!--订阅词start-->
+            <div class="blk_myRss" style="display: none;">
+                <div class="br_title clearfix"><h4>我的订阅词</h4><a href="javascript:;" class="rss_rssCur">订阅当前词</a></div>
+                <ul class="ul_right" id="rss01"></ul>
+            </div>
+            <!--订阅词end-->
+            <!--最近搜过start-->
+            <div class="blk_myHis">
+                <div class="br_title clearfix"><h4>最近搜过</h4> </br>
+                    <a  class="his_clear" onclick="shan()">全部清除</a>
+                    <ul class="ul_right" id="his01">
+                    </ul>
+
+
+                </div>
+
+
+            </div>
+            <!--最近搜过end-->
+            <!--大家都在搜 start-->
+            <div class="blk_hotSearch">
+                <div class="br_title clearfix"><h4>大家都在搜</h4></div>
+                <ul class="ul_hotSearch ul_right" id="hotSearch01">
+                    <li >古天乐</li>
+                </ul>
+            </div>
+            <!--大家都在搜 end-->
+        </div>
+    </div>
+</div>
+</div>
+
+<style type="text/css">
+</style>
+<div id="scrollDiv" class="scrollDiv" style="position: fixed;">
+    <a href="http://comment5.news.sina.com.cn/comment/skin/feedback.html?channel=ly&amp;newsid=231" target="_blank">我要反馈</a>
+</div>
+<script type="text/javascript">
+    ~function(){var a="scrollDiv";var d=document.getElementById(a);function c(g,e,f){if(g.attachEvent){g.attachEvent("on"+e,f);}else{g.addEventListener(e,f,false);}}function b(){var g=navigator.appVersion.indexOf("MSIE 6")!=-1?true:false;var e=0,f=0;if(g){d.style.position="absolute";}else{d.style.position="fixed";}}c(window,"scroll",b);c(window,"resize",b);b();}();
+</script>
+
+<script type="text/javascript" src="http://www.sinaimg.cn/unipro/pub/suda_m_v629.js"></script>
+<script type="text/javascript">suds_init(2296,50.0000,1015,2);</script>
+<script type="text/javascript" charset="utf-8" src="http://www.sinaimg.cn/unipro/pub/suda_s_v851c.js"></script>
+<div id="footer" class="foot">
+    <a href="javascript:void(0);" onclick="setHomePage();">设为首页</a> - <a href="http://comment4.news.sina.com.cn/comment/skin/feedback.html?channel=ly&amp;newsid=231" target="_blank">意见反馈</a> - <a href="http://corp.sina.com.cn/chn/" target="_blank">新浪简介</a> - <a href="http://corp.sina.com.cn/eng/" target="_blank">About Sina</a>
+    <br>
+
+    <br>
+    <a href="http://news.sina.com.cn/c/2013-01-29/171826152112.shtml" target="_blank">共同抵制网络低俗色情信息</a> - 文明办网文明上网举报电话：010-82615762
+</div>
+<script type="text/javascript">
+</script>
+<script src="http://i.sso.sina.com.cn/js/ssologin.js"></script>
+<script type="text/javascript" src="http://i.sso.sina.com.cn/js/user_panel.js" charset="utf-8"></script>
+</body>
+</html>

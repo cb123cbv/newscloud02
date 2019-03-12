@@ -25,6 +25,8 @@ public class Common {
 
     private String vipname;
 
+    private String tlink;//推荐文章的链接
+
     //-----------------新增微博
     private String name;
     private String textName;

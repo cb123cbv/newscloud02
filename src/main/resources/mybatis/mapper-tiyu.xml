@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.TiYuMapper">
+	<select id="getTiYu" resultType="com.jk.bean.TiYu">
+        select * from ${tablename}
+    </select>
+
+    <select id="getOne" resultType="com.jk.bean.LanMuBiaoTi">
+        select
+		  b.*,c.text
+		from
+		  t_lanmu_biaoti a,${tablename} b,t_lanmu c
+		where
+		  a.biaotiid = b.id
+		and
+		  a.lanmuid = c.id
+		and
+		  a.tablename = #{tablename}
+		and
+		  c.text = '篮球'
+    </select>
+
+	<select id="getTwo" resultType="com.jk.bean.LanMuBiaoTi">
+        select
+		  b.*,c.text
+		from
+		  t_lanmu_biaoti a,${tablename} b,t_lanmu c
+		where
+		  a.biaotiid = b.id
+		and
+		  a.lanmuid = c.id
+		and
+		  a.tablename = #{tablename}
+		and
+		  c.text = '足球'
+    </select>
+
+	<select id="getThree" resultType="com.jk.bean.LanMuBiaoTi">
+        select
+		  b.*,c.text
+		from
+		  t_lanmu_biaoti a,${tablename} b,t_lanmu c
+		where
+		  a.biaotiid = b.id
+		and
+		  a.lanmuid = c.id
+		and
+		  a.tablename = #{tablename}
+		and
+		  c.text = '乒乓球'
+    </select>
+
+	<select id="getFour" resultType="com.jk.bean.LanMuBiaoTi">
+        select
+		  b.*,c.text
+		from
+		  t_lanmu_biaoti a,${tablename} b,t_lanmu c
+		where
+		  a.biaotiid = b.id
+		and
+		  a.lanmuid = c.id
+		and
+		  a.tablename = #{tablename}
+		and
+		  c.text = '羽毛球'
+    </select>
+
+	<select id="getFive" resultType="com.jk.bean.LanMuBiaoTi">
+        select
+		  b.*,c.text
+		from
+		  t_lanmu_biaoti a,${tablename} b,t_lanmu c
+		where
+		  a.biaotiid = b.id
+		and
+		  a.lanmuid = c.id
+		and
+		  a.tablename = #{tablename}
+		and
+		  c.text = '排球'
+    </select>
+
+	<select id="getSix" resultType="com.jk.bean.LanMuBiaoTi">
+        select
+		  b.*,c.text
+		from
+		  t_lanmu_biaoti a,${tablename} b,t_lanmu c
+		where
+		  a.biaotiid = b.id
+		and
+		  a.lanmuid = c.id
+		and
+		  a.tablename = #{tablename}
+		and
+		  c.text = '跳水'
+    </select>
+
+</mapper>
