@@ -24,4 +24,21 @@ public class Common {
     private String imgurl;
 
     private String vipname;
+
+    //-----------------新增微博
+    private String name;
+    private String textName;
+    private String selectName;
+    private String biaoqian;
+    private Integer titleid;
+
+
+
+    private String endTime;
+    private long timeDate=1;
+
+
+
+
+
 }
