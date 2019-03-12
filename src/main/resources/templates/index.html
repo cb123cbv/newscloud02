@@ -786,7 +786,7 @@
                 data:{page:1,rows:20},
                 success:function(result){
                     console.log(result)
-                    var count2= '<li><a href="#">总榜</a></li>';
+                    var count2= '<li><a href="#" >总榜</a></li>';
                     count2 += '<li><a href="javascript:yueguanzhu()">月榜</a></li>';
                     var count ='<thead><tr>';
                     count+=" <th width=\"10%\" align=\"center\">排名</th>";
@@ -1226,9 +1226,11 @@
             <ul class="menuStyleIn">
                 <li style="width:550px; background:none; text-align:left;"><h2><span id="title_105" title="总榜 all">每日排行榜</span></h2></li>
                 <div id="div111">
-                    <li class="selectd" ><a href="javascript:void(0)"  onclick="queryArticleList(3)">日</a></li>
-                    <li><a href="javascript:void(0)"  onclick="queryArticleList(2)">周</a></li>
-                    <li><a href="javascript:void(0)"  onclick="queryArticleList(1)">月</a></li>
+
+
+                    <li  id="rizhouyueid1"><a href="javascript:void(0)"  onclick="queryArticleList(3)">日</a></li>
+                    <li  id="rizhouyueid2"><a href="javascript:void(0)"  onclick="queryArticleList(2)">周</a></li>
+                    <li  id="rizhouyueid3"><a href="javascript:void(0)"  onclick="queryArticleList(1)">月</a></li>
                     <li style="width:140px; float:right; background:none; font-weight:normal;">
                 </div>
 

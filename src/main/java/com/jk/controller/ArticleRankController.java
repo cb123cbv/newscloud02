@@ -18,7 +18,6 @@ public class ArticleRankController {
     @Resource
     private ArticleRankService articleRankService;
 
-
     @ResponseBody
     @RequestMapping("addArticle")
     public void addArticle(PageView pageView){

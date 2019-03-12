@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.WirteMapper">
+
+
+    <!-- List<Common> queryBiaoQian();-->
+    <select id="queryBiaoQian" resultType="com.jk.bean.Common">
+        select * from t_biaoqian
+    </select>
+
+    <!--void addwrite(Common common);-->
+
+    <insert id="addwrite" >
+        insert into ${selectName}(title,vipid,time,status,userid,tablename) values(
+        #{title},#{vipid},now(),1,#{vipid},#{selectName}
+        )
+        <selectKey keyProperty="titleid" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+
+    <!-- Integer addqianbianByName(Common common);-->
+    <insert id="addqianbianByName" >
+        insert into t_biaoqian(name) values(#{name})
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+
+    <!--addqianbianWirte(@Param("biaoqianid") Integer id, @Param("titleid")Integer titleid, @Param("selectName")String selectName);-->
+    <insert id="addqianbianWirte" >
+        insert into t_biaoqian_wirte(biaoqianid,titleid,tablename) values(#{biaoqianid},#{titleid},#{selectName})
+    </insert>
+
+</mapper>

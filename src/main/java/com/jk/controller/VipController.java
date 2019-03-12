@@ -50,11 +50,6 @@ public class VipController {
 
         }
 
-
-        for (Vip vip : list2) {
-            System.out.println(vip);
-        }
-
         return list2;
     }
 
