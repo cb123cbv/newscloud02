@@ -622,7 +622,7 @@
                 url: "/getTree",
                 type: "POST",
                 success: function (result) {
-                    var count = "<li><a href='#'>首页</a></li>";
+                    var count = "<li><a href='/toView?url=shouye'>首页</a></li>";
                     count += '<li><img src="http://i1.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_004.gif"></li>';
                     var count2 = '<li class="selec"><a href="http://blog.sina.com.cn/lm/top/all/day.html">总榜</a></li>';
                     $.each(result, function (index, obj) {
@@ -783,7 +783,7 @@
                 url:"/follow/queryList",
                 type:"POST",
                 async:false,
-                data:{page:1,rows:10},
+                data:{page:1,rows:20},
                 success:function(result){
                     console.log(result)
                     var count2= '<li><a href="#">总榜</a></li>';
@@ -800,8 +800,17 @@
                         count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
                         count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
                         count+='<td><div class="w270"></div></td>';
-                        count+='<td>'+obj.sl+'</td>';
-                        count+='<td><button id="button1" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        if(obj.sl==null||obj.sl==''){
+                            count+='<td>0</td>';
+                        }else{
+                            count+='<td>'+obj.sl+'</td>';
+                        }
+                        if(obj.state==1){//1 已关注
+                            count+='<td><button style="background-color: #67b168" onclick="removeGuanzhu('+obj.authorid+')">已关注</button></td></tr>';
+                        }if(obj.state==0){//2 未关注
+                            count+='<td><button style="background-color: #6b9cde" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                        }
+                        //count+='<td><button id="button1" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
                     })
                     count+='</tbody>';
                     $("#li2").html(count2);
@@ -870,13 +879,16 @@
                         count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
                         count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.imgurl+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.auname+'</a></div></td>';
                         count+='<td><div class="w270"></div></td>';
-                        count+='<td>'+obj.shuliang+'</td>';
+                        if(obj.shuliang==null||obj.shuliang==''){
+                            count+='<td>0</td>';
+                        }else{
+                            count+='<td>'+obj.shuliang+'</td>';
+                        }
                         if(obj.state==1){//1 已关注
                            count+='<td><button style="background-color: #67b168;width: 80px" onclick="removeGuanzhu('+obj.authorid+')">取消关注</button></td></tr>';
                         }if(obj.state==0){//2 未关注
                            count+='<td><button style="background-color: #6b9cde;width: 80px" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
                         }
-
                     })
                     count+='</tbody>';
                     $("#li2").html(count2);
@@ -930,6 +942,7 @@
 
 
     </script>
+
 </head>
 <body>
 <iframe id="IO_WEBPUSH4_LOCALCONN_IFRAME" src="https://current.sina.com.cn/theone/IO.WebPush4.localConn.html"
@@ -1127,23 +1140,43 @@
                         document.forms["iask_f"].action = "http://search.blog.sina.com.cn/blog/search";
                     }
                 }
+                
+                function  getInfoAndTileInfo() {
+                    /*$.ajax({
+                        url:"/getInfoAndTileInfo",
+                        type:"POST",
+                        data:{
+                            queryString:$("#k").val(),
+                            status:$("#by").val()
+                        },
+                        success:function(pageUtil){
+
+                              location.href="/toView?url=searchInfo"
+
+                        },
+                        error:function(){
+                            alert("失败了");
+                        }
+                    });*/
+                    location.href="/toView?url=searchInfo"
+                }
+                
             </script>
             <form id="blogsearch_f1" name="blogsearch_f1" target="_blank">
-                <a href="javascript:void(0)" target="_blank" style="text-decoration:none;">新闻搜索</a>：<input type="text"
+                <!--<a href="javascript:void(0)" target="_blank" style="text-decoration:none;">新闻搜索</a>：<input type="text"
                                                                                                            id="k"
                                                                                                            style="width:133px;"
                                                                                                            value="请输入查询词"
                                                                                                            name="q"
                                                                                                            onclick="javascript:if(this.value=='请输入查询词')this.value='';"><input
                     type="hidden" name="c" value="blog"><input type="hidden" name="range" value="article">
-                <!--<select style="width:77px;" onchange="blogsearch_change1(this);" size="1" name="by">
-                    <option value="all" selected="">博客全文</option>
-                    <option value="title">文章标题</option>
-                    <option value="nick">博客作者</option>
-                    <option value="tag">标签</option>
+               <select style="width:77px;" onchange="blogsearch_change1(this);" size="1" name="by"  id="by">
+                    <option value="1" selected="">博客全文</option>
+                    <option value="2">文章标题</option>
+                    <option value="3">博客作者</option>
+                    <option value="4">标签</option>
                 </select>-->
-                <input name="" type="image" src="http://i2.sinaimg.cn/blog/deco/2007/1219/ph_blog_lmy_005.gif"
-                       onclick="alert('1')">
+                <input type="button"   value="搜索" onclick="getInfoAndTileInfo()">
             </form>
         </li>
     </ul>
