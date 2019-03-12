@@ -24,4 +24,6 @@ public class Common {
     private String imgurl;
 
     private String vipname;
+
+    private String tlink;//推荐文章的链接
 }
