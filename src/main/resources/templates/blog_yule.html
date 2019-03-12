@@ -288,13 +288,15 @@
 
 <script type="text/javascript" th:inline="none">
     $(function(){
-        shenDuRead();//深度阅读
+        shenDuRead();//深度阅读  代码在 500行之后
 
         fiveNews();//查询 第一块 5条信息
 
         jingBaoNews();//劲爆热点
 
         blogRank();//博文排行
+
+        queryLanmu();//查询栏目
     })
 </script>
 
@@ -479,11 +481,9 @@
                             <label class="layui-form-label" style="width: 30%">栏目</label>
 
                             <div class="layui-input-inline">
-                                <select name="lanmu">
-                                    <option value="">请选择</option>
-                                    <option value="6">劲爆热点</option>
-                                    <option value="7">深度阅读</option>
-                                    <option value="8">博文排行</option>
+                                <select name="lanmu" id="lanmuId">
+
+
                                 </select>
                             </div>
 
@@ -504,6 +504,25 @@
                                 ,layedit = layui.layedit;
 
                         });
+                        //栏目
+                        function queryLanmu(){
+                            $.ajax({
+                                url : "/tui/queryLanmu?tablename=t_yule",
+                                async : true,
+                                type: "POST",
+                                success : function(data) {
+                                    var html = "<option value='-1'>请选择</option>";
+                                    for(var i in data){
+                                        html += '<option value="'+data[i].id+'">'+data[i].text+'</option>';
+                                    }
+                                    $("#lanmuId").html(html);
+                                },
+                                error : function(e){
+                                    alert("代码有问题，请打开F12和debug进行调试！");
+                                }
+                            });
+                        }
+
                         //添加推送
                         function addTuiJian() {
                             $.ajax({

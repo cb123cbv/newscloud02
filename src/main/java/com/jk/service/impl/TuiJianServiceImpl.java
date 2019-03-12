@@ -1,6 +1,7 @@
 package com.jk.service.impl;
 
 import com.jk.bean.Common;
+import com.jk.bean.LanMu;
 import com.jk.bean.TuiJian;
 import com.jk.mapper.TuiJianMapper;
 import com.jk.service.TuiJianService;
@@ -39,5 +40,10 @@ public class TuiJianServiceImpl implements TuiJianService {
     @Override
     public List<Common> blogRank(Integer flag) {
         return tuiJianMapper.blogRank(flag);
+    }
+
+    @Override
+    public List<LanMu> queryLanmu(String tablename) {
+        return tuiJianMapper.queryLanmu(tablename);
     }
 }

@@ -1,6 +1,7 @@
 package com.jk.controller;
 
 import com.jk.bean.Common;
+import com.jk.bean.LanMu;
 import com.jk.bean.TuiJian;
 import com.jk.bean.Vip;
 import com.jk.service.TuiJianService;
@@ -67,5 +68,17 @@ public class TuiJianController {
         List<Common> list = tuiJianService.blogRank(flag);
         return list;
     }
+
+    //栏目 queryLanmu
+    @RequestMapping("queryLanmu")
+    @ResponseBody
+    public List<LanMu> queryLanmu(String tablename){
+        List<LanMu> list = tuiJianService.queryLanmu(tablename);
+        for (LanMu lanMu : list) {
+            System.out.println(lanMu);
+        }
+        return list;
+    }
+
 
 }

@@ -33,7 +33,10 @@
         and YEARWEEK(date_format(y.time,'%Y-%m-%d')) = YEARWEEK(now())
         ORDER BY y.time desc LIMIT 10
     </select>
-
+<!--List<LanMu> queryLanmu();-->
+    <select id="queryLanmu" resultType="com.jk.bean.LanMu">
+        select * from t_lanmu l where l.tablename = #{tablename}
+    </select>
 
 
 </mapper>
