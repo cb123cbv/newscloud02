@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>新浪博客</title>
+    <title>本地新浪博客</title>
     <meta name="keywords" content="blog,博客,blog博客,blog博客新闻,blog博客资讯,blog博客信息,新浪blog博客">
     <meta name="description" content="新浪网博客频道是全中国最主流，最具人气的博客频道。拥有最耀眼的娱乐明星博客、最知性的名人博客、最动人的情感博客，最自我的草根博客!">
     <!--轮播图-->
@@ -39,9 +39,7 @@
                 url: "/img/queryImg",
                 type: "POST",
                 success: function (result) {
-                    /*for (i = 0; i < 5; i++) {
-                        $("#pic" + i).prop("src", result[i].imgUrl);
-                    }*/
+
                     $.each(result,function (val,obj) {
 
                         flag+=' <li >'
@@ -165,28 +163,7 @@
                 url: "/login/clearSession",
                 type: "POST",
                 success: function (data) {
-                 /* div += '<div class="login-info" data-sudaclick=blog_user>'
-                  div += '<div class="not-login">'
-                  div += '<p>新浪博友，欢迎回来！</p>'
-                  div += '<form id="newsBd">'
-                  div += '<input id="loginName" type="text" name="vipaccount" autocomplete="off" placeholder="微博/博客/邮箱/手机号">'
-                  div += '<input id="loginPassword" type="password" name="vippassword" autocomplete="off" placeholder="请输入密码">'
-                  div += '</form>'
-                  div += '<div class="btn-row">'
-                  div += '<div class="jfl">'
-                  div += '<a id="submit-btn" suda-uatrack="key=2018_blog_index&value=my_signin" class="login-btn" href="javascript:denglu();">登录</a>'
-                  div += '</div>'
-                  div += '<div class="jfr">'
-                  div += '<input suda-uatrack="key=2018_blog_index&value=my_signin_save" id="auto" value="true" type="checkbox" name="auto" >'
-                  div += '<label suda-uatrack="key=2018_blog_index&value=my_signin_save" for="auto"><span>下次自动登录</span></label>'
-                  div += '</div>'
-                  div += '</div>'
-                  div += '<div class="logined">'
-                  div += '</div>'
-                  div += '</div>'
-                  div += '</div>'
 
-                    $("#divid").html(div)*/
                     tcpinjie();
                 },
 
@@ -439,7 +416,7 @@
         </div>
         <ul class="nav-list">
             <li>
-                <a target="_blank" href="http://blog.sina.com.cn/lm/ent/">娱乐</a>
+                <a target="_blank" href="/toView?url=blog_yule">娱乐</a>
             </li>			<li>
             <a target="_blank" href="http://blog.sina.com.cn/lm/history/">文史</a>
         </li>			<li>
@@ -462,7 +439,7 @@
                         <a target="_blank" href="http://blog.sina.com.cn/lm/top/rank/"><span>博主排行</span></a>
                     </li>
                     <li>
-                        <a target="_blank" href="http://blog.sina.com.cn/lm/rank/"><span>博文排行</span></a>
+                        <a target="_blank" href="/toView?url=index"><span>博文排行</span></a>
                     </li>
                     <li>
                         <a target="_blank" href="http://blog.sina.com.cn/lm/search/class/"><span>博客名录</span></a>
