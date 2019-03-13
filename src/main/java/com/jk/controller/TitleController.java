@@ -6,6 +6,7 @@ import com.jk.bean.PageView;
 import com.jk.bean.QueryParam;
 import com.jk.bean.Vip;
 import com.jk.service.ArticleRankService;
+import com.jk.service.PinglunStateService;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
@@ -24,6 +25,10 @@ public class TitleController {
 
     @Autowired
     private TitleService titleService;
+
+    @Autowired
+    private PinglunStateService pinglunStateService;
+
     @Autowired
     private ArticleRankService articleRankService;
 
@@ -65,6 +70,15 @@ public class TitleController {
     public String toTitleInfo(String id, String name, Model model){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
+        return "showInfo";
+    }
+
+    //评论专用
+    @RequestMapping("toshowInfo2")
+    public String toTitleInfo2(String id, String name,String id2, Model model){
+        model.addAttribute("id",id);
+        model.addAttribute("name",name);
+        pinglunStateService.deletes(id2);
         return "showInfo";
     }
 
