@@ -262,7 +262,7 @@
                            '<p class="myReFrom"><em class="SG_txtc">'+obj.datetime.substring(0,obj.datetime.length-2)+'</em>';
                        count+='<span class="SG_revert_Func"><a href="javascript:huifu('+index+');" class="SG_a_fucs" ><cite id="cite'+index+'">回复</cite></a><a href="javascript:ckhf('+obj.pinglunid+','+index+',\''+obj.vipname+'\');" class="SG_a_fucs" ><cite id="cite2'+index+'">查看回复</cite></a></span>'
                        count+="</p>";
-                       count+= '<p class="myReFrom"><em class="SG_txtc"><div id="divText'+index+'" style="display: none"><textarea style="width: 400px;height: 250px;margin-left: 150px;" id="text'+index+'"></textarea><br><button style="width: 70px;margin-left: 300px;" onclick="sendhuifu('+index+','+obj.pinglunid+')">发送</button></div><div id="huifuinfo'+index+'" style="display:none;"></div></em><br>' +
+                       count+= '<p class="myReFrom"><em class="SG_txtc"><div id="huifuinfo'+index+'" style="display:none;"></div><div id="divText'+index+'" style="display: none"><textarea style="width: 400px;height: 250px;margin-left: 150px;" id="text'+index+'"></textarea><br><button style="width: 70px;margin-left: 300px;" onclick="sendhuifu('+index+','+obj.pinglunid+')">发送</button></div></em><br>' +
                            '</p><div class="SG_reply" id="comment_43D994CB-7F000001-0-851-8A0" style="display:none;">';
                        count+='</div></div></li>';
                     })
