@@ -19,8 +19,13 @@
                     alert("账号或密码错误");
                 }
                 if(result==1){
-                    location.href="/toView?url=index";
-
+                    var href=document.referrer;
+                    if(href==""){
+                        location.href="/test/toView?url=index";
+                    }else{
+                        location.href=href;
+                    }
+                    alert("登陆成功");
                 }
             },
             error:function(){
