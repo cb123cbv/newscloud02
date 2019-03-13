@@ -15,7 +15,12 @@
     <link rel="stylesheet" type="text/css" href="/test/css/css.css">
     <link rel="stylesheet" href="/js/lunbotu/css/font-awesome.css">
     <link rel="stylesheet" href="/js/lunbotu/css/style.css">
-    <script>
+
+    <!--layui-->
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+
+    <script type="text/javascript" >
         ;(function(){
             var ua = navigator.userAgent;
             if(/AppleWebKit.*Mobile.*/i.test(ua) && /AppleWebKit/i.test(ua) && !/iPad/i.test(ua)){
@@ -23,8 +28,10 @@
             }
         })();
         $(function(){
+            querypinglunCount();
+            querypinglun();
             queryImgInfo();
-            news1("娱乐");
+            //news1("娱乐");
          var ss=$("#hid").val()
           if(ss==''){
                tcpinjie();
@@ -32,6 +39,79 @@
                pinjie();
            }
         })
+
+
+        //查询评论数量
+        function querypinglunCount() {
+            var vipid = $("#vipid").val();
+            //alert(vipid);
+            if(vipid!=null&&vipid!=""){
+                $.ajax({
+                    url:"/pinglun/pingLunCount",
+                    type:"POST",
+                    success:function(result){
+                        $("#spanid").html(result);
+                    },
+                    error:function(){
+                        alert("失败了");
+                    }
+                });
+            }
+        }
+
+
+        //查询评论
+        function querypinglun() {
+            var vipid = $("#vipid").val();
+
+            var coun="";
+            if(vipid!=null&&vipid!=""){
+                $.ajax({
+                    url:"/pinglun/querypingLunList",
+                    type:"POST",
+                    success:function(result){
+                        if(result!=null){
+                            $.each(result,function(index,obj){
+                                coun+='<dd style="width: 360px">'
+                                coun+='<img src="'+obj.vipheadimg+'" class="layui-nav-img">'///title/toshowInfo?name='+obj.tablename+'&id='+obj.id+'
+                                coun+='<font color="#a52a2a">'+obj.vipname+'</font><font color="black">评论了:</font><a href="/title/toshowInfo2?name='+obj.tablename+'&id='+obj.titleid+'&id2='+obj.id+'"><font color="blue">'+obj.title+'</font></a>';
+                                coun+='</dd>'
+                                coun+='<dd>'
+                                coun+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="black">评论内容:</font>&nbsp;<font color="green">'+obj.info+'</font>'
+                                coun+='</dd>'
+                            })
+                            $("#pinglunid").html(coun);
+                        }else{
+                            coun+='<dd style="width: 360px"><font color="black">还没有人评论哦！</font></dd>';
+                            $("#pinglunid").html(coun);
+                        }
+                    },
+                    error:function(){
+                        alert("失败了");
+                    }
+                });
+            }else{
+                coun+='<dd style="width: 360px"><font color="black" >请先登录！</font></dd>';
+                $("#pinglunid").html(coun);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //轮播图,查询url
         function queryImgInfo() {
             var flag="";
@@ -172,6 +252,20 @@
                 }
             });
         }
+
+
+        layui.use('element', function(){
+            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+            //监听导航点击
+            element.on('nav(demo)', function(elem){
+                //console.log(elem)
+                layer.msg(elem.text());
+            });
+        });
+
+
+
+
     </script>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <!-- 360 启动急速模式 -->
@@ -182,6 +276,8 @@
     <script src="http://n.sinaimg.cn/blog/lib/es5-sham.min.js"></script>
     <![endif]-->
     <script src="http://n.sinaimg.cn/blog/lib/es6-promise.min.js"></script>
+
+
     <!--
         926/930
         <link href="http://mjs.sinajs.cn/blog/items/2018/blogIndex/css/index-e0b2f3.css" rel="stylesheet">
@@ -194,160 +290,10 @@
 <input type="hidden" th:value="${session.user?.vipaccount}" id="hid">
 <input type="hidden" th:value="${session.user?.vipname}" id="vipname">
 <input type="hidden" th:value="${session.user?.vipheadimg}" id="vipheadimg">
-<div class="sina15-top-bar-wrap" data-action="nav-for-pad">
-    <div class="sina15-top-bar-inner">
-        <div class="sina15-nav">
-            <ul class="sina15-nav-list">
-                <li class="sina15-nav-list-first">
-                    <a href="http://www.sina.com.cn/" target="_blank">新浪首页</a>
-                </li>
-                <li>
-                    <a href="http://news.sina.com.cn/" target="_blank">新闻</a>
-                </li>
-                <li>
-                    <a href="http://sports.sina.com.cn/" target="_blank">体育</a>
-                </li>
-                <li>
-                    <a href="http://finance.sina.com.cn/" target="_blank">财经</a>
-                </li>
-                <li>
-                    <a href="http://ent.sina.com.cn/" target="_blank">娱乐</a>
-                </li>
-                <li>
-                    <a href="http://tech.sina.com.cn/" target="_blank">科技</a>
-                </li>
-                <li>
-                    <a href="http://blog.sina.com.cn/lm/2018/" target="_blank">博客</a>
-                </li>
-                <li>
-                    <a href="http://photo.sina.com.cn/" target="_blank">图片</a>
-                </li>
-                <li>
-                    <a href="http://zhuanlan.sina.com.cn/" target="_blank">专栏</a>
-                </li>
-                <li class="sina15-nav-list-last">
-                    <a class="sina15-more" href="#" data-action="dropdown" data-target="more">更多<i class="sina15-icon sina15-icon-arrows-a"></i></a>
-                </li>
-                <!--鼠标滑过更多<a>标签添加class="cur"-->
-            </ul>
-            <ul class="sina15-nav-list nav-list-4pad">
-                <li class="sina15-nav-list-first">
-                    <a href="http://www.sina.com.cn/" target="_blank">新浪首页</a>
-                </li>
-                <li>
-                    <a href="http://news.sina.com.cn/" target="_blank">新闻</a>
-                </li>
-                <li>
-                    <a href="http://sports.sina.com.cn/" target="_blank">体育</a>
-                </li>
-                <li>
-                    <a href="http://finance.sina.com.cn/" target="_blank">财经</a>
-                </li>
-                <li class="sina15-nav-list-last">
-                    <a class="sina15-more" href="#" data-action="dropdown" data-target="pad-more">更多
-                        <i class="sina15-icon sina15-icon-arrows-a"></i>
-                    </a>
-                </li>
-                <!--鼠标滑过更多<a>标签添加class="cur"-->
-            </ul>
-            <ul id="more" class="sina15-nav-others">
-                <li>
-                    <a href="http://auto.sina.com.cn/" target="_blank">汽车</a>
-                    <a href="http://edu.sina.com.cn/" target="_blank">教育</a>
-                    <a href="http://fashion.sina.com.cn/" target="_blank">时尚</a>
-                    <a href="http://eladies.sina.com.cn/" target="_blank">女性</a>
-                    <a href="http://astro.sina.com.cn/" target="_blank">星座</a>
-                    <a href="http://health.sina.com.cn/" target="_blank">健康</a>
-                </li>
-                <li>
-                    <a href="http://house.sina.com.cn/" target="_blank">房产</a>
-                    <a href="http://history.sina.com.cn/" target="_blank">历史</a>
-                    <a href="http://video.sina.com.cn/" target="_blank">视频</a>
-                    <a href="http://collection.sina.com.cn/" target="_blank">收藏</a>
-                    <a href="http://baby.sina.com.cn/" target="_blank">育儿</a>
-                    <a href="http://book.sina.com.cn/" target="_blank">读书</a>
-                </li>
-                <li class="sina15-nav-others-last">
-                    <a href="http://fo.sina.com.cn/" target="_blank">佛学</a>
-                    <a href="http://games.sina.com.cn/" target="_blank">游戏</a>
-                    <a href="http://travel.sina.com.cn/" target="_blank">旅游</a>
-                    <a href="http://mail.sina.com.cn/" target="_blank">邮箱</a>
-                    <a href="http://news.sina.com.cn/guide/" target="_blank">导航</a>
-                </li>
-            </ul>
-            <ul id="pad-more" class="sina15-nav-others nav-others-4pad">
-                <li>
-                    <a href="http://ent.sina.com.cn/" target="_blank">娱乐</a>
-                    <a href="http://tech.sina.com.cn/" target="_blank">科技</a>
-                    <a href="http://blog.sina.com.cn/" target="_blank">博客</a>
-                    <a href="http://photo.sina.com.cn/" target="_blank">图片</a>
-                </li>
-                <li>
-                    <a href="http://zhuanlan.sina.com.cn/" target="_blank">专栏</a>
-                    <a href="http://auto.sina.com.cn/" target="_blank">汽车</a>
-                    <a href="http://edu.sina.com.cn/" target="_blank">教育</a>
-                    <a href="http://fashion.sina.com.cn/" target="_blank">时尚</a>
-                </li>
-                <li>
-                    <a href="http://eladies.sina.com.cn/" target="_blank">女性</a>
-                    <a href="http://astro.sina.com.cn/" target="_blank">星座</a>
-                    <a href="http://health.sina.com.cn/" target="_blank">健康</a>
-                    <a href="http://house.sina.com.cn/" target="_blank">房产</a>
-                </li>
-                <li>
-                    <a href="http://history.sina.com.cn/" target="_blank">历史</a>
-                    <a href="http://video.sina.com.cn/" target="_blank">视频</a>
-                    <a href="http://collection.sina.com.cn/" target="_blank">收藏</a>
-                    <a href="http://baby.sina.com.cn/" target="_blank">育儿</a>
-                </li>
-                <li>
-                    <a href="http://book.sina.com.cn/" target="_blank">读书</a>
-                    <a href="http://fo.sina.com.cn/" target="_blank">佛学</a>
-                    <a href="http://games.sina.com.cn/" target="_blank">游戏</a>
-                    <a href="http://travel.sina.com.cn/" target="_blank">旅游</a>
-                </li>
-                <li class="sina15-nav-others-last">
-                    <a href="http://mail.sina.com.cn/" target="_blank">邮箱</a>
-                    <a href="http://news.sina.com.cn/guide/" target="_blank">导航</a>
-                </li>
-            </ul>
-        </div>
-        <!--通行证组件start-->
-        <div class="sina15-client">
-            <div class="sina15-client-tl">
-                <a class="sina15-more" href="#" data-action="dropdown" data-target="mobileclient">移动客户端<i class="sina15-icon sina15-icon-arrows-a"></i></a>
-            </div>
-            <ul id="mobileclient" class="sina15-dropdown" style="display: none;">
-                <li data-sudaclick="nav_app_weibo_p"><a href="http://m.sina.com.cn/m/weibo.shtml" target="_blank"><i class="sina15-ico-client sina15-ico-weibo"></i>新浪微博</a></li>
-                <li data-sudaclick="nav_app_news_p"><a href="http://news.sina.com.cn/m/sinanews.html" target="_blank"><i class="sina15-ico-client sina15-ico-news"></i>新浪新闻</a></li>
-                <li data-sudaclick="nav_app_sports_p"><a href="http://m.sina.com.cn/m/sinasports.shtml" target="_blank"><i class="sina15-ico-client sina15-ico-sports"></i>新浪体育</a></li>
-                <li data-sudaclick="nav_app_ent_p"><a href="http://ent.sina.com.cn/app/download/" target="_blank"><i class="sina15-ico-client sina15-ico-ent"></i>新浪娱乐</a></li>
-                <li data-sudaclick="nav_app_finance_p"><a href="http://finance.sina.com.cn/mobile/comfinanceweb.shtml" target="_blank"><i class="sina15-ico-client sina15-ico-finance"></i>新浪财经</a></li>
-                <li><a data-sudaclick="nav_app_zhongce_p" href="http://zhongce.sina.com.cn/about/app" target="_blank"><i class="sina15-ico-client sina15-ico-zhongce"></i>新浪众测</a></li>
-                <li data-sudaclick="nav_app_blog_p"><a href="http://blog.sina.com.cn/lm/z/app/" target="_blank"><i class="sina15-ico-client sina15-ico-blog"></i>新浪博客</a></li>
-                <li data-sudaclick="nav_app_video_p"><a href="http://video.sina.com.cn/app" target="_blank"><i class="sina15-ico-client sina15-ico-video"></i>新浪视频</a></li>
-                <li data-sudaclick="nav_app_game_p"><a href="http://games.sina.com.cn/o/kb/12392.shtml" target="_blank"><i class="sina15-ico-client sina15-ico-games"></i>新浪游戏</a></li>
-                <li data-sudaclick="nav_app_weather_p"><a href="http://m.sina.com.cn/m/weather.shtml" target="_blank"><i class="sina15-ico-client sina15-ico-weather"></i>天气通</a></li>
-            </ul>
-        </div>
-        <div id="SI_User" class="TAP14">
-            <div class="ac-rgst">
-                <a href="https://login.sina.com.cn/signup/signup?entry=account" class="msg-link">注册</a>
-            </div>
-            <div class="ac-login">
-                <div class="ac-login-cnt ">
-                    <a href="javascript:void(0);" class="">
-                                <span class="thumb">
-                                    <img src="http://i.sso.sina.com.cn/images/login/thumb_default.png">
-                                </span>
-                        <span class="log-links">登录</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!--/通行证组件end-->
-    </div>
-</div>
+<input type="hidden" th:value="${session.user?.id}" id="vipid">
+
+
+
 <script src="http://n.sinaimg.cn/blog/0977ce10/20180408/jsload.js"></script>
 <script>document.domain = "sina.com.cn";</script>
 <script>
@@ -406,14 +352,34 @@
         'ssoLogin':'http://tech.sina.com.cn/js/717/20140827/index2014/top.js',
         'topNav':'http://n.sinaimg.cn/common/channelnav/js/nav.js'
     };
+
+
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- 导航 -->
-<div class="nav" data-sudaclick=blog_nav>
+<div class="nav" data-sudaclick=blog_nav style="background-color: black;margin-top: 0px" >
     <div class="wrapper">
-        <div class="logo">
-           <span><img src="/img/3331f0baa4a410ad49f8b08fb9d9426b.gif" width="35px" height="35px"><b>云新闻</b>
-                        </span>
-        </div>
+
+        <div style="margin-left: 180px" >
         <ul class="nav-list">
             <li>
                 <a target="_blank" href="/toView?url=blog_yule">娱乐</a>
@@ -447,6 +413,8 @@
                 </ul>
             </li>
         </ul>
+        </div>
+
         <script>
             // 添加滚动事件
             jsLoader(jsAssets.jq, function () {
@@ -467,9 +435,37 @@
                     $(this).removeClass('active');
                 });
             });
+
+
+
+
+
+
+
         </script>
         <div class="blog-map">
-            <a href="http://blog.sina.com.cn/lm/map/" target="_blank">博客地图</a>
+
+            <!---------评论反馈-------------->
+            <div style="background-color: #0000FF;width: 300px" >
+                <ul class="layui-nav" style="height: 55px;background-color: black">
+
+                    <li class="layui-nav-item" lay-unselect="" ><div style="margin-top: 15px"><img src="http://p5.sinaimg.cn/1510039900/180/01541361605077" class="layui-nav-img"></div></li>
+                    <li class="layui-nav-item" lay-unselect="" >
+                        <div style="float: left"><span class="layui-badge" id="spanid">0</span></div>
+                        <div style="float: left;margin-left: 25px"><a href="javascript:;">评论</a></div>
+                        <dl class="layui-nav-child" id="pinglunid">
+
+                          <dd><img src="http://p5.sinaimg.cn/1510039900/180/01541361605077" class="layui-nav-img"><font color="black">张三评论了你：这是一个很好看的文章... </font></dd>
+                            <dd><font color="black">  评论内容：很过分的会计师购房... </font></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!------------------------------------>
+
+
         </div>
         <div class="search">
             <div class="row">

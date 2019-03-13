@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.PinglunStateMapper">
+
+<!--List<PingLun_State> querypingLunList(Integer id);-->
+    <select id="querypingLunList" resultType="com.jk.bean.PingLun_State">
+       select pl.*,v.vipname,v.vipheadimg from t_pinglun_state pl,t_vip v where pl.vipid=#{id} and pl.pluserid=v.id
+    </select>
+
+
+<!--List<PingLun_State> queryTitleList(PingLun_State pingLun_state);-->
+    <select id="queryTitleList" resultType="com.jk.bean.PingLun_State">
+       select title from ${tablename} where id=#{titleid}
+    </select>
+
+    <!--void deletes(String substring);-->
+    <delete id="deletes">
+        delete from t_pinglun_state where id=#{substring}
+    </delete>
+
+
+</mapper>

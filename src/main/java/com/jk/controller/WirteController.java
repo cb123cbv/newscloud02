@@ -75,57 +75,6 @@ public class WirteController {
 
 
 
-
-
-
-
-
-
-
-    /*@Scheduled(fixedRate = 1000)
-    public void autosync() {
-       if(common3!=null){
-           if (common3.getEndTime() != null) {
-
-                   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                   Date parse =null;
-                   try {
-                        parse = sdf.parse(common3.getEndTime());
-                   } catch (ParseException e) {
-                       e.printStackTrace();
-                   }
-                   long seconds = parse.getTime()-new Date().getTime();
-                   System.out.println(seconds+"总剩余时间");
-               if(seconds<0){
-                   //获取对象，走新增方法
-                   timeDate=seconds;
-                   System.out.println("去新增了");
-                   addWrite(common3);
-
-               }
-           }
-       }
-    }
-
-    @ResponseBody
-    @RequestMapping("addWrite")
-    public void addWrite(Common common) {
-        if (common.getEndTime()==null) {
-            wirteService.addWrite(common);
-        }
-        if(common.getEndTime()!=null){
-             common3=common;
-            if (timeDate<0) {
-                System.out.println("新增成功");
-                wirteService.addWrite(common);
-                common3=null;
-                timeDate=0;
-            }
-        }
-
-    }
-*/
-
     @ResponseBody
     @RequestMapping("queryBiaoQian")
     public List<Common> queryBiaoQian() {

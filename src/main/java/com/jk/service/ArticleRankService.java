@@ -10,4 +10,5 @@ public interface ArticleRankService {
     void addArticle(PageView pageView);
 
     List<PageView> queryArticleList(QueryParam queryParam);
+
 }
