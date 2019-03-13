@@ -667,8 +667,7 @@
                     $("#cc").val(count);
                 }
             }
-            var type =null;
-            queryList(type, count);
+            var type =null;            queryList(type, count);
         }
 
         var arr = [];
@@ -939,7 +938,40 @@
             });
         }
 
+        //所有博主---开始-------------------------------------------
+        function getAllBoZhu(){
+            $.ajax({
+            	url:"/vip/getAllBoZhu",
+            	type:"POST",
+            	success:function(result){
 
+                    var count2= '<li><a href="#">总榜</a></li>';
+                    count2 += '<li><a href="javascript:yueguanzhu()">月榜</a></li>';
+                    var count ='<thead><tr>';
+                    count+=" <th width=\"10%\" align=\"center\">首字母</th>";
+                    count+='<th width="20%">昵称</th>';
+                    count+='<th width="30%">.</th>';
+                    count+=' <th width="20%">.</th>';
+                    count+='<th width="20%"></th></tr>';
+                    count+='</thead><tbody>';
+                    $.each(result,function(index,obj){
+
+                        var str=obj.pinyiname.substr(0,1).toUpperCase();
+                        count+="<tr>";
+                        count+='<td><div class="num"><span>'+str+'</span></div></td>';
+                        count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
+                    })
+                    count+='</tbody>';
+                    $("#li2").html(count2);
+                    $("#table_lit_bang_105").html(count);
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+
+
+            })
+        }
 
     </script>
 
@@ -1057,7 +1089,7 @@
         <li><a href="javascript:meizhourenqi()" onclick="aaa(this)" name="a1" style="font-weight:normal;">每周人气榜</a></li>
         <li><a href="javascript:zongguanzhu()" onclick="aaa(this)" name="a1">总关注度榜</a></li>
         <li><a href="javascript:yueguanzhu()" onclick="aaa(this)" name="a1">月关注度榜</a></li>
-
+        <li><a href="javascript:getAllBoZhu()" onclick="aaa(this)" name="a1">博主榜单</a></li>
         <li style="width:373px; float:right; background:none; font-weight:normal; text-align:right;">
             <script type="text/javascript">
                 $(function () {
@@ -1194,7 +1226,7 @@
                 <li style="width:550px; background:none; text-align:left;"><h2><span id="title_105" title="总榜 all">每日排行榜</span></h2></li>
                 <div id="div111">
 
-                    //class="selectd"
+
                     <li  id="rizhouyueid1"><a href="javascript:void(0)"  onclick="queryArticleList(3)">日</a></li>
                     <li  id="rizhouyueid2"><a href="javascript:void(0)"  onclick="queryArticleList(2)">周</a></li>
                     <li  id="rizhouyueid3"><a href="javascript:void(0)"  onclick="queryArticleList(1)">月</a></li>

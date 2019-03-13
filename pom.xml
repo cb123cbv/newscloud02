@@ -27,17 +27,12 @@
 
     <dependencies>
 
-        <!-- quartz定时器 -->
+        <!--汉字转拼音  pinyin4j -->
         <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>2.2.1</version>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
         </dependency>
-        <dependency><!-- 该依赖必加，里面有sping对schedule的支持 -->
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
-
 
 
         <!-- rabbitMQ -->
@@ -74,7 +69,7 @@
             <artifactId>druid</artifactId>
             <version>1.0.5</version>
         </dependency>
-        <dependency>
+     <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.1.1</version>

@@ -74,7 +74,7 @@ public class TuiJianController {
     @ResponseBody
     public List<LanMu> queryLanmu(String tablename){
         List<LanMu> list = tuiJianService.queryLanmu(tablename);
-        
+
         return list;
     }
 

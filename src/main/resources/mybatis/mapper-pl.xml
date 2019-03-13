@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.PlMapper">
+    <insert id="addPl">
+        insert into t_pinglun(plinfo,titleid,vipid,datetime,tablename,authorid) value(#{plinfo},#{titleid},#{vipid},SYSDATE(),#{tablename},#{authorid})
+    </insert>
+    <select id="queryPl" resultType="com.jk.bean.Pl">
+       select * from t_vip a,t_pinglun b WHERE a.id=b.vipid and #{titleid}=b.titleid and #{tablename}=b.tablename order by b.datetime desc
+    </select>
+    <insert id="addHuiFu">
+       insert into t_huifu(hfinfo,plid,hfrvipid,datetime) value(#{hfinfo},#{plid},#{hfrvipid},SYSDATE())
+    </insert>
+    <select id="queryHuiFu" resultType="com.jk.bean.Huifu">
+        select b.*,a.vipname from t_vip  a,t_huifu b where #{plid}=b.plid and a.id=b.hfrvipid order by b.datetime desc
+    </select>
+</mapper>

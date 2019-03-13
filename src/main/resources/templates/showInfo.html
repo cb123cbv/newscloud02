@@ -11,6 +11,40 @@
     <!--[if lt IE 9]>
     <script src="/shouInfo/js/modernizr.js"></script>
     <![endif]-->
+    <!--–[if lte IE 6]-->
+    <script id="sinaads-ck-script" charset="utf-8" src="//d6.sina.com.cn/litong/zhitou/sinaads/src/spec/sinaads_ck.js"></script><script type="text/javascript">
+    try{
+        document.execCommand("BackgroundImageCache", false, true);
+    }catch(e){}
+</script>
+    <!--[endif]–-->
+    <script type="text/javascript">
+        window.staticTime=new Date().getTime();
+    </script>
+    <link rel="pingback" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php">
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php?rsd">
+    <link href="http://blog.sina.com.cn/blog_rebuild/blog/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest">
+    <link rel="alternate" type="application/rss+xml" href="http://blog.sina.com.cn/rss/1156966391.xml" title="RSS">
+    <link href="http://simg.sinajs.cn/blog7style/css/conf/blog/article.css" type="text/css" rel="stylesheet"><link href="http://simg.sinajs.cn/blog7style/css/common/common.css" type="text/css" rel="stylesheet"><link href="http://simg.sinajs.cn/blog7style/css/blog/blog.css" type="text/css" rel="stylesheet"><link href="http://simg.sinajs.cn/blog7style/css/module/common/blog.css" type="text/css" rel="stylesheet"><style id="tplstyle" type="text/css">@charset "utf-8";@import url("http://simg.sinajs.cn/blog7newtpl/css/32/32_11/t.css");
+</style>
+    <style id="positionstyle" type="text/css">
+        .sinabloghead .blogtoparea{ left:229px;top:50px;}
+        .sinabloghead .blognav{ left:216px;top:131px;}
+    </style>
+    <style id="bgtyle" type="text/css">
+    </style>
+    <style id="heightstyle" type="text/css">
+        .sinabloghead{ height: 203px; }
+    </style>
+    <style id="headtyle" type="text/css">
+        .sinabloghead{ background-image: url(http://s8.sinaimg.cn/orignal/001givOfty6FDqqVWNFc7);}
+        .sinabloghead{ background-repeat:repeat-y; background-position:center center;}
+    </style>
+    <style id="navtyle" type="text/css">
+        .sinabloghead .blognav .blognavBg{  background-image: url(http://s7.sinaimg.cn/orignal/001givOfty6FDqlIBWCb6);_filter:none;}
+        .sinabloghead .blognav .blognavBg{ background-repeat:repeat-x; background-position:center top;}
+    </style>
+    <script type="text/javascript" src="http://d1.sina.com.cn/litong/zhitou/sspnew.js"></script><script src="http://i.sso.sina.com.cn/js/ssologin.js" charset="utf-8" async=""></script><script src="http://sjs.sinajs.cn/blog7/article.js?681.js" charset="utf-8"></script><script src="http://d5.sina.com.cn/litong/zhitou/sinaads/release/sinaads.js" charset="utf-8"></script><script src="http://www.sinaimg.cn/unipro/pub/suda_s_v851c.js" charset="utf-8"></script><iframe src="http://beacon.sina.com.cn/ckctl.html" id="ckctlFrame" scrolling="no" style="height: 0px; width: 1px; overflow: hidden;"></iframe><script src="http://sjs.sinajs.cn/blog7/adwidget.js?v1=" charset="utf-8"></script><script type="text/javascript" charset="utf-8" src="http://bal.blog.sina.com.cn/main/adfshow?border=0&amp;local=yes&amp;js=mid&amp;db=sinablog&amp;user=SINABLOG|1156966391|PDPS000000004568"></script><script src="http://sjs.sinajs.cn/blog7common/conf/tmp_clone.js" charset="utf-8"></script><style type="text/css" id="stylefix">#bsPanelHolder,#sinaads_pdps54771{display:none;}</style><script src="http://sjs.sinajs.cn/blog7activity/zoneStatic.js" charset="utf-8"></script><script src="http://d3.sina.com.cn/litong/zhitou/sinaads/release/spec/getSinaadsExParamsForBlog.js" charset="utf-8"></script><script src="http://ent.sina.com.cn/js/470/2013/0506/collect.js?varname=requestId_69249039" charset="gb2312"></script><script src="http://d3.sina.com.cn/litong/zhitou/sinaads/demo/changwy/link/blog_bottom_float.js" charset="utf-8"></script>
 </head>
 <body>
 <input type="hidden" id="idInfo" th:value="${id}">
@@ -60,17 +94,73 @@
 
         </ul>
 
-        <div class="textfoot"><a href="/">阅读全文</a><a href="/">评论</a><a href="/">转载</a></div>
-        <div class="pages"><span>1</span><a href="/" hidefocus="">2</a><a href="/" hidefocus="">3</a><a href="/" class="next">下一页&gt;&gt;</a>
+        <!--开始-->
+        <div class="allComm">
+            <div class="allCommTit">
+                <div class="SG_floatL">
+                    <strong>评论</strong>
+                    <span id="commAd_1" style="display: inline-block;">
+				        <span style="margin-left:15px; width:220px; display:inline-block;"><a target="_blank" href="http://blog.sina.com.cn/lm/8/2009/0325/105340.html">重要提示：警惕虚假中奖信息</a></span>
+				    </span>
+                </div>
+                <div class="SG_floatR"><a class="CP_a_fuc" href="#post">[<cite>发评论</cite>]</a></div>
+            </div>
+            <ul id="article_comment_list" class="SG_cmp_revert">
+
+            </ul>
+            <div class="clearit"></div>
+            <div class="myCommPages SG_j_linedot1" style="display: block;">
+                <div class="SG_page" id="commentPaging" style="display: block; text-align: center;">
+                    <a href="javascript:getyeshu('1')">上一页</a>
+                    <input id="cc" style="width: 20px;text-align: center" disabled value="1">
+                    <a href="javascript:getyeshu('2')">下一页</a>
+                    <br>总<span id="yeshu"></span>条
+                </div>
+                <div class="clearit"></div>
+            </div>
+            <a name="post"></a>
+            <div class="writeComm">
+                <div class="allCommTit">
+                    <div class="SG_floatL">
+                        <strong>发评论</strong>
+                        <span></span>
+                    </div>
+                    <div class="SG_floatR"></div>
+                </div>
+                <div class="formTextarea">
+                   <textarea style="width: 680px;" id="textarea"></textarea>
+                </div>
+                <div class="formBtn" style="margin-top: 150px;text-align: center;">
+                    <a href="javascript:void(0)" onclick="pd()" class="SG_aBtn" tabindex="5"><cite id="postcommentid">发评论</cite></a>
+                </div>
+                </div>
+            </div>
         </div>
+
+        <!--结束-->
     </div>
 </article>
+<input type="hidden" th:value="${session.user?.id}" id="userid">
 </body>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
+    var tablename="";
+    var titleid=null;
     $(function () {
+        $("#img").attr("src", "[[${session.mallSku.img}]]");
+        function getQueryString(name) {
+            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return decodeURI(r[2]);
+            }
+            return null;
+        }
+        tablename = getQueryString("name");
+        titleid = getQueryString("id");
         toTitleInfo();
+        queryPl(1);
     })
-
+    var text=null;
     function toTitleInfo() {
         $.ajax({
             url: "/title/toTitleInfo",
@@ -78,6 +168,7 @@
             async: true,
             data: {id: $("#idInfo").val(), name: $("#nameInfo").val()},
             success: function (result) {
+                text=result;
                 $("#titleid").html(result.common.title);
                 $("#infoid").html(result.common.imgtype);
                 $("#usernameid").html("姓名:"+result.vip.vipname);
@@ -101,7 +192,155 @@
         });
     }
 
+   /*新增评论*/
+    function pd(){
+        var userid=$("#userid").val()
+        if(userid==''){
+            var truthBeTold = window.confirm("去登陆");
+            if (truthBeTold) {
+                location.href='/toView?url=Wopop';
+            }
+        }else{
+            addpl(userid);
+        }
+    }
+    function addpl(userid){
+        console.log(text)
+        $.ajax({
+        		url:"/addPl",
+        		type:"POST",
+        		data:{plinfo:$("#textarea").val(),titleid:text.common.id,vipid:userid,tablename:text.common.tablename,authorid:text.common.vipid},
+        		success:function(result){
+                  location.reload();
+        		},
+        		error:function(){
+        			alert("失败了");
+        		}
+        		})
+    }
+    /*分页*/
+    function getyeshu(type){
+            var count = $("#cc").val();
+            if (type == 1) {
+                if (count == 1) {
+                    alert("已经是首页了")
+                } else {
+                    count--;
+                    $("#cc").val(count);
+                }
+            }
+            if (type == 2) {
+                var yeshu = $("#yeshu").html();
+                var ys = Math.ceil(parseInt(yeshu) / 10);
+                if (ys == count) {
+                    alert("已经是尾页了")
+                } else {
+                    count++;
+                    $("#cc").val(count);
+                }
+            }
+            queryPl(count);
+        }
+   /*查询评论*/
+    var hufuid=0;
+    function queryPl(yeshu){
+        $.ajax({
+        		url:"/queryPl",
+        		type:"POST",
+                 async:false,
+                 data:{page:yeshu,rows:10,tablename:tablename,titleid:titleid},
+        		success:function(result){
+        		   	console.log(result)
+                    var count='';
+                    $.each(result.rows,function(index,obj){
+                       count+='<li class="SG_j_linedot1" id="li'+index+'">';
+                       count+='<div class="SG_revert_Left">';
+                       count+='<img src="http://portrait3.sinaimg.cn/0/blog/50">';
+                       count+='</div><div class="SG_revert_Cont">';
+                       count+='<p><span class="SG_revert_Tit">'+obj.vipname+'</span></p>';
+                       count+='<div class="SG_revert_Inner SG_txtb" id="body_cmt_43D994CB-7F000001-0-851-8A0">'+obj.plinfo+'&nbsp;<a href="javascript:void(0);" class="btn_artzk" style="display:none" action-type="comment_more" action-data="%7B%22id%22%3A%2243D994CB-7F000001-0-851-8A0%22%2C%22commentid%22%3A%2243D994CB-7F000001-0-851-8A0%22%2C%22articleid%22%3A%2244f5e7f7010002el%22%2C%22cms_body%22%3A%22%E4%B9%9F%E8%AE%B8%E6%B9%96%E4%BA%BA%E5%9C%A8%E4%BB%8A%E5%B9%B4%E4%B8%8D%E4%BC%9A%E8%B5%B0%E7%9A%84%E5%BE%88%E8%BF%9C%E4%BD%86KOBE%E7%9A%84%E8%A1%A8%E7%8E%B0%E6%98%AF%E7%B2%BE%E5%BD%A9%E7%9A%84%E5%85%81%E8%AE%B8%E6%88%91%E4%BB%AC%E7%9A%84%E8%B4%A8%E7%96%91%E7%9A%84%EF%BC%81%20%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%220%22%2C%22uname%22%3A%22%5B%E5%8C%BF%E5%90%8D%5D%20%E3%80%820%E2%97%8B%22%2C%22src_uid%22%3A%221156966391%22%2C%22cms_pubdate%22%3A%222006-01-27%2011%3A34%3A35%22%2C%22ria_index_url%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F0%22%2C%22user_image%22%3A%22http%3A%2F%2Fportrait3.sinaimg.cn%2F0%2Fblog%2F50%22%2C%22source_ria_index_url%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F0%22%2C%22cms_reply_num%22%3A0%7D"></a></div>' +
+                           '<p class="myReFrom"><em class="SG_txtc">'+obj.datetime.substring(0,obj.datetime.length-2)+'</em>';
+                       count+='<span class="SG_revert_Func"><a href="javascript:huifu('+index+');" class="SG_a_fucs" ><cite id="cite'+index+'">回复</cite></a><a href="javascript:ckhf('+obj.pinglunid+','+index+',\''+obj.vipname+'\');" class="SG_a_fucs" ><cite id="cite2'+index+'">查看回复</cite></a></span>'
+                       count+="</p>";
+                       count+= '<p class="myReFrom"><em class="SG_txtc"><div id="huifuinfo'+index+'" style="display:none;"></div><div id="divText'+index+'" style="display: none"><textarea style="width: 400px;height: 250px;margin-left: 150px;" id="text'+index+'"></textarea><br><button style="width: 70px;margin-left: 300px;" onclick="sendhuifu('+index+','+obj.pinglunid+')">发送</button></div></em><br>' +
+                           '</p><div class="SG_reply" id="comment_43D994CB-7F000001-0-851-8A0" style="display:none;">';
+                       count+='</div></div></li>';
+                    })
+                    $("#article_comment_list").html(count);
 
+        		},
+        		error:function(){
+        			alert("失败了");
+        		}
+        		})
+    }
+    /*回复*/
+    var type=1;
+    function huifu(bb){
+        if(type==1){
+            $("#divText"+bb).show();
+            type=2;
+            $("#cite"+bb).html("取消回复")
+        }else{
+            $("#divText"+bb).hide();
+            type=1;
+            $("#cite"+bb).html("回复")
+        }
+    }
+    function sendhuifu(aaaa,plid){
+        if($("#userid").val()!='') {
+            $.ajax({
+                url: "/addHuiFu",
+                type: "POST",
+                data: {hfinfo: $("#text" + aaaa).val(), plid: plid, hfrvipid: $("#userid").val()},
+                success: function (result) {
+                    location.reload();
+                },
+                error: function () {
+                    alert("失败了");
+                }
+            })
+        }else{
+            var truthBeTold = window.confirm("去登陆");
+            if (truthBeTold) {
+                location.href='/toView?url=Wopop';
+            }
+        }
+    }
+    /*查看回复*/
+    var hufutype=1;
+    function ckhf(plid,cc,username){
+        if(hufutype==1){
+            $("#huifuinfo"+cc).show();
+            hufutype=2;
+            $("#cite2"+cc).html("取消查看")
+            queryHuiFu(plid,cc,username)
+        }else{
+            $("#huifuinfo"+cc).hide();
+            hufutype=1;
+            $("#cite2"+cc).html("查看回复")
+        }
+    }
+    function queryHuiFu(plid,cc,plname){
+        $.ajax({
+        		url:"/queryHuiFu",
+        		type:"POST",
+        		data:{plid:plid},
+        		success:function(result){
+        		   	console.log(result);
+        		   	/**/
+        		   	var count="";
+        		   	$.each(result,function(index,obj){
+                      count+='<p><span class="SG_revert_Tit">'+obj.vipname+'@'+plname+':&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+obj.datetime.substring(0,obj.datetime.length-2)+'</span></p>';
+                      count+='<div class="SG_revert_Inner SG_txtb" id="body_cmt_43D994CB-7F000001-0-851-8A0">'+obj.hfinfo+'</div>';
+                    })
+                    $("#huifuinfo"+cc).html(count);
+        		},
+        		error:function(){
+        			alert("失败了");
+        		}
+        		})
+    }
 </script>
 
 
