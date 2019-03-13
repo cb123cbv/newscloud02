@@ -32,8 +32,14 @@ public class SearchController {
 
     @RequestMapping("getInfoAndTileInfo")
     public List<Blog_Info>  getInfoAndTileInfo(String queryString, Integer status,Blog_Info blog_info){
-
-        redisTemplate.opsForList().rightPushAll(Constant.info+blog_info.getId(),queryString);
+        if(redisTemplate.hasKey(Constant.info)){
+            List<String> range = redisTemplate.opsForList().range(Constant.info, 0, -1);
+            if(!range.contains(queryString)){
+                redisTemplate.opsForList().rightPushAll(Constant.info,queryString);
+            }
+        }else{
+            redisTemplate.opsForList().rightPushAll(Constant.info,"");
+        }
         List<Blog_Info> list = searchClient.getInfoAndTileInfo(queryString,status);
 
         return list;
@@ -42,13 +48,13 @@ public class SearchController {
 
     @RequestMapping("getInfo")
     public  List<String> getInfo(Blog_Info blog_info){
-        List<String> range = redisTemplate.opsForList().range(Constant.info+blog_info.getId(), 0, -1);
+        List<String> range = redisTemplate.opsForList().range(Constant.info, 0, -1);
        return range;
     }
 
     @RequestMapping("deleteInfo")
     public void deleteInfo(Blog_Info blog_info){
-        redisTemplate.delete(Constant.info+blog_info.getId());
+        redisTemplate.delete(Constant.info);
 
     }
 }

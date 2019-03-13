@@ -795,6 +795,7 @@
                     count+='<th width="20%"></th></tr>';
                     count+='</thead><tbody>';
                     $.each(result.rows,function(index,obj){
+                        console.log(obj)
                         count+="<tr>";
                         count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
                         count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.vipheadimg+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.vipname+'</a></div></td>';
@@ -874,6 +875,7 @@
                     count+='<th width="20%"></th></tr>';
                     count+='</thead><tbody>';
                     $.each(result,function(index,obj){
+                        console.log(obj);
                         count+="<tr>";
                         count+='<td><div class="num"><span>'+(index+1)+'</span></div></td>';
                         count+='<td style="text-align: left;"><div class="w170"><img src="'+obj.imgurl+'" width="30px">&nbsp;<a href="javascript:void(0)" target="_blank">'+obj.auname+'</a></div></td>';
@@ -884,9 +886,9 @@
                             count+='<td>'+obj.shuliang+'</td>';
                         }
                         if(obj.state==1){//1 已关注
-                           count+='<td><button style="background-color: #67b168;width: 80px" onclick="removeGuanzhu('+obj.authorid+')">取消关注</button></td></tr>';
+                           count+='<td><button style="background-color: #67b168;width: 80px" onclick="removeGuanzhu('+obj.yongzege+')">取消关注</button></td></tr>';
                         }if(obj.state==0){//2 未关注
-                           count+='<td><button style="background-color: #6b9cde;width: 80px" onclick="addGuanzhu('+obj.authorid+')">加关注</button></td></tr>';
+                           count+='<td><button style="background-color: #6b9cde;width: 80px" onclick="addGuanzhu('+obj.yongzege+')">加关注</button></td></tr>';
                         }
                     })
                     count+='</tbody>';
@@ -902,6 +904,7 @@
         /*月关注度榜结束*/
         /*加关注*/
         function addGuanzhu(authorid) {
+            alert(authorid)
             $.ajax({
                 url:"/monthGuanzhu/addGuanzhu",
                 type:"POST",

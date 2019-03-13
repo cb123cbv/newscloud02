@@ -32,7 +32,5 @@ public class TreeController {
  public List<Title> getTree(){
   List<Title> tree=treeService.getTree();
   return tree;
-
-
  }
 }
