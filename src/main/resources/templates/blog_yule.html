@@ -660,16 +660,22 @@
                                 $.each(result,function(index,obj){
 
                                 titleStr=obj.title.substr(0,18);
+                                    if(index<=2){
+                                        bw +='<li class="clearfix"><i class="top">'+(index+1)+'</i>';
+                                        if(obj.tlink==null){
+                                            bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
+                                        }else{
+                                            bw +='<a target="_blank" href="'+obj.tlink+'">'+titleStr+'</a>';
+                                        }
 
-                                if(index<=2){
-                                    bw +='<li class="clearfix"><i class="top">'+(index+1)+'</i>';
-                                    bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
-
-                                }else{
-                                    bw +='<li class="clearfix"><i>'+(index+1)+'</i>';
-                                    bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
-
-                                }
+                                    }else{
+                                        bw +='<li class="clearfix"><i>'+(index+1)+'</i>';
+                                        if(obj.tlink==null){
+                                            bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
+                                        }else{
+                                            bw +='<a target="_blank" href="'+obj.tlink+'">'+titleStr+'</a>';
+                                        }
+                                    }
 
                                 })
                                     $("#boWenId").html(bw);

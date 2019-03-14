@@ -70,8 +70,9 @@
                     url:"/pinglun/querypingLunList",
                     type:"POST",
                     success:function(result){
-                        if(result!=null){
+                        if(result.length>0){
                             $.each(result,function(index,obj){
+                                console.log(obj);
                                 coun+='<dd style="width: 360px">'
                                 coun+='<img src="'+obj.vipheadimg+'" class="layui-nav-img">'///title/toshowInfo?name='+obj.tablename+'&id='+obj.id+'
                                 coun+='<font color="#a52a2a">'+obj.vipname+'</font><font color="black">评论了:</font><a href="/title/toshowInfo2?name='+obj.tablename+'&id='+obj.titleid+'&id2='+obj.id+'"><font color="blue">'+obj.title+'</font></a>';
@@ -167,6 +168,8 @@
             var name=$("#vipname").val();
             var img=$("#vipheadimg").val();
             var div="";
+            var div2='<img src="'+img+'" class="layui-nav-img">';
+
             div +=  '<div class="logined" style="display: block;">'
             div +=  '<div class="logined-user-info">'
 
@@ -188,6 +191,7 @@
             div +=  '</div>'
             div +=  '</div>'
             $("#divid").html(div);
+            $("#imgid").html(div2);
         }
         function denglu(){
 
@@ -449,7 +453,7 @@
             <div style="background-color: #0000FF;width: 300px" >
                 <ul class="layui-nav" style="height: 55px;background-color: black">
 
-                    <li class="layui-nav-item" lay-unselect="" ><div style="margin-top: 15px"><img src="http://p5.sinaimg.cn/1510039900/180/01541361605077" class="layui-nav-img"></div></li>
+                    <li class="layui-nav-item" lay-unselect="" ><div style="margin-top: 15px" id="imgid"></div></li>
                     <li class="layui-nav-item" lay-unselect="" >
                         <div style="float: left"><span class="layui-badge" id="spanid">0</span></div>
                         <div style="float: left;margin-left: 25px"><a href="javascript:;">评论</a></div>

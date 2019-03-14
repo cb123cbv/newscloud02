@@ -27,7 +27,9 @@ public class PlController {
  PlService plService;
  @RequestMapping("addPl")
  public void addPl(Pl pl){
+
   plService.addPl(pl);
+  plService.addpinglunState(pl);
  }
  @RequestMapping("queryPl")
  public SendPage queryPl(ReceivePage rp,Pl pl){

@@ -6,7 +6,6 @@ package com.jk.service.impl;/**
  */
 
 import com.github.pagehelper.PageHelper;
-import com.jk.bean.Common;
 import com.jk.bean.Huifu;
 import com.jk.bean.Pl;
 import com.jk.mapper.PlMapper;
@@ -49,5 +48,10 @@ public class PlServiceImpl implements PlService {
  @Override
  public List<Huifu> queryHuiFu(Huifu huifu) {
   return plMapper.queryHuiFu(huifu);
+ }
+
+ @Override
+ public void addpinglunState(Pl pl) {
+  plMapper.addpinglunState(pl);
  }
 }

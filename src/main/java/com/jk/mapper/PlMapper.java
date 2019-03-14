@@ -1,6 +1,5 @@
 package com.jk.mapper;
 
-import com.jk.bean.Common;
 import com.jk.bean.Huifu;
 import com.jk.bean.Pl;
 
@@ -20,4 +19,6 @@ public interface PlMapper {
  void addHuiFu(Huifu huifu);
 
  List<Huifu> queryHuiFu(Huifu huifu);
+
+    void addpinglunState(Pl pl);
 }

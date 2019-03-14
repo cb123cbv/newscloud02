@@ -5,6 +5,7 @@ import com.jk.bean.Common;
 import com.jk.service.WirteService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,8 +48,9 @@ public class WirteController {
                         //获取对象，走新增方法
                         System.out.println("去新增了");
                         commons.get(i).setTimeDate(2);
-                        addWrite(commons.get(i));
+                        common3=commons.get(i);
                         commons.remove(i);
+                        addWrite(common3);
                     }
                 }
             }
@@ -58,10 +60,10 @@ public class WirteController {
     @ResponseBody
     @RequestMapping("addWrite")
     public void addWrite(Common common) {
-        if (common.getEndTime()==null) {
+        if (common.getEndTime()=="") {
             wirteService.addWrite(common);
         }
-        if(common.getEndTime()!=null){
+        if(!StringUtils.isEmpty(common.getEndTime())){
             if(common.getTimeDate()==1){
                 commons.add(common);
             }
