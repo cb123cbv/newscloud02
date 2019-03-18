@@ -45,6 +45,7 @@
         .sinabloghead .blognav .blognavBg{ background-repeat:repeat-x; background-position:center top;}
     </style>
     <script type="text/javascript" src="http://d1.sina.com.cn/litong/zhitou/sspnew.js"></script><script src="http://i.sso.sina.com.cn/js/ssologin.js" charset="utf-8" async=""></script><script src="http://sjs.sinajs.cn/blog7/article.js?681.js" charset="utf-8"></script><script src="http://d5.sina.com.cn/litong/zhitou/sinaads/release/sinaads.js" charset="utf-8"></script><script src="http://www.sinaimg.cn/unipro/pub/suda_s_v851c.js" charset="utf-8"></script><iframe src="http://beacon.sina.com.cn/ckctl.html" id="ckctlFrame" scrolling="no" style="height: 0px; width: 1px; overflow: hidden;"></iframe><script src="http://sjs.sinajs.cn/blog7/adwidget.js?v1=" charset="utf-8"></script><script type="text/javascript" charset="utf-8" src="http://bal.blog.sina.com.cn/main/adfshow?border=0&amp;local=yes&amp;js=mid&amp;db=sinablog&amp;user=SINABLOG|1156966391|PDPS000000004568"></script><script src="http://sjs.sinajs.cn/blog7common/conf/tmp_clone.js" charset="utf-8"></script><style type="text/css" id="stylefix">#bsPanelHolder,#sinaads_pdps54771{display:none;}</style><script src="http://sjs.sinajs.cn/blog7activity/zoneStatic.js" charset="utf-8"></script><script src="http://d3.sina.com.cn/litong/zhitou/sinaads/release/spec/getSinaadsExParamsForBlog.js" charset="utf-8"></script><script src="http://ent.sina.com.cn/js/470/2013/0506/collect.js?varname=requestId_69249039" charset="gb2312"></script><script src="http://d3.sina.com.cn/litong/zhitou/sinaads/demo/changwy/link/blog_bottom_float.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js"></script>
 </head>
 <body>
 <input type="hidden" id="idInfo" th:value="${id}">
@@ -211,7 +212,15 @@
         		type:"POST",
         		data:{plinfo:$("#textarea").val(),titleid:text.common.id,vipid:userid,tablename:text.common.tablename,authorid:text.common.vipid},
         		success:function(result){
-                  location.reload();
+        		    if(result==1){
+                        location.reload();
+                    }else if(result==3){
+                        layer.msg("包含敏感字符，请重试");
+                    }
+        		    else{
+                        layer.msg("该用户已被禁言，请联系管理员");
+                    }
+
         		},
         		error:function(){
         			alert("失败了");
@@ -294,7 +303,14 @@
                 type: "POST",
                 data: {hfinfo: $("#text" + aaaa).val(), plid: plid, hfrvipid: $("#userid").val()},
                 success: function (result) {
-                    location.reload();
+                    if(result==1){
+                        location.reload();
+                    }else if(result==3){
+                        layer.msg("包含敏感字符，请重试");
+                    }
+                    else{
+                        layer.msg("该用户已被禁言，请联系管理员");
+                    }
                 },
                 error: function () {
                     alert("失败了");

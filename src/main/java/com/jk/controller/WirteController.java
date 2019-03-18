@@ -1,8 +1,13 @@
 package com.jk.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.jk.bean.Blog_Info;
 import com.jk.bean.Common;
+import com.jk.client.SearchClient;
 import com.jk.service.WirteService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,8 @@ public class WirteController {
 
     @Resource
     private WirteService wirteService;
+    @Autowired
+    SearchClient searchClient;
 
     //public long timeDate=0;
     Common common3=new Common();
@@ -82,8 +89,10 @@ public class WirteController {
 
         return commons;
     }
-
-
+   @RabbitListener(queues = "1807B-SendEs")
+   public void addEs(String message){
+    searchClient.addInfo(message);
+   }
 
 
 }

@@ -1,10 +1,8 @@
 package com.jk.mapper;
 
 import com.jk.bean.Common;
-import com.jk.bean.Huifu;
-import com.jk.bean.MInGanCi;
-import com.jk.bean.Pl;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,15 +12,13 @@ import java.util.List;
  * @Author：陈斌 创建时间：${date} ${time}
  * ${tags}&lt;/pre&gt;
  */
-public interface PlMapper {
- void addPl(Pl pl);
+public interface MeiRiJingXuanMapper {
 
- List<Pl> queryPl(Pl pl);
+ List<Common> getYuLe2();
 
- void addHuiFu(Huifu huifu);
+ List<Common> gettiyu2();
 
- List<Huifu> queryHuiFu(Huifu huifu);
-@Select("select text from t_minganci")
- List<String> queryMinGanCi();
+ List<Common> getcaijing2();
 
+ List<Common> getjunshi2();
 }
