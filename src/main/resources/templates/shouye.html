@@ -31,8 +31,9 @@
             querypinglunCount();
             querypinglun();
             queryImgInfo();
-            //news1("娱乐");
-         var ss=$("#hid").val()
+            news1("娱乐");
+            queryDaoHang();//导航栏
+         var ss=$("#hid").val();
           if(ss==''){
                tcpinjie();
            }else if(ss!=''){
@@ -96,22 +97,6 @@
                 $("#pinglunid").html(coun);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //轮播图,查询url
         function queryImgInfo() {
@@ -266,9 +251,45 @@
                 layer.msg(elem.text());
             });
         });
+        //导航栏
+        function queryDaoHang() {
+            $.ajax({
+            	url:"/title/queryTitle",
+            	type:"POST",
+            	success:function(result){
+            	    var dh=""
+            		$.each(result,function(index,obj){
+
+                        dh+='<li>';
+                       if(obj.turl!=""){
+                            dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
+                        }else{
+                            dh+='<a target="_blank" href="javascript:to404()">'+obj.tname+'</a>';
+                        }
+                        dh+='</li>';
 
 
+                    })
+                    dh+='<li class="sub-nav">' +
+                        '<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>' +
+                        '<ul class="down-list">' +
+                        '<li>' +
+                        '<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>' +
+                        '</li>' +
+                        '</ul>' +
+                        '</li>';
 
+                    $("#daoHangId").html(dh);
+            	},
+            	error:function(){
+            		alert("失败了");
+            	}
+            });
+        }
+
+        function to404() {
+            alert("页面维护中...");
+        }
 
     </script>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -362,60 +383,13 @@
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- 导航 -->
 <div class="nav" data-sudaclick=blog_nav style="background-color: black;margin-top: 0px" >
     <div class="wrapper">
 
         <div style="margin-left: 180px" >
-        <ul class="nav-list">
-            <li>
-                <a target="_blank" href="/toView?url=blog_yule">娱乐</a>
-            </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/history/">文史</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/stock/">股票</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/edu/">教育</a>
-        </li>			<li>
-            <a target="_blank" href="/toView?url=tiyu">体育</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/eatblog.html">美食</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/baby/">育儿</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/astro/">星座</a>
-        </li>
-            <li class="sub-nav">
-                <a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>
-                <ul class="down-list">
-                    <li>
-                        <a target="_blank" href="http://blog.sina.com.cn/lm/top/rank/"><span>博主排行</span></a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="/toView?url=index"><span>博文排行</span></a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="http://blog.sina.com.cn/lm/search/class/"><span>博客名录</span></a>
-                    </li>
-                </ul>
-            </li>
+        <ul class="nav-list" id="daoHangId">
+
         </ul>
         </div>
 

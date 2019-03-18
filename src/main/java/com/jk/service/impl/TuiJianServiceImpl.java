@@ -1,5 +1,6 @@
 package com.jk.service.impl;
 
+
 import com.jk.bean.Common;
 import com.jk.bean.LanMu;
 import com.jk.bean.TuiJian;
@@ -46,4 +47,8 @@ public class TuiJianServiceImpl implements TuiJianService {
     public List<LanMu> queryLanmu(String tablename) {
         return tuiJianMapper.queryLanmu(tablename);
     }
+
+
+
+
 }

@@ -1,10 +1,7 @@
 package com.jk.controller;
 
 
-import com.jk.bean.Common;
-import com.jk.bean.PageView;
-import com.jk.bean.QueryParam;
-import com.jk.bean.Vip;
+import com.jk.bean.*;
 import com.jk.service.ArticleRankService;
 import com.jk.service.PinglunStateService;
 import com.jk.service.TitleService;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -81,6 +79,15 @@ public class TitleController {
         pinglunStateService.deletes(id2);
         return "showInfo";
     }
+
+    //导航栏
+    @RequestMapping("queryTitle")
+    @ResponseBody
+    public List<TitleInfo> queryTitle(){
+        List<TitleInfo> list = titleService.queryTitle();
+        return list;
+    }
+
 
 
 }

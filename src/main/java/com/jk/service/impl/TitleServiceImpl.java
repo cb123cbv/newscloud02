@@ -1,10 +1,7 @@
 package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.jk.bean.Common;
-import com.jk.bean.Info;
-import com.jk.bean.QueryParam;
-import com.jk.bean.Vip;
+import com.jk.bean.*;
 import com.jk.mapper.TitleMapper;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
@@ -55,6 +52,10 @@ public class TitleServiceImpl implements TitleService
         return queryParam;
     }
 
+    @Override
+    public List<TitleInfo> queryTitle() {
+        return titleMapper.queryTitle();
+    }
 
 
 }

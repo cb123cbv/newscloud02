@@ -1,5 +1,6 @@
 package com.jk.service;
 
+import com.alipay.api.domain.Advert;
 import com.jk.bean.Common;
 import com.jk.bean.LanMu;
 import com.jk.bean.TuiJian;
@@ -18,4 +19,5 @@ public interface TuiJianService {
     List<Common> blogRank(Integer flag);
 
     List<LanMu> queryLanmu(String tablename);
+
 }

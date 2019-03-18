@@ -315,6 +315,8 @@
         blogRank();//博文排行
 
         queryLanmu();//查询栏目
+
+        queryDaoHang();//导航栏
     })
 </script>
 
@@ -375,14 +377,7 @@
 
     <!-- 导航栏 开始 -->
     <div class="nav">
-        <ul class="clearfix">
-            <li><span>娱乐博客</span></li>
-            <li class="selected"><a href="/toView?url=shouye" target="_blank">首页</a></li>
-            <li><a href="/toView?url=tiyu" target="_blank">体育</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/history/" target="_blank">文化</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/eladies/" target="_blank">女性</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/tech/" target="_blank">IT</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/auto/" target="_blank">汽车</a></li>
+        <ul class="clearfix" id="daoHangId">
 
         </ul>
     </div>
@@ -613,7 +608,10 @@
                                     $("#JS_Article_Cont01").html(content);
                             	},
                             	error:function(){
-                            		alert("失败了");
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
                             	}
                             });
                       }
@@ -649,7 +647,10 @@
                                 $("#flag2Id").html(flag2);
                          	},
                          	error:function(){
-                         		alert("失败了");
+                                layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
                          	}
                          });
                      }
@@ -676,7 +677,10 @@
 
                             	},
                             	error:function(){
-                            		alert("失败了");
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
                             	}
                             });
                         }
@@ -712,7 +716,10 @@
                                     $("#boWenId").html(bw);
                                 },
                                 error: function () {
-                                    alert("失败了");
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
                                 }
                             });
                         }
@@ -732,7 +739,10 @@
                                    }
                             },
                             error:function(){
-                                   alert("失败了");
+                                layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
                             },
                             complete:function(){ //最后执行
                                    location.reload();
@@ -750,11 +760,50 @@
                                 }
                                },
                                error: function () {
-                                   alert("失败了");
+                                   layer.msg('加载中', {
+                                       icon: 16
+                                       ,shade: 0.01
+                                   });
                                }
                            });
                        }
 
+                        //导航栏
+                        function queryDaoHang() {
+                            $.ajax({
+                                url:"/title/queryTitle",
+                                type:"POST",
+                                success:function(result){
+                                    var dh=""
+                                        dh+='<li><span>娱乐博客</span></li>';
+                                    $.each(result,function(index,obj){
+
+                                        dh+='<li>';
+                                        if(obj.turl!=""){
+                                            dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
+                                        }else{
+                                            dh+='<a target="_blank" href="javascript:to404()">'+obj.tname+'</a>';
+                                        }
+                                        dh+='</li>';
+
+
+                                    })
+
+                                    $("#daoHangId").html(dh);
+                                },
+                                error:function(){
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
+                                }
+                            });
+                        }
+
+                        function to404() {
+                            layer.msg('页面维护中。。。。', {icon: 6});
+
+                        }
                     </script>
                 <!----------------------------------------------------------------------->
                 </div>
