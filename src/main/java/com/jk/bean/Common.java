@@ -24,7 +24,7 @@ public class Common {
     private String imgurl;
 
     private String vipname;
-
+    Integer djl;//数量
     private String tlink;//推荐文章的链接
 
     //-----------------新增微博

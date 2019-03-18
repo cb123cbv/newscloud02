@@ -2,7 +2,9 @@ package com.jk.controller;
 
 
 import com.jk.bean.Common;
+import com.jk.client.SearchClient;
 import com.jk.service.WirteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -22,6 +24,8 @@ public class WirteController {
 
     @Resource
     private WirteService wirteService;
+    @Autowired
+    SearchClient searchClient;
 
     //public long timeDate=0;
     Common common3=new Common();
@@ -84,8 +88,12 @@ public class WirteController {
 
         return commons;
     }
+ //  @RabbitListener(queues = "1807B-SendEs")
+   public void addEs(String message){
 
-
+    System.out.println(message);
+    searchClient.addInfo(message);
+   }
 
 
 }

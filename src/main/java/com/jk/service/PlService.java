@@ -14,11 +14,11 @@ import java.util.List;
  * ${tags}&lt;/pre&gt;
  */
 public interface PlService {
- void addPl(Pl pl);
+ String addPl(Pl pl);
 
  SendPage queryPl(ReceivePage rp,Pl pl);
 
- void addHuiFu(Huifu huifu);
+ String addHuiFu(Huifu huifu);
 
  List<Huifu> queryHuiFu(Huifu huifu);
 
