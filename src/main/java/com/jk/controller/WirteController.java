@@ -3,6 +3,7 @@ package com.jk.controller;
 
 import com.jk.bean.Common;
 import com.jk.service.WirteService;
+import org.junit.jupiter.api.Test;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,6 +86,27 @@ public class WirteController {
 
         return commons;
     }
+
+
+    @RequestMapping("tomap")
+    public String tomap(HttpSession session,Common common){
+        session.setAttribute("common",common);
+
+        return "map";
+    }
+
+
+    @RequestMapping("toWirte")
+    public String toWirte(String site,HttpSession session){
+        Common common = (Common) session.getAttribute("Common");
+        common.setSite(site);
+        session.setAttribute("common",common);
+        return "WriteWeibo";
+    }
+
+
+
+
 
 
 

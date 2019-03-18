@@ -11,8 +11,8 @@
     <!--void addwrite(Common common);-->
 
     <insert id="addwrite" >
-        insert into ${selectName}(title,vipid,time,status,userid,tablename) values(
-        #{title},#{vipid},now(),1,#{vipid},#{selectName}
+        insert into ${selectName}(title,vipid,time,status,userid,tablename,site) values(
+        #{title},#{vipid},now(),1,#{vipid},#{selectName},#{site}
         )
         <selectKey keyProperty="titleid" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()

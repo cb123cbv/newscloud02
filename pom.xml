@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jk</groupId>
-    <artifactId>mall-reception</artifactId>
+    <artifactId>cloundnews-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mall-reception</name>
+    <name>cloundnews-web</name>
 
 
     <description>Demo project for Spring Boot</description>
@@ -76,6 +76,9 @@
         </dependency>
 
         <!--跳转视图-->
+        <!--Thymeleaf依赖包含了spring-boot-starter，
+        spring-boot-starter又包含了 spring-boot-starter-logging
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -153,6 +156,12 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
             <version>1.10.18.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
