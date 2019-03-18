@@ -13,4 +13,11 @@
     <select id="queryHuiFu" resultType="com.jk.bean.Huifu">
         select b.*,a.vipname from t_vip  a,t_huifu b where #{plid}=b.plid and a.id=b.hfrvipid order by b.datetime desc
     </select>
+
+
+    <!-- void addpinglunState(Pl pl);-->
+    <insert id="addpinglunState">
+        insert into t_pinglun_state(titleid,tablename,time,vipid,info,pluserid) value(#{titleid},#{tablename},now(),#{authorid},#{plinfo},#{vipid})
+    </insert>
+
 </mapper>

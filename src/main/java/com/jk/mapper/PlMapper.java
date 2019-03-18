@@ -25,4 +25,6 @@ public interface PlMapper {
 @Select("select text from t_minganci")
  List<String> queryMinGanCi();
 
+
+    void addpinglunState(Pl pl);
 }

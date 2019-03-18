@@ -41,15 +41,19 @@ public class PinglunStateController {
         Vip vip = (Vip) session.getAttribute("user");
         if (vip != null) {
             list = pinglunStateService.querypingLunList(vip.getId());
-            for (PingLun_State pingLun_state : list) {
-                if (pingLun_state.getTitle().length()>19) {
-                    String substring = pingLun_state.getTitle().substring(0, 17);
-                    pingLun_state.setTitle(substring+"....");
+            if(list.size()>0){
+                for (PingLun_State pingLun_state : list) {
+                    if (pingLun_state.getTitle().length()>19) {
+                        String substring = pingLun_state.getTitle().substring(0, 17);
+                        pingLun_state.setTitle(substring+"....");
+                    }
+                    if (pingLun_state.getInfo().length()>19) {
+                        String substring = pingLun_state.getInfo().substring(0, 17);
+                        pingLun_state.setInfo(substring+"...");
+                    }
                 }
-                if (pingLun_state.getInfo().length()>19) {
-                    String substring = pingLun_state.getInfo().substring(0, 17);
-                    pingLun_state.setInfo(substring+"...");
-                }
+
+
             }
         }
         return list;

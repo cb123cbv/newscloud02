@@ -21,4 +21,7 @@ public interface PlService {
  String addHuiFu(Huifu huifu);
 
  List<Huifu> queryHuiFu(Huifu huifu);
+
+ void addpinglunState(Pl pl);
+
 }
