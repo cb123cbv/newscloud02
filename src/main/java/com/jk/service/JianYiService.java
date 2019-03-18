@@ -9,5 +9,5 @@ import com.jk.bean.JIanYi;
  * ${tags}&lt;/pre&gt;
  */
 public interface JianYiService {
- void addJIanYi(JIanYi j);
+ String addJIanYi(JIanYi j);
 }

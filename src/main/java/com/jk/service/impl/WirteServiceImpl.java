@@ -25,8 +25,6 @@ public class WirteServiceImpl implements WirteService {
     private MongodbClient mongodbClient;
     @Autowired
     SendESClient sendESClient;
-    @Autowired
-    AmqpTemplate amqpTemplate;
 
     @Override
     public List<Common> queryBiaoQian() {
@@ -35,13 +33,13 @@ public class WirteServiceImpl implements WirteService {
 
     @Override
     public void addWrite(Common common) {
-        Blog_Info info=new Blog_Info();
+       /* Blog_Info info=new Blog_Info();
         info.setTitleinfo(common.getTitle());
         info.setTablename("t_"+common.getSelectName());
         info.setInfo(common.getTextName());
         String string = JSONObject.toJSONString(info);
-        amqpTemplate.convertAndSend("1807B-SendEs", string);
-        /*sendESClient.sendES(common);*/
+        amqpTemplate.convertAndSend("1807B-SendEs", string);*/
+        sendESClient.sendES(common);
         common.setSelectName("t_"+common.getSelectName());
         wirteMapper.addwrite(common);
         mongodbClient.addInfo(String.valueOf(common.getTitleid()),common.getSelectName(),common.getTextName());

@@ -400,7 +400,10 @@
             		success:function(result){
             		    if(result==1){
                             location.reload()
-                        }else{
+                        }else if(result==3){
+            		        layer.msg("包含敏感字符")
+                        }
+            		    else{
                             var truthBeTold = window.confirm("去登陆");
                             if (truthBeTold) {
                                 location.href='/toView?url=Wopop';
@@ -673,7 +676,6 @@
             </ul>
         </div>
         <!--领域热文排行-->
-         领域热文排行
         <div class="hot-rank">
             <div class="l-title-1">
                 <i class="l-line"></i>

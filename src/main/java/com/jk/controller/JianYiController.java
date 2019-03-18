@@ -30,7 +30,7 @@ public class JianYiController {
    return "2";
   }
   j.setUserid(user.getId());
-  jianYiService.addJIanYi(j);
-  return "1";
+
+  return jianYiService.addJIanYi(j);
  }
 }

@@ -93,6 +93,8 @@ public class WirteController {
     }
    @RabbitListener(queues = "1807B-SendEs")
    public void addEs(String message){
+
+    System.out.println(message);
     searchClient.addInfo(message);
    }
 
