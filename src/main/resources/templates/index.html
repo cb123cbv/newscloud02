@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--引入easyui的样式 -->
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
+    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
+    <script src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <script src="/js/uploadify/jquery.uploadify.min.js"></script>
+    <link rel="stylesheet" href="/js/uploadify/uploadify.css">
     <style type="text/css">
         <!--
         /* CSS from lmy 2007-12-17*/
@@ -980,6 +989,20 @@
 
 </head>
 <body>
+<!--右上-->
+<div class="container" style="background:#fafafa;width:200px;height:280px;top:50px;right:10px;position:fixed" id="ggw1">
+    <a href="javascript:guanbi(4)" class="easyui-linkbutton" iconCls="icon-cancel">X</a>
+</div>
+
+<!--左上-->
+<div class="container" style="background:#fafafa;width:200px;height:280px;top:50px;left:10px;position:fixed" id="ggw2"></div>
+
+<!--左下-->
+<div class="container" style="background:#fafafa;width:200px;height:280px;bottom:20px;left:10px;position:fixed" id="ggw3"></div>
+
+<!--右下-->
+<div class="container" style="background:#fafafa;width:200px;height:280px;bottom:20px;right:10px;position:fixed" id="ggw4"></div>
+
 <iframe id="IO_WEBPUSH4_LOCALCONN_IFRAME" src="https://current.sina.com.cn/theone/IO.WebPush4.localConn.html"
         style="display: none;"></iframe>
 <div class="real-time-window" style="display: none; position: fixed; left: 0px; bottom: -49px;"></div>
@@ -1381,4 +1404,131 @@
 <iframe id="sinaads-ck-iframe" src="//d8.sina.com.cn/litong/zhitou/sinaads/src/spec/sinaads_ck.html"
         style="display: none;"></iframe>
 </body>
+<script type="text/javascript">
+    $(function () {
+        getAdvertOne();
+        getAdvertTwo();
+        getAdvertThree();
+        getAdvertFour();
+    })
+    function  guanbi(num){
+        document.getElementById("ggw"+num).style.display="none";
+    }
+    //====1
+    function getAdvertOne(){
+        $.ajax({
+            url:"/advert/getAdvert?id=1",
+            type:"POST",
+            async : true,
+            dataType: "json",
+            success:function(text){
+
+                console.log(text[0]);
+                var count="";
+                $.each(text,function(index,obj){
+                    count+="<div style='padding:0px;background:#fafafa;width:15px;height:20px;display:inline-block;margin-left:180px'>";
+                    count+='<a onclick="guanbi(1)" class="easyui-linkbutton" iconCls="icon-cancel">X</a>';
+                    count+="</div>";
+                    count+="<div style='padding:0px;background:#fafafa;height:20px;display:inline-block'>";
+                    count+="<h1>"+obj.adtitle+"</h1>";
+                    count+="</div>";
+                    count+="<div style='width:200px;height:230px'>";
+                    count+="<img src="+obj.adimg+" alt='图片1' width='200' height='230'>";
+                    count+="</div>";
+                })
+                $("#ggw1").html(count);
+            },
+            error:function(){
+                alert("失败了");
+            }
+        });
+    }
+    //====2
+    function getAdvertTwo(){
+        $.ajax({
+            url:"/advert/getAdvert?id=2",
+            type:"POST",
+            async : true,
+            dataType: "json",
+            success:function(text){
+
+                console.log(text[0]);
+                var count="";
+                $.each(text,function(index,obj){
+                    count+="<div style='padding:0px;background:#fafafa;width:15px;height:20px;display:inline-block;margin-left:180px'>";
+                    count+='<a onclick="guanbi(2)" class="easyui-linkbutton" iconCls="icon-cancel">X</a>';
+                    count+="</div>";
+                    count+="<div style='padding:0px;background:#fafafa;height:20px;display:inline-block'>";
+                    count+="<h1>"+obj.adtitle+"</h1>";
+                    count+="</div>";
+                    count+="<div style='width:200px;height:230px'>";
+                    count+="<img src="+obj.adimg+" alt='图片2' width='200' height='230'>";
+                    count+="</div>";
+                })
+                $("#ggw2").html(count);
+            },
+            error:function(){
+                alert("失败了");
+            }
+        });
+    }
+    //====3
+    function getAdvertThree(){
+        $.ajax({
+            url:"/advert/getAdvert?id=3",
+            type:"POST",
+            async : true,
+            dataType: "json",
+            success:function(text){
+
+                console.log(text[0]);
+                var count="";
+                $.each(text,function(index,obj){
+                    count+="<div style='padding:0px;background:#fafafa;width:15px;height:20px;display:inline-block;margin-left:180px'>";
+                    count+='<a onclick="guanbi(3)" class="easyui-linkbutton" iconCls="icon-cancel">X</a>';
+                    count+="</div>";
+                    count+="<div style='padding:0px;background:#fafafa;height:20px;display:inline-block'>";
+                    count+="<h1>"+obj.adtitle+"</h1>";
+                    count+="</div>";
+                    count+="<div style='width:200px;height:230px'>";
+                    count+="<img src="+obj.adimg+" alt='图片3' width='200' height='230'>";
+                    count+="</div>";
+                })
+                $("#ggw3").html(count);
+            },
+            error:function(){
+                alert("失败了");
+            }
+        });
+    }
+    //====4
+    function getAdvertFour(){
+        $.ajax({
+            url:"/advert/getAdvert?id=4",
+            type:"POST",
+            async : true,
+            dataType: "json",
+            success:function(text){
+
+                console.log(text[0]);
+                var count="";
+                $.each(text,function(index,obj){
+                    count+="<div style='padding:0px;background:#fafafa;width:15px;height:20px;display:inline-block;margin-left:180px'>";
+                    count+='<a onclick="guanbi(4)" class="easyui-linkbutton" iconCls="icon-cancel">X</a>';
+                    count+="</div>";
+                    count+="<div style='padding:0px;background:#fafafa;height:20px;display:inline-block'>";
+                    count+="<h1>"+obj.adtitle+"</h1>";
+                    count+="</div>";
+                    count+="<div style='width:200px;height:230px'>";
+                    count+="<img src="+obj.adimg+" alt='图片4' width='200' height='230'>";
+                    count+="</div>";
+                })
+                $("#ggw4").html(count);
+            },
+            error:function(){
+                alert("失败了");
+            }
+        });
+    }
+</script>
 </html>

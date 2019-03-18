@@ -120,6 +120,23 @@
                 $("#pinglunid").html(coun);
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //轮播图,查询url
         function queryImgInfo() {
             var flag="";
@@ -467,7 +484,7 @@
 
 
 <script src="http://n.sinaimg.cn/blog/0977ce10/20180408/jsload.js"></script>
-<script>document.domain = "sina.com.cn";</script>
+<!--<script>document.domain = "sina.com.cn";</script>-->
 <script>
     var __scope__ = {
         updateBrowserLink : 'http://dl.pconline.com.cn/download/51614-1.html'//浏览器推荐下载地址
@@ -640,7 +657,34 @@
 
         </div>
         <div class="search">
-        <!--广告-->
+            <div class="row">
+                <div id='search-type-selector' data-val="article" class="label">
+                    <span>博文</span><i></i>
+                    <ul class="sub-label">
+                        <li data-val="article">
+                            <span>博文</span>
+                        </li>
+                        <li data-val="title">
+                            <span>标题</span>
+                        </li>
+                        <li data-val="author">
+                            <span>作者</span>
+                        </li>
+                        <li data-val="tag">
+                            <span>标签</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search-input">
+                    <input id="search" type="text" placeholder="搜索内容" autocomplete="off"><i suda-uatrack="key=2018_blog_index&value=blog_nav_search"></i>
+                    <ul class="sub-input first-view-search">
+                        <!-- 首屏热搜 -->
+                    </ul>
+                    <ul class="sub-input sec-view-search">
+                        <!-- 用户检索联想 -->
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -662,6 +706,7 @@
             </div>
             <ul id="huodong">
             </ul>
+
         </div>
         <!-- 活动专区结束 -->
          <!--人气排行-->
@@ -688,6 +733,7 @@
                 <li data-index="2">财经</li>
                 <li data-index="3" class="last">军事</li>
             </ul>
+
              <!--娱乐-->
             <ul class="art-list" data-sudaclick="blog_enthot" id="ul9">
 
@@ -925,8 +971,7 @@
             </div>
         </div>
     </div>
-</div>m
-
+</div>
 <!-- 主体内容结束 -->
 
 <script type="text/javascript" src="http://mjs.sinajs.cn/blog/items/2018/blogIndex/js/manifest-0fea88.js"></script>
