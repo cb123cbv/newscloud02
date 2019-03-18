@@ -299,7 +299,7 @@
 
 
 <script src="http://n.sinaimg.cn/blog/0977ce10/20180408/jsload.js"></script>
-<script>document.domain = "sina.com.cn";</script>
+<!--<script>document.domain = "sina.com.cn";</script>-->
 <script>
     var __scope__ = {
         updateBrowserLink : 'http://dl.pconline.com.cn/download/51614-1.html'//浏览器推荐下载地址
@@ -361,48 +361,39 @@
 
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- 导航 -->
 <div class="nav" data-sudaclick=blog_nav style="background-color: black;margin-top: 0px" >
     <div class="wrapper">
 
         <div style="margin-left: 180px" >
-        <ul class="nav-list">
-            <li>
+        <ul class="nav-list" id="titledivid">
+            <!--<li>
+
                 <a target="_blank" href="/toView?url=blog_yule">娱乐</a>
-            </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/history/">文史</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/stock/">股票</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/edu/">教育</a>
-        </li>			<li>
-            <a target="_blank" href="/toView?url=tiyu">体育</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/eatblog.html">美食</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/baby/">育儿</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/astro/">星座</a>
-        </li>
-            <li class="sub-nav">
+            </li>
+            <li>
+                <a target="_blank" href="http://blog.sina.com.cn/lm/history/">文史</a>
+            </li>
+            <li>
+                <a target="_blank" href="http://blog.sina.com.cn/lm/stock/">股票</a>
+            </li>
+            <li>
+                <a target="_blank" href="http://blog.sina.com.cn/lm/edu/">教育</a>
+            </li>
+            <li>                         /toView?url=blog_tiyu
+                <a target="_blank" href="/toView?url=tiyu">体育</a>
+            </li>
+            <li>
+                <a target="_blank" href="http://blog.sina.com.cn/lm/eatblog.html">美食</a>
+            </li>
+            <li>
+                <a target="_blank" href="http://blog.sina.com.cn/lm/baby/">育儿</a>
+            </li>
+            <li>
+                <a target="_blank" href="http://blog.sina.com.cn/lm/astro/">星座</a>
+            </li>-->
+            <!--排行榜下拉框-->
+            <!--<li class="sub-nav">
                 <a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>
                 <ul class="down-list">
                     <li>
@@ -415,6 +406,9 @@
                         <a target="_blank" href="http://blog.sina.com.cn/lm/search/class/"><span>博客名录</span></a>
                     </li>
                 </ul>
+            </li>-->
+            <li id="paihangbang">
+                <a target="_blank" href="/toView?url=index"><span>博文排行</span></a>
             </li>
         </ul>
         </div>
@@ -439,13 +433,6 @@
                     $(this).removeClass('active');
                 });
             });
-
-
-
-
-
-
-
         </script>
         <div class="blog-map">
 
@@ -519,36 +506,9 @@
                 <img  src="http://n.sinaimg.cn/blogapp/334/w200h134/20190121/Mrrl-hryfqhk2748362.jpg" />
             </a>
             </div>
-            <ul id="huodong"><!--<li><i></i><a target="_blank" href="http://blog.sina.com.cn/s/blog_496b2a650102xypf.html?tj=1">周末宅家解闷神器，5本轻松不费脑的漫画书送给你</a></li>
-                <li><i></i><a target="_blank" href="http://blog.sina.com.cn/s/blog_496b2a650102xyiu.html?tj=1">足以满足业余爱好者的4本科普书，有趣又长知识！</a></li>
-                <li><i></i><a target="_blank" href="http://blog.sina.com.cn/s/blog_496b2a650102xugd.html?tj=1">8部观影指南，看完你就get了看电影的正确姿势~</a></li>-->
-
+            <ul id="huodong">
             </ul>
-            <!--<ul>
-                <li><i></i>
-                    <style>
-                        .left-rec ul li ins i{
-                            display: inline-block;
-                            height: auto;
-                            width: auto;
-                            background: none;
-                            position: relative;
-                            font-size: 14px;
-                            left: 0px;
-                            top: 0px;
-                        }
-                    </style>
-                    &lt;!&ndash;要闻区文字链01(天)     2018/09  wenjing8  begin&ndash;&gt;
-                    <ins class="sinaads" data-ad-pdps="PDPS000000057079"></ins>
-                    <script>(sinaads = window.sinaads || []).push({});</script>
-                    &lt;!&ndash;要闻区文字链01(天)     end&ndash;&gt;
 
-                    &lt;!&ndash;要闻区文字链02(天)     2018/09  wenjing8  begin&ndash;&gt;
-                    <ins class="sinaads" data-ad-pdps="PDPS000000057080"></ins>
-                    <script>(sinaads = window.sinaads || []).push({});</script>
-                    &lt;!&ndash;要闻区文字链02(天)     end&ndash;&gt;
-                </li>
-            </ul>-->
         </div>
         <!-- 活动专区结束 -->
 
@@ -710,29 +670,7 @@
             <div class="blog-right">
                 <!-- 登录信息 -->
                 <div id="divid">
-                <!--<div class="login-info" data-sudaclick=blog_user>
-                    <div class="not-login">
-                        <p>新浪博友，欢迎回来！</p>
-                        <form id="newsBd">
-                        <input id="loginName" type="text" name="vipaccount" autocomplete="off" placeholder="微博/博客/邮箱/手机号">
 
-                        <input id="loginPassword" type="password" name="vippassword" autocomplete="off" placeholder="请输入密码">
-                        </form>
-                        <div class="btn-row">
-                            <div class="jfl">
-                                <a id="submit-btn" suda-uatrack="key=2018_blog_index&value=my_signin" class="login-btn" href="javascript:denglu();">登录</a>
-                            </div>
-                            <div class="jfr">
-                                <input suda-uatrack="key=2018_blog_index&value=my_signin_save" id="auto" value="true" type="checkbox" name="auto" >
-                                <label suda-uatrack="key=2018_blog_index&value=my_signin_save" for="auto"><span>下次自动登录</span></label>
-                            </div>
-                        </div>
-
-                        <div class="logined">
-                        </div>
-                    </div>
-
-                </div>-->
                 </div>
                 <!-- 登录信息结束 -->
 
@@ -929,5 +867,55 @@
 <script type="text/javascript" src="http://mjs.sinajs.cn/blog/items/2018/blogIndex/js/index-568c95.js"></script>
 
 </body>
+<script type="text/javascript" th:inline="none">
+    $(function () {
+        getTree();
+        var div = document.getElementById("paihangbang");
+        var dragFlag = false;
+        var x,y;
+        console.log(div)
+        div.onmousedown = function (e) {
+            e = e || window.event;
+            x = e.clientX - div.offsetLeft;
+            y = e.clientY - div.offsetTop;
+            dragFlag = true;
+        };
+
+        document.onmousemove = function (e) {
+            if (dragFlag) {
+                e = e || window.event;
+                div.style.left = e.clientX - x + "px";
+                div.style.top  = e.clientY - y + "px";
+            }
+        };
+
+        document.onmouseup = function (e) {
+            dragFlag = false;
+        };
+    })
+    //====1
+    function getTree(){
+        $.ajax({
+            url:"/getTree",
+            type:"POST",
+            async : true,
+            dataType: "json",
+            success:function(text){
+                console.log(text);
+                var count="";
+                $.each(text,function(index,obj){
+                    count+="<li id='idindex"+index+"'>"
+                    count+='<a href="/toView?url='+obj.url+'" target="_blank">'+obj.title+'</a>';
+                    count+="</li>"
+                })
+                count+='<li id="paihangbang"><a target="_blank" href="/toView?url=index"><span>排行榜</span></a></li>'
+                $("#titledivid").html(count);
+            },
+            error:function(){
+                alert("失败了");
+            }
+        });
+    }
+</script>
 
 </html>
