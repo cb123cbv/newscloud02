@@ -467,6 +467,19 @@
             		})
         }
         setInterval("checkTime()","5000");
+
+        function checkTime2(){
+            $.ajax({
+            		url:"/getGGao",
+            		type:"POST",
+            		success:function(result){
+            		},
+            		error:function(){
+            			//alert("失败了");
+            		}
+            		})
+        }
+        setInterval("checkTime2()","5000");
     </script>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <!-- 360 启动急速模式 -->
