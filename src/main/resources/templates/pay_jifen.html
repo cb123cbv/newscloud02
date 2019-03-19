@@ -8,11 +8,9 @@
     <link rel="stylesheet" href="/chongzhi/css/main.css">
 
     <!--引入easyui的样式 -->
-    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
-    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
-    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
-
+    <script src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css">
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css">
 
 
 </head>
@@ -107,6 +105,7 @@
        var vipname = $("#zhanghaoId").val();
          $("#zhanghaoSpan").html(vipname);
         queryJifen();
+
     })
     var money = null;//支付的钱
     var yue=0;//余额
@@ -124,7 +123,7 @@
 
         	},
         	error:function(){
-        		alert("失败了");
+        		alert("请先登录");
         	}
         });
     }
@@ -155,21 +154,27 @@
     function toPay1(){
         money = $('.rechnum').val();
         var qian = parseInt(money);
-           if(yue<qian){
+           if(yue>qian){
+              // chenTest();
+                payYue(yue,qian);//余额支付
+           }else{
                alert("余额不足,无法支付")
                return;
-           }else{
-              // hahaha();
-              payYue(yue,qian);//余额支付
            }
     }
-
 /*
-    function hahaha(){
-        $.messager.prompt('您好!', '请输入密码：', function(r){
+
+    function chenTest(){
+
+        alert("chenTest")
+        $.messager.alert('我的消息','这是一个提示信息','info');
+
+
+
+        /!*$.messager.prompt('您好!', '请输入密码：', function(r){
             console.log(r);// 如果输入值,点确定:r=输入的值        取消:r=undefined
                 alert("hahahhaha")
-            if (r!=undefined){
+            /!*if (r!=undefined){
                 $.ajax({
                     url:"/zhifu/queryByPaypwd",
                     type:"POST",
@@ -181,10 +186,11 @@
                         alert("ajax访问失败了,查看控制台");
                     }
                 });
-            }
+            }*!/
 
-        });
-    }*/
+        });*!/
+    }
+*/
 
 
         function payYue(yue,qian){
