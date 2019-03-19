@@ -15,7 +15,6 @@ import com.jk.service.VipStateService;
 import com.jk.utils.OrderCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -151,7 +150,7 @@ public class AlipayController {
 
 
             System.out.println("前往支付成功页面");
-            mav.setViewName("index");
+            mav.setViewName("successReturn");
 
         } else {
             System.out.println("前往支付失败页面");
