@@ -47,15 +47,17 @@ public class VipStateServiceImpl implements VipStateService {
     public void addVipState(VipState vipState) {
             Date date = new Date();
             long time = date.getTime();
-            long ss= vipState.getYue()*30*24*60*60*1000;//一个月
+            long yue=vipState.getYue();
+            long ss=yue*30*24*60*60*1000;//一个月
+
         VipState vipState1=vipStateMapper.queryVipStartByid(vipState.getUserid());
         if (vipState1!=null) {
             if(vipState1.getEndTime()<=time){
-                vipState.setEndTime(ss+time);
-                vipStateMapper.upVip(vipState);
+                vipState1.setEndTime(ss+time);
+                vipStateMapper.upVip(vipState1);
             }else{
-                vipState.setEndTime(vipState.getEndTime()+ss);
-                vipStateMapper.upVip(vipState);
+                vipState1.setEndTime(vipState1.getEndTime()+ss);
+                vipStateMapper.upVip(vipState1);
             }
 
         }else{

@@ -15,7 +15,25 @@
     <link rel="stylesheet" type="text/css" href="/test/css/css.css">
     <link rel="stylesheet" href="/js/lunbotu/css/font-awesome.css">
     <link rel="stylesheet" href="/js/lunbotu/css/style.css">
-
+    <!-- 导入 jquery包  -->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--引入easyui的样式 -->
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-table/bootstrap-table.min.css" >
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" >
+    <link href="/js/bootstrap-3.3.7-dist/bootstrap-select-1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/uploadify/uploadify.css" />
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-select-1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="/js/uploadify/jquery.uploadify.js"></script>
+    <link rel="stylesheet" href="/js/uploadify/uploadify.css">
+    <script src="/js/layer/layer.js"></script>
     <!--layui-->
     <script src="/layui/layui.js" charset="utf-8"></script>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all">
@@ -32,12 +50,19 @@
             querypinglun();
             queryImgInfo();
             news1("娱乐");
-         var ss=$("#hid").val()
+            queryDaoHang();//导航栏
+         var ss=$("#hid").val();
           if(ss==''){
                tcpinjie();
            }else if(ss!=''){
                pinjie();
            }
+            getVipYuLu();
+            getjunshi2();
+            getYuLe2();
+            getcaijing2();
+            gettiyu2();
+            meizhourenqi();
         })
 
 
@@ -97,22 +122,6 @@
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //轮播图,查询url
         function queryImgInfo() {
             var flag="";
@@ -160,7 +169,7 @@
 
                 },
                 error : function() {
-                    alert("ajax访问失败了,查看控制台");
+                    alert("今日httpClient访问次数用完");
                 }
             });
         }
@@ -266,10 +275,211 @@
                 layer.msg(elem.text());
             });
         });
+      /*VIP语录查询*/
+        function getVipYuLu() {
+            $.ajax({
+            		url:"/getVipYuLu",
+            		type:"POST",
+            		success:function(result){
+            		    var count="";
+            		    $.each(result,function(index,obj){
+            		        if(index<5){
+            		            count+='<li>';
+            		            count+='<a href="javascript:void(0)">';
+            		            count+='<img src="'+obj.vipheadimg+'" alt="'+obj.vipname+'"></a>';
+            		            count+='<div><p><a href="javascript:void(0)" target="_blank">'+obj.text+'</a></p>';
+            		            count+='<span><a href="http://blog.sina.com.cn/u/2737992103" target="_blank">'+obj.vipname+'</a></span></div></li>';
+                            }
+                        })
+                        count+='<div><input type="text" class="form-control" name=\'text\' placeholder="输入建议" style="width: 250px;height: 30px">\n' +
+                            '<button type="button" class="btn btn-success" onclick="addJIanYi()" style="width: 62px;height: 34px">发送</button> </div>';
+                        $("#ul2").html(count);
+            		   	console.log(result);
+            		},
+            		error:function(){
+            			alert("失败了");
+            		}
+            		})
+        }
+      /*每日精选*/
+      function getYuLe2(){
+          $.ajax({
+          		url:"/getYuLe2",
+          		type:"POST",
+          		success:function(result){
+          		    console.log(result);
+          		    var count="";
+          		    $.each(result,function(index,obj){
+          		        if(index<5){
+                            count+='<li><i class="top-bg">'+(index+1)+'</i>';
+                            count+='<a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.id+'" target="_blank">';
+                            count+='<span>'+obj.title+'</span>';
+                            count+=' </a></li>';
+                        }
+                        $("#ul9").html(count);
+                    })
+          		},
+          		error:function(){
+          			alert("失败了");
+          		}
+          		})
+      }
+      function gettiyu2(){
+          $.ajax({
+          		url:"/gettiyu2",
+          		type:"POST",
+          		success:function(result){
+          		    console.log(result);
+                    var count="";
+                    $.each(result,function(index,obj) {
+                        if (index < 5) {
+                            count += '<li><i class="top-bg">' + (index + 1) + '</i>';
+                            count += '<a href="/title/toshowInfo?name=' + obj.tablename + '&id=' + obj.id + '" target="_blank">';
+                            count += '<span>' + obj.title + '</span>';
+                            count += ' </a></li>';
+                        }
+                    })
+                    $("#ul8").html(count);
+          		},
+          		error:function(){
+          			alert("失败了");
+          		}
+          		})
+      }
+      function getcaijing2(){
+          $.ajax({
+          		url:"/getcaijing2",
+          		type:"POST",
+          		data:$("form").serialize(),
+          		success:function(result){
+          		    console.log(result);
+                    var count="";
+                    $.each(result,function(index,obj) {
+                        if (index < 5) {
+                            count += '<li><i class="top-bg">' + (index + 1) + '</i>';
+                            count += '<a href="/title/toshowInfo?name=' + obj.tablename + '&id=' + obj.id + '" target="_blank">';
+                            count += '<span>' + obj.title + '</span>';
+                            count += ' </a></li>';
+                        }
+                    })
+                        $("#ul7").html(count);
+
+          		},
+          		error:function(){
+          			alert("失败了");
+          		}
+          		})
+      }
+      function getjunshi2(){
+          $.ajax({
+          		url:"/getjunshi2",
+          		type:"POST",
+          		data:$("form").serialize(),
+          		success:function(result){
+          		    console.log(result);
+                    var count="";
+                    $.each(result,function(index,obj) {
+                        if (index < 5) {
+                            count += '<li><i class="top-bg">' + (index + 1) + '</i>';
+                            count += '<a href="/title/toshowInfo?name=' + obj.tablename + '&id=' + obj.id + '" target="_blank">';
+                            count += '<span>' + obj.title + '</span>';
+                            count += ' </a></li>';
+                        }
+                    })
+                   $("#ul6").html(count);
+          		},
+          		error:function(){
+          			alert("失败了");
+          		}
+          		})
+      }
+       /*新增建议*/
+        function addJIanYi(){
+            $.ajax({
+            		url:"/addJIanYi",
+            		type:"POST",
+                    data:{text:$("[name='text']").val()},
+            		success:function(result){
+            		    if(result==1){
+                            location.reload()
+                        }else if(result==3){
+            		        layer.msg("包含敏感字符")
+                        }
+            		    else{
+                            var truthBeTold = window.confirm("去登陆");
+                            if (truthBeTold) {
+                                location.href='/toView?url=Wopop';
+                            }
+                        }
+
+                    },
+            		error:function(){
+            			alert("失败了");
+            		}
+            		})
+        }
+        /*每周人气榜开始*/
+        function meizhourenqi(){
+            $.ajax({
+            		url:"/meizhourenqi",
+            		type:"POST",
+            		success:function(result){
+            		    var count='';
+            		    $.each(result,function(index,obj){
+                          count+='<li><i class="top-bg">'+(index+1)+'</i>';
+                          count+='<a href="javascript:void(0)" >';
+                          count+='<img src="'+obj.vipheadimg+'">';
+                          count+='<span>'+obj.vipname+'</span>';
+                          count+='</a></li>';
+                        })
+                        $("#ul5").html(count);
+            		},
+            		error:function(){
+            			alert("失败了");
+            		}
+            		})
+        }
+        /*每周人气榜结束*/
+
+        //导航栏
+        function queryDaoHang() {
+            $.ajax({
+                url:"/title/queryTitle",
+                type:"POST",
+                success:function(result){
+                    var dh=""
+                    $.each(result,function(index,obj){
+
+                        dh+='<li>';
+                        if(obj.turl!=""){
+                            dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
+                        }else{
+                            dh+='<a target="_blank" href="javascript:to404()">'+obj.tname+'</a>';
+                        }
+                        dh+='</li>';
 
 
+                    })
+                    dh+='<li class="sub-nav">' +
+                        '<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>' +
+                        '<ul class="down-list">' +
+                        '<li>' +
+                        '<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>' +
+                        '</li>' +
+                        '</ul>' +
+                        '</li>';
 
+                    $("#daoHangId").html(dh);
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+        }
 
+        function to404() {
+            alert("页面维护中...");
+        }
     </script>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <!-- 360 启动急速模式 -->
@@ -362,60 +572,13 @@
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- 导航 -->
 <div class="nav" data-sudaclick=blog_nav style="background-color: black;margin-top: 0px" >
     <div class="wrapper">
 
         <div style="margin-left: 180px" >
-        <ul class="nav-list">
-            <li>
-                <a target="_blank" href="/toView?url=blog_yule">娱乐</a>
-            </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/history/">文史</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/stock/">股票</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/edu/">教育</a>
-        </li>			<li>
-            <a target="_blank" href="/toView?url=tiyu">体育</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/eatblog.html">美食</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/baby/">育儿</a>
-        </li>			<li>
-            <a target="_blank" href="http://blog.sina.com.cn/lm/astro/">星座</a>
-        </li>
-            <li class="sub-nav">
-                <a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>
-                <ul class="down-list">
-                    <li>
-                        <a target="_blank" href="http://blog.sina.com.cn/lm/top/rank/"><span>博主排行</span></a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="/toView?url=index"><span>博文排行</span></a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="http://blog.sina.com.cn/lm/search/class/"><span>博客名录</span></a>
-                    </li>
-                </ul>
-            </li>
+        <ul class="nav-list" id="daoHangId">
+
         </ul>
         </div>
 
@@ -518,40 +681,23 @@
                 <img  src="http://n.sinaimg.cn/blogapp/334/w200h134/20190121/Mrrl-hryfqhk2748362.jpg" />
             </a>
             </div>
-            <ul id="huodong"><!--<li><i></i><a target="_blank" href="http://blog.sina.com.cn/s/blog_496b2a650102xypf.html?tj=1">周末宅家解闷神器，5本轻松不费脑的漫画书送给你</a></li>
-                <li><i></i><a target="_blank" href="http://blog.sina.com.cn/s/blog_496b2a650102xyiu.html?tj=1">足以满足业余爱好者的4本科普书，有趣又长知识！</a></li>
-                <li><i></i><a target="_blank" href="http://blog.sina.com.cn/s/blog_496b2a650102xugd.html?tj=1">8部观影指南，看完你就get了看电影的正确姿势~</a></li>-->
-
+            <ul id="huodong">
             </ul>
-            <!--<ul>
-                <li><i></i>
-                    <style>
-                        .left-rec ul li ins i{
-                            display: inline-block;
-                            height: auto;
-                            width: auto;
-                            background: none;
-                            position: relative;
-                            font-size: 14px;
-                            left: 0px;
-                            top: 0px;
-                        }
-                    </style>
-                    &lt;!&ndash;要闻区文字链01(天)     2018/09  wenjing8  begin&ndash;&gt;
-                    <ins class="sinaads" data-ad-pdps="PDPS000000057079"></ins>
-                    <script>(sinaads = window.sinaads || []).push({});</script>
-                    &lt;!&ndash;要闻区文字链01(天)     end&ndash;&gt;
 
-                    &lt;!&ndash;要闻区文字链02(天)     2018/09  wenjing8  begin&ndash;&gt;
-                    <ins class="sinaads" data-ad-pdps="PDPS000000057080"></ins>
-                    <script>(sinaads = window.sinaads || []).push({});</script>
-                    &lt;!&ndash;要闻区文字链02(天)     end&ndash;&gt;
-                </li>
-            </ul>-->
         </div>
         <!-- 活动专区结束 -->
+         <!--人气排行-->
+        <div class="week-hot-user" data-sudaclick="blog_weekhot">
+            <div class="l-title-1">
+                <i class="l-line"></i>
+                <h3>每周人气排行</h3>
+                <i class="r-line"></i>
+            </div>
+            <ul id="ul5">
 
-         领域热文排行
+            </ul>
+        </div>
+        <!--领域热文排行-->
         <div class="hot-rank">
             <div class="l-title-1">
                 <i class="l-line"></i>
@@ -560,132 +706,32 @@
             </div>
             <ul class="tab">
                 <li data-index="0" class="active">娱乐</li>
-                <li data-index="1">文化</li>
-                <li data-index="2">感情</li>
-                <li data-index="3" class="last">图片</li>
+                <li data-index="1">体育</li>
+                <li data-index="2">财经</li>
+                <li data-index="3" class="last">军事</li>
             </ul>
 
              <!--娱乐-->
-            <ul class="art-list" data-sudaclick="blog_enthot">
-                <li>
-                    <i class="top-bg">1</i>
-                    <a href="http://blog.sina.com.cn/s/blog_51205a7f01030ueb.html?tj=1" target="_blank">
-                        <span>山</span>
-                    </a>
-                </li>			<li>
-                <i class="top-bg">2</i>
-                <a href="http://blog.sina.com.cn/s/blog_51205a7f01030udc.html?tj=1" target="_blank">
-                    <span>節奏</span>
-                </a>
-            </li>			<li>
-                <i class="top-bg">3</i>
-                <a href="http://blog.sina.com.cn/s/blog_532b88150102yi2t.html?tj=1" target="_blank">
-                    <span>英达与梁欢的一双儿女近照曝光</span>
-                </a>
-            </li>			<li>
-                <i class="">4</i>
-                <a href="http://blog.sina.com.cn/s/blog_50721ef70102w801.html?tj=1" target="_blank">
-                    <span>刘谦婚纱照曝光模特妻子性感私照大起底（图）</span>
-                </a>
-            </li>			<li>
-                <i class="">5</i>
-                <a href="http://blog.sina.com.cn/s/blog_58a6d4ea0102vluj.html?tj=1" target="_blank">
-                    <span>《捉妖记》：未婚爸妈不靠谱，要生孩子想清楚</span>
-                </a>
-            </li>
+            <ul class="art-list" data-sudaclick="blog_enthot" id="ul9">
+
             </ul>
              <!--娱乐结束-->
 
              <!--文化-->
-            <ul class="art-list" data-sudaclick="blog_culhot" style="display: none;">
-                <li>
-                    <i class="top-bg">1</i>
-                    <a href="http://blog.sina.com.cn/s/blog_4c45664e0102yphg.html?tj=1" target="_blank">
-                        <span>近代名人叶名琛为何客死印度加尔各答？</span>
-                    </a>
-                </li>			<li>
-                <i class="top-bg">2</i>
-                <a href="http://blog.sina.com.cn/s/blog_496b2a650102xy38.html?tj=1" target="_blank">
-                    <span>博客连载：9本艺术书告诉你，生活不止眼前的苟且还有诗与远方</span>
-                </a>
-            </li>			<li>
-                <i class="top-bg">3</i>
-                <a href="http://blog.sina.com.cn/s/blog_496b2a650102xvj1.html?tj=1" target="_blank">
-                    <span>博客连载：懂生活的人，不应该错过这5本治愈心灵的烘焙书</span>
-                </a>
-            </li>			<li>
-                <i class="">4</i>
-                <a href="http://blog.sina.com.cn/s/blog_470ffe5b0102vs4u.html?tj=1" target="_blank">
-                    <span>战后流落中国的日本孤儿有多少？</span>
-                </a>
-            </li>			<li>
-                <i class="">5</i>
-                <a href="http://blog.sina.com.cn/s/blog_48b0011f0102vs71.html?tj=1" target="_blank">
-                    <span>千年基督教为什么能延续至今？</span>
-                </a>
-            </li>
-            </ul>
-             文化结束
+            <ul id="ul8" class="art-list" data-sudaclick="blog_culhot" style="display: none;">
 
-             感情
-            <ul class="art-list" data-sudaclick="blog_eladieshot" style="display: none;">
-                <li>
-                    <i class="top-bg">1</i>
-                    <a href="http://blog.sina.com.cn/s/blog_50c3b8070102yoyg.html?tj=1" target="_blank">
-                        <span>中信唱空市场降温（3月8日早评）</span>
-                    </a>
-                </li>			<li>
-                <i class="top-bg">2</i>
-                <a href="http://blog.sina.com.cn/s/blog_50c3b8070102yotr.html?tj=1" target="_blank">
-                    <span>缩量反弹仍有分歧（3月5日收评）</span>
-                </a>
-            </li>			<li>
-                <i class="top-bg">3</i>
-                <a href="http://blog.sina.com.cn/s/blog_4a793a200102yo47.html?tj=1" target="_blank">
-                    <span>胡志明红教堂，红砖上面有世界各国人的签名</span>
-                </a>
-            </li>			<li>
-                <i class="">4</i>
-                <a href="http://blog.sina.com.cn/s/blog_6ce08a930102yele.html?tj=1" target="_blank">
-                    <span>【巴西】到圣保罗逛逛（三）</span>
-                </a>
-            </li>			<li>
-                <i class="">5</i>
-                <a href="http://blog.sina.com.cn/s/blog_96a249180102ykeh.html?tj=1" target="_blank">
-                    <span>人到中年，爱情到底还是不是女人的必需品？</span>
-                </a>
-            </li>
             </ul>
-             感情结束
+            <!--文化结束-->
 
-            <!-- 图片 -->
-            <ul class="art-list" data-sudaclick="blog_pichot" style="display: none;">
-                <li>
-                    <i class="top-bg">1</i>
-                    <a href="http://blog.sina.com.cn/s/blog_9603d7e00102vn73.html?tj=1" target="_blank">
-                        <span>法国春日&nbsp;田园风光</span>
-                    </a>
-                </li>			<li>
-                <i class="top-bg">2</i>
-                <a href="http://blog.sina.com.cn/s/blog_5dcf3a360102vs32.html?tj=1" target="_blank">
-                    <span>【实拍】三清山岭头山村特色民俗：打糍粑</span>
-                </a>
-            </li>			<li>
-                <i class="top-bg">3</i>
-                <a href="http://blog.sina.com.cn/s/blog_4a8a80490102vqgz.html?tj=1" target="_blank">
-                    <span>云南·玉龙雪山云杉坪,纳西族痴男怨女的殉情地</span>
-                </a>
-            </li>			<li>
-                <i class="">4</i>
-                <a href="http://blog.sina.com.cn/s/blog_45d46ca00102xlf4.html?tj=1" target="_blank">
-                    <span>邂逅浪漫之都，开启海洋亲子“心”体验</span>
-                </a>
-            </li>			<li>
-                <i class="">5</i>
-                <a href="http://blog.sina.com.cn/s/blog_7be749530102vj5p.html?tj=1" target="_blank">
-                    <span>行走湘西：夯沙赶集（下）</span>
-                </a>
-            </li>
+            <!--感情-->
+          <ul id="ul7" class="art-list" data-sudaclick="blog_eladieshot" style="display: none;">
+
+          </ul>
+           <!--感情结束-->
+
+          <!-- 图片 -->
+            <ul id="ul6" class="art-list" data-sudaclick="blog_pichot" style="display: none;">
+
             </ul>
             <!-- 图片结束 -->
         </div>
@@ -709,34 +755,16 @@
             <div class="blog-right">
                 <!-- 登录信息 -->
                 <div id="divid">
-                <!--<div class="login-info" data-sudaclick=blog_user>
-                    <div class="not-login">
-                        <p>新浪博友，欢迎回来！</p>
-                        <form id="newsBd">
-                        <input id="loginName" type="text" name="vipaccount" autocomplete="off" placeholder="微博/博客/邮箱/手机号">
 
-                        <input id="loginPassword" type="password" name="vippassword" autocomplete="off" placeholder="请输入密码">
-                        </form>
-                        <div class="btn-row">
-                            <div class="jfl">
-                                <a id="submit-btn" suda-uatrack="key=2018_blog_index&value=my_signin" class="login-btn" href="javascript:denglu();">登录</a>
-                            </div>
-                            <div class="jfr">
-                                <input suda-uatrack="key=2018_blog_index&value=my_signin_save" id="auto" value="true" type="checkbox" name="auto" >
-                                <label suda-uatrack="key=2018_blog_index&value=my_signin_save" for="auto"><span>下次自动登录</span></label>
-                            </div>
-                        </div>
-
-                        <div class="logined">
-                        </div>
-                    </div>
-
-                </div>-->
                 </div>
                 <!-- 登录信息结束 -->
+                <!--用户建议-->
+                <div class="b-user-talk" data-sudaclick="blog_dks">
+                    <h3>用户建议</h3>
+                    <ul id="ul2">
 
-                <!-- 登录信息js逻辑结束 -->
-
+                    </ul>
+                </div>
                 <!-- 每日图说 -->
                 <div class="b-img-talk" data-sudaclick=blog_pic_03 style="margin-top: 20px">
                     <h3>

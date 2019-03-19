@@ -1,8 +1,13 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-    <title>文史博客_历史频道_新浪网</title>
+    <title>体育</title>
     <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--layer-->
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/layer/theme/default/layer.css">
+
+
     <meta name="keywords" content="韩寒,郭敬明,马未都,文化博客">
     <meta name="description" content="汇博客文化主流，读名人精英意识。习百家之文化，纳百家之精华。新浪文化名博，不仅仅是一个重要的文化阵地，更是广大博友耕耘收获分享快乐的文化乐园。">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
@@ -106,12 +111,6 @@
         .CP_a_btn2:link,.CP_a_btn2:visited,.CP_a_btn2:active {font-size:12px!important;height:25px;padding:6px 0 6px 3px;*padding:0 0 0 3px;background:url(http://simg.sinajs.cn/common/images/cp_newbtnb.png) no-repeat 0 -35px; color:#000; text-decoration:none;white-space:nowrap;*vertical-align:middle;position:relative;font-family:"宋体"!important;*display:inline-block;}
         .CP_a_btn2 cite{font-size:12px!important;line-height:26px;*line-height:24px;padding:6px 16px 6px 13px;*padding:0 16px 0 13px; background:url(http://simg.sinajs.cn/common/images/cp_newbtnb.png) no-repeat right -35px; color:#000;*display:block;}
         /*登录end*/
-
-
-
-
-
-
 
         .red{color: #f00;}
         .gray{color: #999;}
@@ -436,169 +435,13 @@
 
     <div class="header clearfix">
         <div class="logo">
-            <a href="http://blog.sina.com.cn/lm/history/" title="文史博客">体育博客</a>
+            <a href="javascript:void(0)" title="体育博客">体育博客</a>
         </div>
         <!-- 主导航 -->
-        <div class="nav">
-            <a href="http://blog.sina.com.cn/lm/ent/">娱乐</a> |
-            <a href="http://blog.sina.com.cn/lm/sports/">体育</a> |
-            <a href="http://blog.sina.com.cn/lm/eladies/">女性</a> |
-            <a href="http://blog.sina.com.cn/lm/tech/">IT</a> |
-            <a href="http://blog.sina.com.cn/lm/auto/">汽车</a> |
-            <a href="http://www.leju.com/#source=pc_sina_dbdh3&amp;source_ext=pc_sina">房产</a> |
-            <a href="http://blog.sina.com.cn/lm/edu/">教育</a> |
-            <a href="http://blog.sina.com.cn/lm/games/">游戏</a> |
-            <a href="http://blog.sina.com.cn/lm/jczs/">军事</a> |
-            <a href="http://blog.sina.com.cn/lm/astro/">星座</a> |
-            <a href="http://blog.sina.com.cn/lm/decor/">家居</a> |
-            <a href="http://blog.baby.sina.com.cn/lm/baby/">育儿</a> |
-            <a href="http://blog.sina.com.cn/lm/petblog.html">宠物</a> |
-            <a href="http://blog.sina.com.cn/lm/eatblog.html">美食</a> |
-            <a href="http://blog.sina.com.cn/lm/news/">健康</a> |
-            <a href="http://blog.sina.com.cn/lm/pic/">图片</a>
+        <div class="nav" id="daoHangId">
+
         </div>
         <!-- 主导航end -->
-
-        <div class="module_01">
-
-            <!-- SSO统一登录login begin -->
-            <div class="member">
-
-                <script type="text/javascript" charset="utf-8" src="http://i.sso.sina.com.cn/js/ssologin.js"></script>
-
-                <!-- 登录前 begin -->
-                <form id="notLogin" method="post" action="#" onsubmit="return false" style="display:block;">
-                    登录名： <input autocomplete="off" id="loginName" type="text" name="loginName" class="txt" style="width:100px;">
-                    密码： <input id="loginPass" type="password" class="txt" style="width:100px;">
-                    <input id="loginButton" type="button" value="登录" class="btn01" suda-uatrack="key=blog_login_toolbar&amp;value=signin">
-                    <label><input id="loginSave" type="checkbox" name="t1"> 记住登录状态</label>
-                    <a href="https://security.weibo.com/iforgot/loginname?entry=blog" target="_blank" class="ful">找回密码</a>
-                    <a href="http://login.sina.com.cn/signup/signupmail.php?entry=blog&amp;src=book" target="_blank" suda-uatrack="key=blog_login_toolbar&amp;value=blog_startup"><img src="http://i2.sinaimg.cn/blog/main/v7login/reg_blue2.gif" alt="开通新博客" style="vertical-align:middle;"></a>
-
-                    <a href="#" onclick="window.open('https://login.live.com/oauth20_authorize.srf?client_id=0000000040046F08&amp;redirect_uri=http%3A%2F%2Fcontrol.blog.sina.com.cn%2Fblog_rebuild%2Fmsn%2FmsnLoginCallBack.php&amp;response_type=code&amp;scope=wl.basic%20wl.signin%20wl.offline_access%20wl.share%20wl.emails','neww','left=548,top=232,height=400,width=440');msnrefreshWindow();" style="background:transparent url(http://simg.sinajs.cn/blog7style/images/msn_login01.gif) no-repeat left top; width:70px; height:22px; line-height:22px; display:inline-block; text-align:left; text-indent:2em; text-decoration:none; color:white; font-weight:bold; font-size:14px;">登录</a></form>
-                <!-- 登录前 end -->
-
-                <!-- 登录后 begin -->
-                <div id="loginDone" style="display:none;">
-                    <div class="Name">欢迎：<a id="userNickName" target="_blank" href="http://blog.sina.com.cn/" class="fred2" suda-uatrack="key=blog_login_toolbar&amp;value=nickname">你好</a></div>
-                    <div class="Func01"><a class="linkRed" target="_blank" href="http://i.blog.sina.com.cn/" suda-uatrack="key=blog_login_toolbar&amp;value=myblog">我的博客</a></div>
-                    <div class="Func02"><a target="_blank" href="http://control.blog.sina.com.cn/admin/article/article_add.php?index" suda-uatrack="key=blog_login_toolbar&amp;value=post">发博文</a></div>
-                    <div class="Func03" style="display:none;"><a target="_blank" href="http://control.blog.sina.com.cn/blogprofile/index.php" id="blogEntrance">个人中心</a></div>
-                    <div class="Func04"><a target="_blank" href="http://help.sina.com.cn/p/i_1.html" suda-uatrack="key=blog_login_toolbar&amp;value=help">帮助</a></div>
-                    <div class="Func05"><a id="logout" target="_top" href="#" suda-uatrack="key=blog_login_toolbar&amp;value=signout">退出</a></div>
-                </div>
-                <!-- 登录后 end -->
-
-                <div id="loginError"></div>
-
-                <script type="text/javascript">
-                    var $loginOpt = {
-                        nickLen : 20,
-                        sucCallback : function(uid){},
-                        autoCallback : function(uid){},
-                        logoutCallback : function(res){							// 退出登录回调
-                            var msnLoginBtn = document.getElementById("msnLoginBtn");
-                            if(msnLoginBtn){
-                                msnLoginBtn.contentWindow.location.reload();	// 刷新 MSN 登录按钮
-                            }
-                        },
-                        customFunc : "suggest tabkey dialogErr",				// userData、loading、highlight。
-                        suggestColor : {
-                            border : "#CCCCCC",			// 灰色风格
-                            msover : "#E8F4FC"
-                            // border : "#ECC996",		// 橙色风格
-                            // msover : "#FFA13B"
-                        }
-                    };
-
-                </script>
-                <script type="text/javascript" src="http://news.sina.com.cn/iframe/js/blog2010/v3/bloglogin.js" charset="gb2312"></script>
-                <script type="text/javascript">
-                    sinaSSOConfig.from = "referer:"+location.hostname+location.pathname;
-                    sinaSSOController.init();
-                </script>
-            </div>
-            <!-- SSO登录 end -->
-
-
-            <!-- 搜索css start -->
-            <style type="text/css">
-                .inp-txt-wrap{position: relative;}
-                .top-suggest-wrap{text-align:left;top:21px; position: absolute;border: 1px solid #E1E1E1;background: #fff;width:173px;margin:0 0 0 1px;z-index:99999;filter:Alpha(Opacity=99); zoom:1; left: -1px;font-family: "Arial","SimSun","宋体";overflow: hidden;}
-                .top-suggest-wrap .top-suggest-item,.top-suggest-wrap .top-suggest-tip,.top-suggest-wrap .top-suggest-more{height: 26px;line-height: 26px;padding-left: 14px;overflow: hidden;}
-                .top-suggest-wrap .top-suggest-item{cursor: pointer;}
-                .top-suggest-wrap .top-suggest-mover{background-color: #ddd;color: #000;}
-                .top-suggest-wrap .top-suggest-tip{color: #000;line-height: 30px;height: 30px;border-bottom: 1px dashed #eee;}
-                .top-suggest-wrap .top-suggest-more{font-size: 12px;border-top: 1px dashed #eee;height: 30px;line-height: 30px;}
-                .top-suggest-more a{display: inline;line-height: 30px;}
-                /*.top-suggest-more a:link, .top-suggest-more a:visited{color: #000;}
-                .top-suggest-more a:hover, .top-suggest-more a:active, .top-suggest-more a:focus{color: #ff8400}*/
-                .top-suggest-more .top-suggest-hotAll{float: left;margin-left: 0px;}
-                .top-suggest-more .top-suggest-toHomePage{float:right;margin-right: 10px;}
-            </style>
-            <!-- 搜索css end -->
-            <div class="search">
-
-                <form id="blogsearch_f1" name="blogsearch_f1" onsubmit="return blogsearch(this,'blog')" action="http://search.sina.com.cn/" target="_blank" class="inp-txt-wrap searchForm" accept-charset="GB2312">
-
-                    <input type="text" class="txt gray" value="请输入关键词" onfocus="if(this.value=='请输入关键词') this.value='';this.className='txt'" onblur="if(this.value==''){this.value='请输入关键词';this.className='txt gray'}" name="q" style="width:90px;" autocomplete="off">
-
-                    <input type="hidden" name="c" value="blog">
-                    <input type="hidden" name="range" value="article">
-                    <select onchange="blogsearch_change1(this);" size="1" name="by">
-                        <option value="all" selected="">博客全文</option>
-                        <option value="title">文章标题</option>
-                        <option value="nick">博客作者</option>
-                        <option value="tag">标签</option>
-                    </select>
-
-                    <input type="submit" class="btn01" value="搜索" suda-uatrack="key=blog_login_toolbar&amp;value=search">
-                </form>
-                <!-- 搜索js start -->
-                <script src="http://ent.sina.com.cn/470/2014/0328/search_suggest.js" charset="gb2312"></script>
-                <script type="text/javascript">
-                    (function () {
-                        // 表单
-                        var frm = document.blogsearch_f1;
-                        // 下拉选择
-                        var select = frm.by;
-                        // 输入框
-                        var input = frm.q;
-                        // 提交按钮
-                        var submit = function () {
-                            frm.submit();
-                        };
-                        // 是否新闻
-                        var isNews = function () {
-                            return select.value === 'all';
-                        };
-                        // 提交
-                        new searchsUggest({
-                            input : input,
-                            maxLen : 10,
-                            placeholderStr : '请输入关键词',
-                            showHotList : isNews,
-                            showSuggestList : isNews,
-                            onSelect : submit
-                        });
-                    })();
-                </script>
-                <!-- 搜索js end -->
-                <script language="javascript" type="text/javascript">
-
-                    function blogsearch(fn,strName){if(fn.q.value==""||fn.q.value=="请输入查询词"){fn.q.value="请输入查询词";fn.q.focus();return false}if(strName!="blog"){return false}fn.submit();return false};
-
-                    function blogsearch_change1(o){
-                        var bs_listvalue=o.value;
-                        if(bs_listvalue=="nick"){document.forms["blogsearch_f1"].range.value="author"}
-                        else{document.forms["blogsearch_f1"].range.value="article"}
-                    };
-
-                    function g(URL){window.location.href=URL;}
-                </script>
-
-            </div>
-        </div>
     </div>
 
 
@@ -1207,7 +1050,7 @@
             queryArticleList(url);
             getDjl(url);
             getText(url);
-
+            queryDaoHang();//导航栏
         })
         //=====查询数据库，在查询MongoDB
         function getText(abc){
@@ -1226,7 +1069,10 @@
                     $("#div3").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1248,7 +1094,10 @@
                     $("#div4").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1270,7 +1119,10 @@
                     $("#div5").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1292,7 +1144,10 @@
                     $("#div6").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1314,7 +1169,10 @@
                     $("#div7").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1336,7 +1194,10 @@
                     $("#div8").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1358,7 +1219,10 @@
                     $("#div9").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1383,7 +1247,10 @@
 
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             })
         }
@@ -1405,7 +1272,10 @@
                     $("#div10").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1429,7 +1299,10 @@
                     $("#div11").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
         }
@@ -1453,9 +1326,46 @@
                     $("#div12").html(count);
                 },
                 error:function(){
-                    alert("失败了");
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
                 }
             });
+        }
+
+        // <a href="http://blog.sina.com.cn/lm/ent/">娱乐</a> |
+
+        //导航栏
+        function queryDaoHang() {
+            $.ajax({
+                url:"/title/queryTitle",
+                type:"POST",
+                success:function(result){
+                    var dh=""
+                    $.each(result,function(index,obj){
+                        if(obj.turl!=""){
+                            dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a> | ';
+                        }else{
+                            dh+='<a target="_blank" href="javascript:to404()">'+obj.tname+'</a> | ';
+                        }
+                    })
+                    $("#daoHangId").html(dh);
+                },
+                error:function(){
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                }
+            });
+        }
+
+        function to404() {
+
+            alert("页面维护中")
+            layer.msg('页面维护中。。。。', {icon: 6});
+
         }
     </script>
 </div>

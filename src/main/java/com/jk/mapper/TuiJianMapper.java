@@ -1,9 +1,11 @@
 package com.jk.mapper;
 
+import com.alipay.api.domain.Advert;
 import com.jk.bean.Common;
 import com.jk.bean.LanMu;
 import com.jk.bean.TuiJian;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,4 +21,6 @@ public interface TuiJianMapper {
     List<Common> blogRank(Integer flag);
 
     List<LanMu> queryLanmu(@Param("tablename") String tablename);
+
+
 }

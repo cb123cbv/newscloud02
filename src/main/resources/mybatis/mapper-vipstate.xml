@@ -23,15 +23,16 @@
       update t_vipstate set vipState=2 where vipState=1 and endTime &lt;=#{time}
     </update>
 
+
     <!-- VipState queryVipStartByid(Integer userid);-->
-    <select id="queryVipStartByid" resultType="com.jk.bean.Vip">
-        select * from t_VipState where id=#{userid}
+    <select id="queryVipStartByid" resultType="com.jk.bean.VipState">
+        select * from t_VipState where userid=#{userid}
     </select>
 
     <!-- void addVipState(VipState vipState);-->
     <insert id="addVipState">
-      insert into t_vipstate(userid,startTime,endTime,NoteState,vipState)values (userid,startTime,
-      endTime,1,1
+          insert into t_vipstate(userid,startTime,endTime,NoteState,vipState)values (#{userid},#{startTime},
+     #{endTime},1,1
       )
     </insert>
 

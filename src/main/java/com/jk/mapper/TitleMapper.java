@@ -2,6 +2,7 @@ package com.jk.mapper;
 
 
 import com.jk.bean.Common;
+import com.jk.bean.TitleInfo;
 import com.jk.bean.Vip;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -21,4 +22,6 @@ public interface TitleMapper {
     @Select("select vipname from t_vip where id = #{vipid}")
     String queryAuthorName(Integer vipid);
 
+    @Select("select * from t_titleInfo")
+    List<TitleInfo> queryTitle();
 }

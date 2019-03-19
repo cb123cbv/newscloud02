@@ -1,7 +1,9 @@
 package com.jk.mapper;
 
 import com.jk.bean.Huifu;
+import com.jk.bean.MInGanCi;
 import com.jk.bean.Pl;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,6 +21,9 @@ public interface PlMapper {
  void addHuiFu(Huifu huifu);
 
  List<Huifu> queryHuiFu(Huifu huifu);
+@Select("select text from t_minganci")
+ List<String> queryMinGanCi();
+
 
     void addpinglunState(Pl pl);
 }

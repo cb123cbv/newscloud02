@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.VipYuLuMapper">
+    <select id="getVipYuLu" resultType="com.jk.bean.VipYuLu">
+select * from t_jianyi a,t_vip b where a.userid=b.id and a.`status`=0 ORDER BY a.datetime desc
+  </select>
+    <select id="meizhourenqi" resultType="com.jk.bean.Vip">
+        select b.*,c.sl from t_vip b, (
+        select a.vipid,count(*) sl from t_dianjiliang a where YEARWEEK(
+        date_format(a.time, '%Y-%m-%d')
+        ) = YEARWEEK(now()) GROUP BY a.vipid) c
+        where b.id=c.vipid ORDER BY c.sl desc
+    </select>
+</mapper>

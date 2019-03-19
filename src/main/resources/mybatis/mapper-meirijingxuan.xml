@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.MeiRiJingXuanMapper">
+    <select id="getYuLe2" resultType="com.jk.bean.Common">
+        select * from t_yule a,(
+select titleid,count(*) djl from t_dianjiliang c GROUP BY titleid) b
+where a.id =b.titleid ORDER BY b.djl desc
+    </select>
+    <select id="gettiyu2" resultType="com.jk.bean.Common">
+        select * from t_tiyu a,(
+select titleid,count(*) djl from t_dianjiliang c GROUP BY titleid) b
+where a.id =b.titleid ORDER BY b.djl desc
+    </select>
+    <select id="getcaijing2" resultType="com.jk.bean.Common">
+        select * from t_caijing a,(
+select titleid,count(*) djl from t_dianjiliang c GROUP BY titleid) b
+where a.id =b.titleid ORDER BY b.djl desc
+    </select>
+    <select id="getjunshi2" resultType="com.jk.bean.Common">
+        select * from t_junshi a,(
+select titleid,count(*) djl from t_dianjiliang c GROUP BY titleid) b
+where a.id =b.titleid ORDER BY b.djl desc
+    </select>
+</mapper>
