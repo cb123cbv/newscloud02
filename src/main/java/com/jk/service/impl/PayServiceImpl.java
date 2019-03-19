@@ -16,8 +16,7 @@ public class PayServiceImpl implements PayService {
     @Resource
     private PayMapper payMapper;
 
-    @Resource
-    private VipStateMapper vipStateMapper;
+
 
     @Override
     public void addjifen(Vip users, Integer qian) {
@@ -41,11 +40,5 @@ public class PayServiceImpl implements PayService {
         payMapper.addjifen(users.getId(),qian);
     }
 
-    @Override
-    public void addVip(Integer id, Integer zzz) {
-        VipState vipState = new VipState();
-        vipState.setUserid(id);
-        vipState.setYue(zzz);
-        vipStateMapper.addVipState(vipState);
-    }
+
 }

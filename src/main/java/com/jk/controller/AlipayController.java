@@ -5,10 +5,13 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradePayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.jk.bean.Common;
 import com.jk.bean.Jifen;
 import com.jk.bean.Vip;
+import com.jk.bean.VipState;
 import com.jk.config.AlipayConfig;
 import com.jk.service.PayService;
+import com.jk.service.VipStateService;
 import com.jk.utils.OrderCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,9 @@ public class AlipayController {
 
     @Resource
     private PayService payService;
+
+    @Resource
+    private VipStateService vipStateService;
 
     @RequestMapping("toView")
     public String toView(String view){
@@ -57,12 +63,12 @@ public class AlipayController {
     String sss="";
     Integer zzz=null;
     @RequestMapping("newsToPay")
-    public void pay(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "money")String money,@RequestParam(value = "month")Integer month) throws Exception {
-        zzz=month;
-        sss=money;
+    public void pay(HttpServletRequest request, HttpServletResponse response,Common common) throws Exception {
+        zzz=common.getMonth();
+        sss=common.getMoney();
         // 模拟从前台传来的数据
         String orderNo = OrderCode.getOrderCode(); // 生成订单号
-        String totalAmount = money; // 支付总金额
+        String totalAmount = sss; // 支付总金额
         String subject = "orderName"; // 订单名称
         String body = "充值"; // 商品描述
 
@@ -136,7 +142,11 @@ public class AlipayController {
           }
         if(zzz!=null){//支付宝充值vip
             Vip users = (Vip) session.getAttribute("user");
-            payService.addVip(users.getId(),zzz);
+
+            VipState vipState = new VipState();
+            vipState.setYue(zzz);
+            vipState.setUserid(users.getId());
+            vipStateService.addVipState(vipState);
         }
 
 

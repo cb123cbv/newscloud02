@@ -42,6 +42,7 @@ public class Common {
 
     private String site;//定位的地址
 
-
+    private String money;//钱
+    private Integer month;//月
 
 }

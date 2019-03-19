@@ -134,10 +134,11 @@
 
     //支付宝支付
     function toPay2(){
+        alert(111);
         money = $('.rechnum').val();
         month = $("input[name='docVlGender']:checked").val();
-
-        location.href="/zhifu/newsToPay?money="+money+"&month"+month;
+    alert(month);
+        window.location.href="/zhifu/newsToPay?money="+money+"&month="+month;
     }
 
     //余额支付

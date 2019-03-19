@@ -10,5 +10,5 @@ public interface PayService {
 
     void yuePay(Vip users, Jifen jifen, Integer qian);
 
-    void addVip(Integer id, Integer zzz);
+
 }
