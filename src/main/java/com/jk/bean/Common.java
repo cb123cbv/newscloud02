@@ -44,5 +44,6 @@ public class Common {
 
     private String money;//钱
     private Integer month;//月
+    private Integer paystate;//充余额
 
 }

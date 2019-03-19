@@ -59,12 +59,14 @@ public class AlipayController {
     /**
      * 支付请求
      */
-    String sss="";
-    Integer zzz=null;
+    String sss="";//钱
+    Integer zzz=null;//月 :1 3 6
+    Integer ccc=null;//充余额
     @RequestMapping("newsToPay")
     public void pay(HttpServletRequest request, HttpServletResponse response,Common common) throws Exception {
         zzz=common.getMonth();
         sss=common.getMoney();
+        ccc=common.getPaystate();
         // 模拟从前台传来的数据
         String orderNo = OrderCode.getOrderCode(); // 生成订单号
         String totalAmount = sss; // 支付总金额
@@ -131,22 +133,22 @@ public class AlipayController {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-
-
-
             //-------------------------------------------------------------------------支付宝支付
-          if(zzz==null){//支付宝充值积分
-              Vip users = (Vip) session.getAttribute("user");
-              payService.addjifen(users,qian);//
-          }
-        if(zzz!=null){//支付宝充值vip
             Vip users = (Vip) session.getAttribute("user");
 
-            VipState vipState = new VipState();
-            vipState.setYue(zzz);
-            vipState.setUserid(users.getId());
-            vipStateService.addVipState(vipState);
-        }
+            if(zzz==null){//支付宝充值积分
+              payService.addjifen(users,qian);//
+            }
+            if(zzz!=null){//支付宝充值vip
+                VipState vipState = new VipState();
+                vipState.setYue(zzz);
+                vipState.setUserid(users.getId());
+                vipStateService.addVipState(vipState);
+            }
+            if(ccc!=null&&ccc==1){//支付宝充值余额
+                payService.addYue(users,qian);
+            }
+
 
 
             System.out.println("前往支付成功页面");
@@ -219,8 +221,12 @@ public class AlipayController {
     @ResponseBody
     public String queryByPaypwd(HttpSession session,String r){
         Vip users = (Vip) session.getAttribute("user");
-       // Jifen jf = payService.queryByPaypwd(users,jifen);
-
-        return "1";
+       if(users.getVippassword().equals(r)){
+           return "1";//密码正确
+       }else{
+           return "0";//支付密码错误
+       }
     }
+
+
 }

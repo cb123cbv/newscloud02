@@ -2,9 +2,7 @@ package com.jk.service.impl;
 
 import com.jk.bean.Jifen;
 import com.jk.bean.Vip;
-import com.jk.bean.VipState;
 import com.jk.mapper.PayMapper;
-import com.jk.mapper.VipStateMapper;
 import com.jk.service.PayService;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +29,18 @@ public class PayServiceImpl implements PayService {
     @Override
     public void yuePay(Vip users, Jifen jifen, Integer qian) {
 
-
-
         //扣余额
         payMapper.reduceYue(users.getId(),jifen.getYue(),qian);
 
         //加积分
         payMapper.addjifen(users.getId(),qian);
+    }
+
+    @Override
+    public void addYue(Vip users, Integer qian) {
+
+        //添加余额
+        payMapper.addYue(qian,users.getId());
     }
 
 

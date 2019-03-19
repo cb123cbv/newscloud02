@@ -79,7 +79,7 @@
                 </div>
                 <div class="tr_rechnum">
                     <span>应付金额：</span>
-                    <input id="moneyid" name = "money" class="rechnum" >
+                    <input id="moneyid"  class="rechnum" >
                 </div>
             </div>
             <div class="tr_paybox" id="yes">
@@ -119,7 +119,10 @@
         	},
         	error:function(){
         		alert("请先登录");
-        	}
+        	},
+            complete:function(){
+               // location.href="/toView?url=Wopop";
+            }
         });
     }
 
@@ -136,7 +139,7 @@
     //支付宝支付
     function toPay2(){
         money = $('.rechnum').val();
-        location.href="/zhifu/newsToPay?money="+money+"&state"+1;
+        location.href="/zhifu/newsToPay?money="+money+"&paystate="+1;
     }
 
     // 将所有.ui-choose实例化
