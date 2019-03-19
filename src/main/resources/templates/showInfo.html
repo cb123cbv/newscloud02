@@ -47,6 +47,21 @@
     <script type="text/javascript" src="http://d1.sina.com.cn/litong/zhitou/sspnew.js"></script><script src="http://i.sso.sina.com.cn/js/ssologin.js" charset="utf-8" async=""></script><script src="http://sjs.sinajs.cn/blog7/article.js?681.js" charset="utf-8"></script><script src="http://d5.sina.com.cn/litong/zhitou/sinaads/release/sinaads.js" charset="utf-8"></script><script src="http://www.sinaimg.cn/unipro/pub/suda_s_v851c.js" charset="utf-8"></script><iframe src="http://beacon.sina.com.cn/ckctl.html" id="ckctlFrame" scrolling="no" style="height: 0px; width: 1px; overflow: hidden;"></iframe><script src="http://sjs.sinajs.cn/blog7/adwidget.js?v1=" charset="utf-8"></script><script type="text/javascript" charset="utf-8" src="http://bal.blog.sina.com.cn/main/adfshow?border=0&amp;local=yes&amp;js=mid&amp;db=sinablog&amp;user=SINABLOG|1156966391|PDPS000000004568"></script><script src="http://sjs.sinajs.cn/blog7common/conf/tmp_clone.js" charset="utf-8"></script><style type="text/css" id="stylefix">#bsPanelHolder,#sinaads_pdps54771{display:none;}</style><script src="http://sjs.sinajs.cn/blog7activity/zoneStatic.js" charset="utf-8"></script><script src="http://d3.sina.com.cn/litong/zhitou/sinaads/release/spec/getSinaadsExParamsForBlog.js" charset="utf-8"></script><script src="http://ent.sina.com.cn/js/470/2013/0506/collect.js?varname=requestId_69249039" charset="gb2312"></script><script src="http://d3.sina.com.cn/litong/zhitou/sinaads/demo/changwy/link/blog_bottom_float.js" charset="utf-8"></script>
     <script src="/js/layer/layer.js"></script>
 </head>
+<script type="text/javascript">
+
+    function showErWei() {
+        $("#ErWei").show();
+        var data=this.location.href;
+        $.ajax({
+            url:"/share",
+            data:{data:data},
+            success:function (result) {
+                $("#ErWei").attr("src","data:image/jpg;base64,"+result)
+            }
+        })
+    }
+
+</script>
 <body>
 <input type="hidden" id="idInfo" th:value="${id}">
 <input type="hidden" id="nameInfo" th:value="${name}">
@@ -87,6 +102,7 @@
     </div>
     <div class="rightbox box">
         <h2>最新博文</h2>
+
         <h3 class="title" id="titleid"></h3>
         <ul class="text">
             <p id="infoid"></p>
@@ -94,6 +110,10 @@
             <p class="textimg"><img  id="htmlImgId" style="width: 500px"></p>
 
         </ul>
+        <div>
+            <a onclick="showErWei()">分享</a>
+          <img id="ErWei">
+        </div>
 
         <!--开始-->
         <div class="allComm">

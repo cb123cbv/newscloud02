@@ -25,4 +25,6 @@ public class Vip {
     private String pinyiname;
     private Integer zt=0;
     Integer status;
+
+    private String  qqid;
 }
