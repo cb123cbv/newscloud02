@@ -5,6 +5,8 @@ import com.jk.bean.Common;
 import com.jk.bean.Info;
 import com.jk.bean.QueryParam;
 import com.jk.bean.Vip;
+import com.jk.client.MongodbClient;
+import com.jk.bean.*;
 import com.jk.mapper.TitleMapper;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
@@ -25,7 +27,7 @@ public class TitleServiceImpl implements TitleService
     @Resource
     private TitleMapper titleMapper;
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private MongodbClient mongodbClient;
 
     @Override
     public SendPage queryList(ReceivePage receivePage, Common common, String name) {
@@ -42,10 +44,7 @@ public class TitleServiceImpl implements TitleService
 
     @Override
     public QueryParam toTitleInfo(String id, String name) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("titleId").is(id));
-        query.addCriteria(Criteria.where("tableName").is(name));
-        Info info = mongoTemplate.findOne(query, Info.class);
+        Info info = mongodbClient.getInfoById(id, name);
         Common common = titleMapper.toTitleInfo(id, name);
         common.setImgtype(info.getInfo());
         Vip vip = titleMapper.queryUser(common.getVipid());
@@ -55,6 +54,10 @@ public class TitleServiceImpl implements TitleService
         return queryParam;
     }
 
+    @Override
+    public List<TitleInfo> queryTitle() {
+        return titleMapper.queryTitle();
+    }
 
 
 }

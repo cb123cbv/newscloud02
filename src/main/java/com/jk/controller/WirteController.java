@@ -2,7 +2,9 @@ package com.jk.controller;
 
 
 import com.jk.bean.Common;
+import com.jk.client.SearchClient;
 import com.jk.service.WirteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +25,8 @@ public class WirteController {
 
     @Resource
     private WirteService wirteService;
+    @Autowired
+    SearchClient searchClient;
 
     //public long timeDate=0;
     Common common3=new Common();
@@ -83,6 +88,28 @@ public class WirteController {
         List<Common> commons = wirteService.queryBiaoQian();
 
         return commons;
+    }
+ //  @RabbitListener(queues = "1807B-SendEs")
+   public void addEs(String message){
+
+    System.out.println(message);
+    searchClient.addInfo(message);
+   }
+
+    @RequestMapping("tomap")
+    public String tomap(HttpSession session,Common common){
+        session.setAttribute("common",common);
+
+        return "map";
+    }
+
+
+    @RequestMapping("toWirte")
+    public String toWirte(String site,HttpSession session){
+        Common common = (Common) session.getAttribute("Common");
+        common.setSite(site);
+        session.setAttribute("common",common);
+        return "WriteWeibo";
     }
 
 

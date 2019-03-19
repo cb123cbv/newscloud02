@@ -7,6 +7,7 @@ package com.jk.service.impl;/**
 
 import com.github.pagehelper.PageHelper;
 import com.jk.bean.Huifu;
+import com.jk.bean.MInGanCi;
 import com.jk.bean.Pl;
 import com.jk.mapper.PlMapper;
 import com.jk.service.PlService;
@@ -27,8 +28,21 @@ public class PlServiceImpl implements PlService {
  @Resource
  PlMapper plMapper;
  @Override
- public void addPl(Pl pl) {
-  plMapper.addPl(pl);
+ public String addPl(Pl pl) {
+   List<String> list=plMapper.queryMinGanCi();
+   boolean type=false;
+  for (String s : list) {
+    if(pl.getPlinfo().contains(s)){
+     type=true;
+     break;
+    }
+  }
+  if(type){
+    return "3";
+  }else{
+   plMapper.addPl(pl);
+   return "1";
+  }
  }
 
  @Override
@@ -41,8 +55,21 @@ public class PlServiceImpl implements PlService {
  }
 
  @Override
- public void addHuiFu(Huifu huifu) {
-  plMapper.addHuiFu(huifu);
+ public String addHuiFu(Huifu huifu) {
+  List<String> list=plMapper.queryMinGanCi();
+  boolean type=false;
+  for (String s : list) {
+   if(huifu.getHfinfo().contains(s)){
+    type=true;
+    break;
+   }
+  }
+  if(type){
+   return "3";
+  }else{
+   plMapper.addHuiFu(huifu);
+   return "1";
+  }
  }
 
  @Override

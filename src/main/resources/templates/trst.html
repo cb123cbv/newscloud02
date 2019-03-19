@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+
+
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>百度地图</title>
+
+    <script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+
+
+    <!-- kindeditor编辑器 -->
+    <script type="text/javascript" src="/kindeditor-4.1.10/kindeditor-all.js"></script>
+    <link rel="stylesheet" href="/kindeditor-4.1.10/themes/default/default.css" type="text/css"></link>
+
+    <link rel="stylesheet" href="/writeweibo/css/tab.css">
+
+
+    <!--layui-->
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+
+</head>
+<body style=" background-color: #efeff4">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <a  href="javascript:void(0)" onclick="qushouye()">首页</a>
+    <!--标头-->
+</header>
+
+<div class="demo" style="margin-top:40px;">
+    <form id="formid" class="layui-form layui-form-pane">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题：</label>
+            <div class="layui-input-block">
+                <input type="text" id="titleid" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期时间选择器</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="test5" name="endTime"
+                               placeholder="yyyy-MM-dd HH:mm:ss">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <textarea id="content1" name="textName" style="width:800px;height:350px;"></textarea> <br/>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-inline">
+                <select name="selectName" id="selectid">
+
+
+                </select>
+            </div>
+        </div>
+        <input type="hidden" id="hiddenid" name="biaoqian">
+        <input type="hidden" id="userid" name="userid" th:value="${session.user?.id}">
+    </form>
+
+
+    <!--选择的标签-->
+    <div class="plus-tag tagbtn clearfix" id="myTags">
+
+    </div>
+    <span class="label" style=" font-size: 16px;">我的标签：</span>
+    <div class="plus-tag-add">
+
+        <ul class="Form FancyForm" style="margin-top: 10px;">
+            <li>
+                <input id="" name="" type="text" class="stext" maxlength="20"/>
+                <label>输入标签</label>
+                <span class="fff"></span>
+            </li>
+            <li>
+                <button type="button" class="Button RedButton Button18" style="font-size:14px;">添加标签</button>
+                <a href="javascript:void(0);">展开推荐标签</a>
+            </li>
+        </ul>
+
+    </div><!--plus-tag-add end-->
+
+    <div id="mycard-plus" style="display:none;margin-top: -25px;">
+        <div class="default-tag tagbtn">
+            <!--推荐标签-->
+            <div class="clearfix" id="biaoqianid">
+
+
+            </div>
+            <!--换一批标签-->
+            <div class="clearfix" style="display:none;" id="biaoqianid2">
+
+            </div>
+        </div>
+        <div align="right"><a href="javascript:void(0);" id="change-tips" style="color:#3366cc;">换一换</a></div>
+    </div><!--mycard-plus end-->
+    <button class="layui-btn layui-btn-normal"   onclick="addWrite()">发布</button>
+</div>
+
+</body>
+
+<script type="text/javascript" src="/writeweibo/js/tab.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        querybiaoqian();
+        querySelect();
+        textwenben();
+    })
+
+
+    function qushouye(){
+        location.href="/toView?url=shouye";
+    }
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit;
+    });
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //日期时间选择器
+        laydate.render({
+            elem: '#test5'
+            , type: 'datetime'
+        });
+
+
+    })
+
+
+    function textwenben() {
+        //编辑器
+        var editor = null;
+        KindEditor.ready(function (K) {//将编辑器添加到文档中
+            editor = K.create('#content1', {
+                cssPath: '/kindeditor-4.1.10/plugins/code/prettify.css',//指定编辑器iframe document的CSS文件，用于设置可视化区域的样式。
+                uploadJson: '/kindeditor-4.1.10/jsp/upload_json.jsp', //指定上传文件的服务器端程序。
+                fileManagerJson: '/kindeditor-4.1.10/jsp/file_manager_json.jsp',//指定浏览远程图片的服务器端程序。
+                allowFileManager: true,  //true时显示浏览远程服务器按钮 ;默认值: false
+                afterBlur: function () {
+                    this.sync();
+                }
+            });
+
+        });
+
+
+    }
+
+    //var options=$("#selectid option:selected");
+    //selectid
+    function addWrite() {
+        cs2();
+        $.ajax({
+            url: "/wirte/addWrite",
+            type: "POST",
+            data: $("#formid").serialize(),
+            //data: {title:$("#titleid").val(),textareaName:$("#content").val(),selectName:selectedval},
+            success: function (pageUtil) {
+                 alert("发布成功");
+                location.reload();
+            },
+            error: function () {
+                alert("失败了");
+            }
+        });
+    }
+
+
+    function querybiaoqian() {
+        $.ajax({
+            url: "/wirte/queryBiaoQian",
+            type: "POST",
+            async: true,
+            success: function (result) {
+                var con = "";
+                var con2 = "";
+                $.each(result, function (index, obj) {
+                    if (index <= 13) {
+                        con += '<a title="' + obj.name + '" href="javascript:void(0);">' + obj.name + '</a>';
+                    }
+                    if (index > 13) {
+                        con2 += '<a title="' + obj.name + '" href="javascript:void(0);">' + obj.name + '</a>';
+                    }
+                })
+                $("#biaoqianid").html(con);
+                $("#biaoqianid2").html(con2);
+            },
+            error: function () {
+                alert("失败了");
+            }
+        });
+    }
+
+    var links = "";
+
+    function cs2() {
+        var ll = "";
+        var links = document.getElementById("myTags").getElementsByTagName("a");
+        for (var i = 0; i < links.length; i++) {
+            ll += ',' + links[i].title;
+        }
+        $("#hiddenid").val(ll);
+    }
+
+
+    function querySelect() {
+        $.ajax({
+            url: "/getTree",
+            type: "POST",
+            async: true,
+            success: function (result) {
+                var con = '<option value="" selected="selected">请选择</option>';
+                $.each(result, function (index, obj) {
+                    con += '<option value="' + obj.url + '">' + obj.title + '</option>';
+                })
+                $("#selectid").html(con);
+            },
+            error: function () {
+                alert("失败了");
+            }
+        });
+    }
+
+
+</script>
+
+
+</html>

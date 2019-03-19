@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.VipStateMapper">
+
+
+    <!--   List<VipState> queryVipStart(long time);-->
+    <select id="queryVipStart" resultType="com.jk.bean.VipState">
+        select * from t_vipstate where vipState=1 and NoteState=1 and endTime &lt;=#{time}
+    </select>
+
+   <!-- Vip queryVipById(Integer userid);-->
+    <select id="queryVipById" resultType="com.jk.bean.Vip">
+        select * from t_vip where id=#{userid}
+    </select>
+
+  <!--  void upVipState(Integer id);-->
+ <update id="upVipState">
+    UPDATE t_vipstate SET NoteState=2 where userid=#{id}
+ </update>
+
+    <!-- List<VipState> queryVipByTime(long time);-->
+    <update id="queryVipByTime">
+      update t_vipstate set vipState=2 where vipState=1 and endTime &lt;=#{time}
+    </update>
+
+
+    <!-- VipState queryVipStartByid(Integer userid);-->
+    <select id="queryVipStartByid" resultType="com.jk.bean.VipState">
+        select * from t_VipState where userid=#{userid}
+    </select>
+
+    <!-- void addVipState(VipState vipState);-->
+    <insert id="addVipState">
+          insert into t_vipstate(userid,startTime,endTime,NoteState,vipState)values (#{userid},#{startTime},
+     #{endTime},1,1
+      )
+    </insert>
+
+   <!-- void upVip(VipState vipState);-->
+    <update id="upVip">
+    update t_vipstate set vipState=1,NoteState=1,endTime=#{endTime}  where userid=#{userid}
+    </update>
+
+    <!-- void jianMoney(VipState vipState);-->
+    <update id="jianMoney">
+       update t_jifen set yue=yue-#{money} where userid=#{userid}
+    </update>
+
+
+</mapper>

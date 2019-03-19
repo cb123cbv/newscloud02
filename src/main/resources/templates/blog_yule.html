@@ -7,8 +7,12 @@
     <title>娱乐博客</title>
     <!--jquery-->
     <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--layui-->
     <script src="/js/layui/layui.js" charset="utf-8"></script>
     <link rel="stylesheet" href="/js/layui/css/layui.css"  media="all">
+    <!--layer-->
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/layer/theme/default/layer.css">
 
     <meta name="keywords" content="明星博客,名人博客,明星日志,明星自拍,自拍,走光,绯闻,八卦,电影,电视,音乐,潜规则,片花,视频,偷拍,徐静蕾,李亚鹏,周杰伦,蔡依林">
     <meta name="description" content="博客已成为网络第一热门词汇，其中尤以娱乐明星博客最为抢眼。众多明星纷纷在新浪开博，如成龙，蔡依林，徐若瑄，萧亚轩，徐静蕾，李亚鹏，伊能静，梁咏琪等数百位两岸三地明星均在新浪博客安家。他们把博客作为自己和影迷歌迷交流的平台，记录自己生活的喜怒哀乐。众多知名娱乐评论人的博客也已经成为他们自己的网络名片，他们的观点正影响着网友们的娱乐生活。">
@@ -62,9 +66,19 @@
         .nav li.selected a{padding: 0 15px;background: #d00643;}
 
         /* Login Module */
+        .login-frame{height: 25px;padding:8px 0 8px 17px;color: #4e4e4e;clear: both;background: url(http://www.sinaimg.cn/blog/deco/2013/0812/ent/bg_1px.png) 0 -41px repeat-x;}
+        .select-view {cursor: pointer;height: 21px;line-height:21px;border: 1px solid #cfcfcf;color: #606060;background: #fff; margin-top: 1px; *margin-top: -2px;_margin-top:-1px;}
+        .select-view .ds_title{padding-left: 10px;background:#f5f5f5 url(http://www.sinaimg.cn/blog/deco/2013/0812/ent/icon.png) 66px -200px no-repeat}
+        .select-view .dsl_cont{border: 1px solid #cfcfcf;background-color: #f5f5f5}
         .select-view .dsl_cont p {padding-left: 10px;}
         .select-view .dsl_cont p.selected{background-color: #b10035;color: #fff;}
-
+        .lgn-ipt{border:1px solid #ccc;padding:1px;height:18px;line-height:18px;width:94px;color:#666; }
+        .lgn-submit{background:url(http://www.sinaimg.cn/blog/main/v6login/nv_sbn.gif) no-repeat 0 0;border:none;height:22px;width:44px;cursor: pointer;}
+        a.btn-ma02{width:83px;background:url(http://www.sinaimg.cn/blog/main/index2010/bm_cl_003_10012201.png); }
+        a.btn-ma02:hover{background-position:0 -32px; }
+        a.btn-ma02:active{background-position:0 -67px; }
+        .fred2{color:#f00;}
+        .ful{text-decoration:none; }
 
         .CP_w a:link,
         .CP_w a:visited {color:#2e3092}
@@ -284,6 +298,10 @@
     <link rel="stylesheet" type="text/css" href="http://news.sina.com.cn/css/268/2011/1110/17/weibo-all.css" />
     <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&uuid=bc3b1c41-57af-4bd5-89cd-76dd6e6ee75f&pophcol=2&amp;lang=zh"></script>
     <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+
+
 </head>
 
 <script type="text/javascript" th:inline="none">
@@ -297,6 +315,8 @@
         blogRank();//博文排行
 
         queryLanmu();//查询栏目
+
+        queryDaoHang();//导航栏
     })
 </script>
 
@@ -357,18 +377,25 @@
 
     <!-- 导航栏 开始 -->
     <div class="nav">
-        <ul class="clearfix">
-            <li><span>娱乐博客</span></li>
-            <li class="selected"><a href="/toView?url=shouye" target="_blank">首页</a></li>
-            <li><a href="/toView?url=tiyu" target="_blank">体育</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/history/" target="_blank">文化</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/eladies/" target="_blank">女性</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/tech/" target="_blank">IT</a></li>
-            <li><a href="http://blog.sina.com.cn/lm/auto/" target="_blank">汽车</a></li>
+        <ul class="clearfix" id="daoHangId">
 
         </ul>
     </div>
     <!-- 导航栏 结束 -->
+
+    <!-- 登录模块 开始-->
+    <div class="login-frame">
+        <div class="loginNav" >
+            <!-- 未登录 -->
+            <form id="login_form"  style="display:block; outline:none">
+                账号：<input autocomplete="off"  name="vipaccount" class="lgn-ipt" />
+                密码：<input  name="vippassword" class="lgn-ipt" />
+                <input onclick="LittleLogin()" type="button" value="登录" class="lgn-submit" />
+                <input onclick="LittleLogoff()" type="button" value="退出" class="lgn-submit" />
+
+            </form>
+        </div>
+    </div>
     <div class="blank-d" style="height:20px"></div>
     <!-- Part01 第一部分 开始-->
     <div class="part-01 clearfix">
@@ -508,7 +535,7 @@
                         //栏目
                         function queryLanmu(){
                             $.ajax({
-                                url : "/tui/queryLanmu?tablename=t_yule",
+                                url : "/yule/queryLanmu?tablename=t_yule",
                                 async : true,
                                 type: "POST",
                                 success : function(data) {
@@ -527,17 +554,23 @@
                         //添加推送
                         function addTuiJian() {
                             $.ajax({
-                                url:"/tui/addTuiJian",
+                                url:"/yule/addTuiJian",
                                 type:"POST",
                                 data:$("#addForm").serialize(),
                                 success:function(result){
+
                                     if(result==1){
-                                        alert("请先登录");
+                                        layer.msg('推送成功');
                                     }
-                                  location.reload();
+                                    if(result==0){
+                                        layer.msg("请先登录");
+                                    }
                                 },
                                 error:function(){
                                     alert("失败了");
+                                },
+                                complete:function(){ //最后执行
+                                    document.getElementById("addForm").reset();//重置表单
                                 }
                             });
                         }
@@ -545,7 +578,7 @@
                       //-----------------------------------深度阅读  开始
                       function shenDuRead(){
                             $.ajax({
-                            	url:"/tui/shenDuRead?flag="+7,
+                            	url:"/yule/shenDuRead?flag="+7,
                             	type:"POST",
                             	success:function(result){
                                  var content="";
@@ -575,7 +608,10 @@
                                     $("#JS_Article_Cont01").html(content);
                             	},
                             	error:function(){
-                            		alert("失败了");
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
                             	}
                             });
                       }
@@ -584,16 +620,13 @@
                  //查询 动图 5条信息-开始----------------------------
                      function fiveNews() {
                          $.ajax({
-                         	url:"/tui/queryYuleFive",
+                         	url:"/yule/queryYuleFive",
                          	type:"POST",
                          	success:function(result){
                             var flag1="";
                             var flag2="";
-                            var ii=1;
-                            var titleStr="";
-                            $.each(result,function(index,obj){
 
-                                titleStr=obj.title.substr(0,15);
+                            $.each(result,function(index,obj){
 
                                 flag1+='<div id="JS_Focus_Pic_0'+(index+1)+'">';
                                 if(obj.tlink==null){
@@ -601,20 +634,23 @@
                                 }else{
                                     flag1+='<a target="_blank" href="'+obj.tlink+'"></a>';
                                 }
-                                flag1+='<img src="'+obj.imgurl+'" width="395" height="280" alt="'+titleStr+'" title="'+titleStr+'"/></a>';
+                                flag1+='<img src="'+obj.imgurl+'" width="395" height="280" alt="'+obj.title+'" title="'+obj.title+'"/></a>';
                                 flag1+='</div>';
 
                                 if(obj.tlink==null){
-                                    flag2+='<li id="JS_Focus_Tab_0'+(index+1)+'"><a target="_blank" href="/title/toshowInfo?id='+obj.id+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
+                                    flag2+='<li id="JS_Focus_Tab_0'+(index+1)+'"><a target="_blank" href="/title/toshowInfo?id='+obj.id+'&name='+'t_yule'+'">'+obj.title+'</a></li>';
                                 }else{
-                                    flag2+='<li id="JS_Focus_Tab_0'+(index+1)+'"><a target="_blank" href="'+obj.tlink+'">'+titleStr+'</a></li>';
+                                    flag2+='<li id="JS_Focus_Tab_0'+(index+1)+'"><a target="_blank" href="'+obj.tlink+'">'+obj.title+'</a></li>';
                                 }
                             })
                                 $("#flag1Id").html(flag1);
                                 $("#flag2Id").html(flag2);
                          	},
                          	error:function(){
-                         		alert("失败了");
+                                layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
                          	}
                          });
                      }
@@ -622,20 +658,17 @@
                         //劲爆热点  开始---------------------------
                         function jingBaoNews() {
                             $.ajax({
-                                url:"/tui/jingBaoNews?flag="+6,
+                                url:"/yule/jingBaoNews?flag="+6,
                             	type:"POST",
                             	success:function(result){
                                 var tmp='';
-                                var titleStr="";
                                 $.each(result,function(index,obj){
-
-                                    titleStr=obj.title.substr(0,20);
 
                                     tmp+='<li>';
                                     if(obj.tlink==null){
-                                        tmp+='<a target="_blank" href="/title/toshowInfo?id='+obj.id+'&name='+'t_yule'+'">'+titleStr+'</a>';
+                                        tmp+='<a target="_blank" href="/title/toshowInfo?id='+obj.id+'&name='+'t_yule'+'">'+obj.title+'</a>';
                                     }else{
-                                        tmp+='<a target="_blank" href="'+obj.tlink+'">'+titleStr+'</a>';
+                                        tmp+='<a target="_blank" href="'+obj.tlink+'">'+obj.title+'</a>';
                                     }
                                     tmp+='</li>';
 
@@ -644,7 +677,10 @@
 
                             	},
                             	error:function(){
-                            		alert("失败了");
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
                             	}
                             });
                         }
@@ -652,28 +688,27 @@
                         // 本周 博文排行 开始----------------------------------------------
                         function blogRank() {
                             $.ajax({
-                                url:"/tui/jingBaoNews?flag="+8,
+                                url:"/yule/blogRank?flag="+8,
                                 type: "POST",
                                 success: function (result) {
                                 var bw='';
-                                var titleStr="";
+
                                 $.each(result,function(index,obj){
 
-                                titleStr=obj.title.substr(0,18);
                                     if(index<=2){
                                         bw +='<li class="clearfix"><i class="top">'+(index+1)+'</i>';
                                         if(obj.tlink==null){
-                                            bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
+                                            bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+obj.title+'</a></li>';
                                         }else{
-                                            bw +='<a target="_blank" href="'+obj.tlink+'">'+titleStr+'</a>';
+                                            bw +='<a target="_blank" href="'+obj.tlink+'">'+obj.title+'</a>';
                                         }
 
                                     }else{
                                         bw +='<li class="clearfix"><i>'+(index+1)+'</i>';
                                         if(obj.tlink==null){
-                                            bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+titleStr+'</a></li>';
+                                            bw +='<a target="_blank" href="/title/toshowInfo?id='+obj.titleid+'&name='+'t_yule'+'">'+obj.title+'</a></li>';
                                         }else{
-                                            bw +='<a target="_blank" href="'+obj.tlink+'">'+titleStr+'</a>';
+                                            bw +='<a target="_blank" href="'+obj.tlink+'">'+obj.title+'</a>';
                                         }
                                     }
 
@@ -681,9 +716,93 @@
                                     $("#boWenId").html(bw);
                                 },
                                 error: function () {
-                                    alert("失败了");
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
                                 }
                             });
+                        }
+
+                        //登录
+                       function LittleLogin() {
+                           $.ajax({
+                           	url:"/login/login",
+                           	type:"POST",
+                           	data:$("#login_form").serialize(),
+                            success:function(result){
+                                   if(result==1){
+                                       alert('登录成功');
+                                   }
+                                   if(result==2){
+                                       alert("账号或者密码错误");
+                                   }
+                            },
+                            error:function(){
+                                layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
+                            },
+                            complete:function(){ //最后执行
+                                   location.reload();
+                            }
+                           });
+                       }
+                        //退出
+                       function LittleLogoff() {
+                           $.ajax({
+                               url: "/login/clearSession",
+                               type: "POST",
+                               success: function (result) {
+                                if(result==1){
+                                    alert("已退出");
+                                }
+                               },
+                               error: function () {
+                                   layer.msg('加载中', {
+                                       icon: 16
+                                       ,shade: 0.01
+                                   });
+                               }
+                           });
+                       }
+
+                        //导航栏
+                        function queryDaoHang() {
+                            $.ajax({
+                                url:"/title/queryTitle",
+                                type:"POST",
+                                success:function(result){
+                                    var dh=""
+                                        dh+='<li><span>娱乐博客</span></li>';
+                                    $.each(result,function(index,obj){
+
+                                        dh+='<li>';
+                                        if(obj.turl!=""){
+                                            dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
+                                        }else{
+                                            dh+='<a target="_blank" href="javascript:to404()">'+obj.tname+'</a>';
+                                        }
+                                        dh+='</li>';
+
+
+                                    })
+
+                                    $("#daoHangId").html(dh);
+                                },
+                                error:function(){
+                                    layer.msg('加载中', {
+                                        icon: 16
+                                        ,shade: 0.01
+                                    });
+                                }
+                            });
+                        }
+
+                        function to404() {
+                            layer.msg('页面维护中。。。。', {icon: 6});
+
                         }
                     </script>
                 <!----------------------------------------------------------------------->

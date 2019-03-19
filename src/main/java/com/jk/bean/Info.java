@@ -16,10 +16,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "login")
 public class Info {
     private String  id;
-    private Integer titleId;
+    private String titleId;
     private String  info;
     private String  tableName;
 }

@@ -19,11 +19,36 @@
     <script src="/layui/layui.js" charset="utf-8"></script>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all">
 
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=o96jFscFLlUax84AbxEAzLQsfYyriADo"></script>
+    <style>
+        #div1{
+            display: none;
+            position: absolute;
+            left:30%;
+            top:6%;
+            width:510px;
+            height:510px;
+            background-color:lightgrey;
+            text-align: center;
+        }
+
+    </style>
+
+
 </head>
 <body style=" background-color: #efeff4">
 <header id="header" class="mui-bar mui-bar-nav">
     <!--标头-->
 </header>
+
+<div id="div1" style="margin-top: 40px;z-index: 99" >
+    <a href="javascript:CloseDiv()">关闭</a>
+    <div id="allmap" style="width: 500px;height: 500px;z-index: 100" ></div>
+</div>
+
 
 <div class="demo" style="margin-top:40px;">
     <form id="formid" class="layui-form layui-form-pane">
@@ -60,6 +85,7 @@
             </div>
         </div>
         <input type="hidden" id="hiddenid" name="biaoqian">
+        <input type="hidden" id="hiddenid2" name="site">
         <input type="hidden" id="userid" name="userid" th:value="${session.user?.id}">
     </form>
 
@@ -99,6 +125,7 @@
         </div>
         <div align="right"><a href="javascript:void(0);" id="change-tips" style="color:#3366cc;">换一换</a></div>
     </div><!--mycard-plus end-->
+    <button class="layui-btn layui-btn-normal"   onclick="OpenDiv()">定位</button>
     <button class="layui-btn layui-btn-normal"   onclick="addWrite()">发布</button>
 </div>
 
@@ -113,7 +140,6 @@
         querySelect();
         textwenben();
     })
-
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form
             , layer = layui.layer
@@ -161,7 +187,7 @@
             data: $("#formid").serialize(),
             //data: {title:$("#titleid").val(),textareaName:$("#content").val(),selectName:selectedval},
             success: function (pageUtil) {
-                 alert("发布成功");
+                alert("发布成功");
                 location.reload();
             },
             error: function () {
@@ -205,6 +231,7 @@
             ll += ',' + links[i].title;
         }
         $("#hiddenid").val(ll);
+        $("#hiddenid2").val(address);
     }
 
 
@@ -225,6 +252,72 @@
             }
         });
     }
+
+
+    //启用滚动条
+    $(document.body).css({
+        "overflow-x":"auto",
+        "overflow-y":"auto"
+    });
+
+    //打开div
+    function OpenDiv(){
+        document.getElementById("div1").style.display="block";
+    }
+    // 给div层中的关闭添加onclick事件：
+
+    function CloseDiv(){
+        document.getElementById("div1").style.display="none";
+    }
+
+
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+
+
+
+
+    var address = '';
+    // 添加带有定位的导航控件
+    var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true
+    });
+    map.addControl(navigationControl);
+    // 添加定位控件
+    var geolocationControl = new BMap.GeolocationControl();
+    geolocationControl.addEventListener("locationSuccess", function(e){
+        // 定位成功事件
+        address = '';
+        address += e.addressComponent.province;
+        address += e.addressComponent.city;
+        address += e.addressComponent.district;
+        address += e.addressComponent.street;
+        address += e.addressComponent.streetNumber;
+        alert("当前定位地址为：" + address);
+    });
+    geolocationControl.addEventListener("locationError",function(e){
+        // 定位失败事件
+        alert(e.message);
+    });
+    map.addControl(geolocationControl);
+
+
+
 
 
 </script>
