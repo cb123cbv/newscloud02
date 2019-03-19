@@ -1,8 +1,8 @@
 package com.jk.controller;
 
 import com.jk.bean.Blog_Info;
+import com.jk.client.RedisClusterClient;
 import com.jk.client.SearchClient;
-import com.jk.utils.Constant;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,35 +26,29 @@ public class SearchController {
 
     @Resource
     SearchClient searchClient;
+    @Resource
+    RedisClusterClient redisClusterClient;
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("getInfoAndTileInfo")
-    public List<Blog_Info>  getInfoAndTileInfo(String queryString, Integer status,Blog_Info blog_info){
-        if(redisTemplate.hasKey(Constant.info)){
-            List<String> range = redisTemplate.opsForList().range(Constant.info, 0, -1);
-            if(!range.contains(queryString)){
-                redisTemplate.opsForList().rightPushAll(Constant.info,queryString);
-            }
-        }else{
-            redisTemplate.opsForList().rightPushAll(Constant.info,"");
-        }
+    public List<Blog_Info>  getInfoAndTileInfo(String queryString, Integer status){
+        redisClusterClient.setRedisCluster(queryString);
         List<Blog_Info> list = searchClient.getInfoAndTileInfo(queryString,status);
 
         return list;
     }
 
-
     @RequestMapping("getInfo")
-    public  List<String> getInfo(Blog_Info blog_info){
-        List<String> range = redisTemplate.opsForList().range(Constant.info, 0, -1);
-       return range;
+    public  List<String> getInfo(){
+        List<String> range =redisClusterClient.getInfoByRedis();
+        return range;
     }
 
     @RequestMapping("deleteInfo")
-    public void deleteInfo(Blog_Info blog_info){
-        redisTemplate.delete(Constant.info);
+    public void deleteInfo(){
+        redisClusterClient.deleteInfoByRedis();
 
     }
 }

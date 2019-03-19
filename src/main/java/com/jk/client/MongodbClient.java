@@ -1,7 +1,9 @@
 package com.jk.client;
 
 import com.jk.bean.Info;
+import com.jk.bean.Log;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,5 +19,6 @@ public interface MongodbClient {
  Info getInfoById(@RequestParam(value = "titleId")String titleId,@RequestParam(value = "tableName")String tableName);
  @RequestMapping("addInfo")
  void addInfo(@RequestParam(value = "titleId")String titleId,@RequestParam(value = "tableName")String tableName,@RequestParam(value = "info")String info);
-
+ @RequestMapping("addLog")
+ void addLog(@RequestParam(value = "log") Log log);
 }

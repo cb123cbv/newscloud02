@@ -39,9 +39,6 @@ public class GongGaoServiceImpl implements GongGaoService {
     long parse = sp.parse(gg.getStarttime()).getTime();
     long parse2 = sp.parse(gg.getEndtime()).getTime();
     long time = new Date().getTime();
-    System.out.println(parse);
-    System.out.println(parse2);
-    System.out.println(time);
     boolean datetime = time >= parse && time <= parse2;
     if (!datetime) {
      gongGaoMapper.updateGGao();
