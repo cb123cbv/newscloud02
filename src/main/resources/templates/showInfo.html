@@ -50,6 +50,8 @@
 <body>
 <input type="hidden" id="idInfo" th:value="${id}">
 <input type="hidden" id="nameInfo" th:value="${name}">
+<!--<input type="hidden" id="idInfo2" th:value="${titleid}">
+<input type="hidden" id="nameInfo2" th:value="${tablename}">-->
 <article>
     <header>
         <div class="toptitle">
@@ -192,6 +194,37 @@
             }
         });
     }
+    /*//轮播图跳转文章
+    function toTitleInfo2() {
+        $.ajax({
+            url: "/title/toTitleInfo",
+            type: "POST",
+            async: true,
+            data: {id: $("#idInfo2").val(), name: $("#nameInfo2").val()},
+            success: function (result) {
+                text=result;
+                $("#titleid").html(result.common.title);
+                $("#infoid").html(result.common.imgtype);
+                $("#usernameid").html("姓名:"+result.vip.vipname);
+                $("#vipaccountid").html("用户名:"+result.vip.vipaccount);
+
+                if(result.vip.role==1){
+                    $("#vipImgId").prop("src","/showInfo/images/vip.jpg");
+                }
+                if(result.vip.role==2){
+                    $("#vipImgId").prop("src","/showInfo/images/novip.jpg");
+                }
+
+                $("#vipheadimgid").prop("src",result.vip.vipheadimg);
+                $("#htmlImgId").prop("src",result.common.imgurl);
+
+
+            },
+            error: function () {
+                alert("失败了");
+            }
+        });
+    }*/
 
    /*新增评论*/
     function pd(){

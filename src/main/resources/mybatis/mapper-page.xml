@@ -36,5 +36,45 @@ GROUP BY
 
     </select>
 
+	<select id="queryTtph" resultType="com.jk.bean.Common">
+
+SELECT
+ss,
+title
+FROM
+	(SELECT
+			COUNT(djl) ss,
+			titleid,
+			tablename
+		FROM
+			t_dianjiliang
+		GROUP BY
+			tablename) a,t_title b
+WHERE
+	a.tablename = b.tablename
+ORDER BY
+	a.ss DESC
+    </select>
+	<select id="queryJifen" resultType="com.jk.bean.Jifen">
+SELECT
+	jifen,
+	yue
+FROM
+	(
+		SELECT
+			jifen,
+			yue,
+			userid
+		FROM
+			t_jifen j,
+			t_vip v
+		WHERE
+			j.userid = v.id
+	) a
+WHERE
+	a.userid = #{id}
+
+	</select>
+
 
 </mapper>

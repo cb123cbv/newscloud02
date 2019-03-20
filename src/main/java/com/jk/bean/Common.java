@@ -9,6 +9,8 @@ public class Common {
 
     private String title;
 
+    private String ss;
+
     private Integer vipid;
 
     private String time;
