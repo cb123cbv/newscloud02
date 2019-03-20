@@ -27,7 +27,7 @@ public class ShareController {
     @RequestMapping("share")
     public String maps(String data) {
         Map<String, Object> params = new HashMap<>();
-        params.put("key", "a179a1594f96e65ccf51e9801da3187d");
+        params.put("key", "1f46a33b2b3ac817b0acee15ab6293e4");
         params.put("text",data);
         String allresult = HttpClient.sendGet("http://apis.juhe.cn/qrcode/api", params);
         JSONObject jsonObject = JSONObject.parseObject(allresult);
