@@ -1,6 +1,8 @@
 package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.jk.bean.Common;
+import com.jk.bean.Jifen;
 import com.jk.bean.PageView;
 import com.jk.mapper.PageMapper;
 import com.jk.service.PageService;
@@ -22,5 +24,16 @@ public class PageServiceImpl implements PageService {
         List<PageView> list = PageMapper.getPageList(tablename); //当前页面数据 其大小取决于 每页多少条
         SendPage sendPage = new SendPage(count.size(),list);
         return sendPage;
+    }
+
+    @Override
+    public  List<Common> queryTtph() {
+        return   PageMapper.queryTtph();
+    }
+
+    @Override
+    public Jifen queryJifen(Integer id) {
+
+        return PageMapper.queryJifen(id);
     }
 }

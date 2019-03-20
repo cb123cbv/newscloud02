@@ -4,7 +4,6 @@ package com.jk.controller;
 import com.jk.bean.ImgInfo;
 import com.jk.service.ImgService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,12 +30,6 @@ public class ImgController {
         return list;
     }
 
-    @RequestMapping("toshowInfo")
-    public String toTitleInfo1(Integer titleid, String tablename, Model model){
-        model.addAttribute("titleid",titleid);
-        model.addAttribute("tablename",tablename);
-        return "showInfo2";
-    }
 
 
 }
