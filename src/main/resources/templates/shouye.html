@@ -446,11 +446,12 @@
             $.ajax({
                 url:"/title/queryTitle",
                 type:"POST",
+                async:false,
                 success:function(result){
                     var dh=""
                     $.each(result,function(index,obj){
 
-                        dh+='<li>';
+                        dh+='<li >';
                         if(obj.turl!=""){
                             dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
                         }else{
@@ -460,16 +461,14 @@
 
 
                     })
-                    dh+='<li class="sub-nav">' +
-                        '<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>' +
-                        '<ul class="down-list">' +
-                        '<li>' +
-                        '<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>' +
-                        '</li>' +
-                        '</ul>' +
-                        '</li>';
-
+                    dh+='<li class="sub-nav">';
+                    dh+='<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>';
+                    dh+='<ul class="down-list">';
+                    dh+='<li>';
+                    dh+='<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>';
+                    dh+='</li></ul></li>';
                     $("#daoHangId").html(dh);
+
                 },
                 error:function(){
                     alert("失败了");
@@ -579,6 +578,7 @@
         <div style="margin-left: 180px" >
         <ul class="nav-list" id="daoHangId">
 
+
         </ul>
         </div>
 
@@ -626,10 +626,12 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:void(0);">个人中心</a>
+                        <a href="javascript:void(0);">充值中心</a>
                         <dl class="layui-nav-child">
                             <dd><a href="/toView?url=pay_huiyuan"><font color="black">充VIP</font></a></dd>
                             <dd><a href="/toView?url=pay_jifen"><font color="black">充积分</font></a></dd>
+                            <dd><a href="/toView?url=pay_yue"><font color="black">充余额</font></a></dd>
+
                         </dl>
                     </li>
 
