@@ -8,6 +8,9 @@ import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +24,8 @@ public class TitleServiceImpl implements TitleService {
     private TitleMapper titleMapper;
     @Autowired
     private MongodbClient mongodbClient;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public SendPage queryList(ReceivePage receivePage, Common common, String name) {
@@ -37,7 +42,11 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public QueryParam toTitleInfo(String id, String name) {
-        Info info = mongodbClient.getInfoById(id, name);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("titleId").is(id));
+        query.addCriteria(Criteria.where("tableName").is(name));
+        Info info = mongoTemplate.findOne(query, Info.class);
+        //Info info = mongodbClient.getInfoById(id, name);
         Common common = titleMapper.toTitleInfo(id, name);
         common.setImgtype(info.getInfo());
         Vip vip = titleMapper.queryUser(common.getVipid());

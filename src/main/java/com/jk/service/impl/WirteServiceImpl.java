@@ -10,6 +10,7 @@ import com.jk.mapper.WirteMapper;
 import com.jk.service.WirteService;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,8 @@ public class WirteServiceImpl implements WirteService {
     private MongodbClient mongodbClient;
     @Autowired
     SendESClient sendESClient;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public List<Common> queryBiaoQian() {
@@ -42,7 +45,12 @@ public class WirteServiceImpl implements WirteService {
         sendESClient.sendES(common);
         common.setSelectName("t_"+common.getSelectName());
         wirteMapper.addwrite(common);
-        mongodbClient.addInfo(String.valueOf(common.getTitleid()),common.getSelectName(),common.getTextName());
+        Info info=new Info();
+        info.setTitleId(String.valueOf(common.getTitleid()));
+        info.setInfo(common.getTextName());
+        info.setTableName(common.getSelectName());
+        mongoTemplate.insert(info);
+        //mongodbClient.addInfo(String.valueOf(common.getTitleid()),common.getSelectName(),common.getTextName());
         String[] split = common.getBiaoqian().substring(1).split(",");
         for (String s : split) {
             Common common1 = wirteMapper.queryBiaoQianByname(s);

@@ -65,9 +65,187 @@
             gettiyu2();
             meizhourenqi();
             queryTtph();
-
+            checkTime2();
+            getddd();
+            getRenqiStaus();
+            getRewenStaus();
+            getDengluStaus();
+            getJianyiStaus();
+            getTushuoStaus();
+            getLunboStaus();
         })
+        //人气排行模块显示隐藏
+        <!--人气排行-->
+        function divShow(status){
 
+            if(status==1){
+                $("#renqi").show();
+                $("#rewen").show();
+                $("#denglu").show();
+                $("#jianyi").show();
+                $("#tushuo").show();
+                $("#lunbo").show();
+            }
+            if(status==2){
+                $("#renqi").hide();
+                $("#rewen").hide();
+                $("#denglu").hide();
+                $("#jianyi").hide();
+                $("#tushuo").hide();
+                $("#lunbo").hide();
+            }
+        }
+
+        function getRenqiStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'renqi'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+
+        }
+        <!--领域热文排行-->
+
+        function getRewenStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'rewen'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+
+        }
+        <!--登陆信息-->
+        function getDengluStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'denglu'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+
+        }
+        <!--用户建议-->
+        function getJianyiStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'jianyi'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+
+        }
+        <!--每日图说-->
+        function getTushuoStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'tushuo'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+        }
+        <!--轮播图-->
+        function getLunboStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'lunbo'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+        }
+        function getddd(){
+            $.ajax({
+                url:"/getGGao",
+                type:"POST",
+                success:function(result){
+                    if(result.text!=undefined){
+                        layer.open({
+                            type: 1
+                            ,title: false //不显示标题栏
+                            ,closeBtn: false
+                            ,area: '500px;'
+                            ,shade: 0.8
+                            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                            ,resize: false
+                            ,btn: ['关闭']
+                            ,btnAlign: 'c'
+                            ,moveType: 1 //拖拽模式，0或者1
+                            ,content: '<div id="ddd" style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"><font color=\'red\' size=\'5px\'>重大公告</font>:<br>&nbsp&nbsp'+result.text+'</div>'
+                        });
+                    }
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            })
+        }
+        /*公告*/
+        function checkTime(){
+            $.ajax({
+                url:"/getGongGao",
+                type:"POST",
+                success:function(result){
+                    if(result!=null){
+                        $("#gonggao").html(result.text);
+                    }
+
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+        setInterval("checkTime()","5000");
+
+        function checkTime2(){
+            $.ajax({
+                url:"/getGGao",
+                type:"POST",
+                success:function(result){
+                },
+                error:function(){
+                    //alert("失败了");
+                }
+            })
+        }
+        setInterval("checkTime2()","5000");
         //title大标题的排行
         function queryTtph(){
             var flag="";
@@ -280,9 +458,6 @@
             div += '<div class="btn-row">'
             div += '<div class="jfl">'
             div += '<a id="submit-btn" suda-uatrack="key=2018_blog_index&value=my_signin" class="login-btn" href="javascript:denglu();">登录</a>'
-            div += '</div>'
-            div += '<div class="jfr">'
-            div += '<input suda-uatrack="key=2018_blog_index&value=my_signin_save" id="auto" value="true" type="checkbox" name="auto" >'
             div += '</div>'
             div += '</div>'
             div += '<div class="logined">'
@@ -709,34 +884,12 @@
 
 
         <div class="search">
-            <div class="row">
-                <div id='search-type-selector' data-val="article" class="label">
-                    <span>博文</span><i></i>
-                    <ul class="sub-label">
-                        <li data-val="article">
-                            <span>博文</span>
-                        </li>
-                        <li data-val="title">
-                            <span>标题</span>
-                        </li>
-                        <li data-val="author">
-                            <span>作者</span>
-                        </li>
-                        <li data-val="tag">
-                            <span>标签</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="search-input">
-                    <input id="search" type="text" placeholder="搜索内容" autocomplete="off"><i suda-uatrack="key=2018_blog_index&value=blog_nav_search"></i>
-                    <ul class="sub-input first-view-search">
-                        <!-- 首屏热搜 -->
-                    </ul>
-                    <ul class="sub-input sec-view-search">
-                        <!-- 用户检索联想 -->
-                    </ul>
-                </div>
-            </div>
+            <!--公告-->
+            <marquee  id="marquee" style='height:50px' direction="left" onMouseOver="this.stop()" onMouseOut="this.start()" bgcolor=aaaaee >
+                <font  size="5px" id="gonggao" face='楷体'>
+
+                </font>
+            </marquee>
         </div>
     </div>
 </div>
@@ -762,7 +915,7 @@
         </div>
         <!-- 活动专区结束 -->
          <!--人气排行-->
-        <div class="week-hot-user" data-sudaclick="blog_weekhot">
+        <div class="week-hot-user" data-sudaclick="blog_weekhot" id="renqi">
             <div class="l-title-1">
                 <i class="l-line"></i>
                 <h3>每周人气排行</h3>
@@ -773,7 +926,7 @@
             </ul>
         </div>
         <!--领域热文排行-->
-        <div class="hot-rank">
+        <div class="hot-rank" id="rewen">
             <div class="l-title-1">
                 <i class="l-line"></i>
                 <h3><a href="http://blog.sina.com.cn/lm/rank/" target="_blank">领域热文排行</a></h3>
@@ -815,7 +968,7 @@
 
     <div class="blog-container">
         <div>
-            <div class="blog-center">
+            <div class="blog-center" id="lunbo">
                 <!-- 滚动区域 -->
                 <div class="slider main-slider" data-sudaclick=focus_pic>
 
@@ -841,21 +994,21 @@
             </div>
 
 
-            <div class="blog-right">
+            <div class="blog-right" id="denglu">
                 <!-- 登录信息 -->
                 <div id="divid">
 
                 </div>
                 <!-- 登录信息结束 -->
                 <!--用户建议-->
-                <div class="b-user-talk" data-sudaclick="blog_dks">
+                <div class="b-user-talk" data-sudaclick="blog_dks" id="jianyi">
                     <h3>用户建议</h3>
                     <ul id="ul2">
 
                     </ul>
                 </div>
                 <!-- 每日图说 -->
-                <div class="week-hot-user" data-sudaclick="blog_weekhot">
+                <div class="week-hot-user" data-sudaclick="blog_weekhot" >
                     <div class="l-title-1">
                         <i class="l-line"></i>
                         <h3>标题排行</h3>
