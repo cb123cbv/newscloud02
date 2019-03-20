@@ -2,13 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>充值积分</title>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <link rel="stylesheet" href="/chongzhi/css/amazeui.min.css">
     <link rel="stylesheet" href="/chongzhi/css/main.css">
 
     <!--引入easyui的样式 -->
-    <script src="/js/easyui1.5/jquery.easyui.min.js"></script>
     <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css">
     <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css">
 
@@ -84,7 +83,7 @@
                 </div>
                 <div class="tr_rechnum">
                     <span>应付金额：</span>
-                    <input id="moneyid" name = "money" class="rechnum" >
+                    <input id="moneyid"  readonly="readonly" class="rechnum" >
                 </div>
             </div>
             <div class="tr_paybox" id="yes">
@@ -99,6 +98,9 @@
 <script src="/chongzhi/js/ui-choose.js"></script>
 <script src="/chongzhi/js/amazeui.min.js"></script>
 
+<script src="/js/easyui1.5/jquery.easyui.min.js"></script>
+
+
 <script type="text/javascript" th:inline="none">
 
     $(function(){
@@ -110,6 +112,7 @@
     var money = null;//支付的钱
     var yue=0;//余额
     var jifen=0;//积分
+    var qian=0;//强转的钱
     function queryJifen() {
         $.ajax({
         	url:"/zhifu/queryJifen",
@@ -124,7 +127,10 @@
         	},
         	error:function(){
         		alert("请先登录");
-        	}
+        	},
+            complete:function(){
+              //  location.href="/toView?url=Wopop";
+            }
         });
     }
 
@@ -152,67 +158,62 @@
 
     //余额支付
     function toPay1(){
+
         money = $('.rechnum').val();
-        var qian = parseInt(money);
+        qian = parseInt(money);
            if(yue>qian){
-              // chenTest();
-                payYue(yue,qian);//余额支付
+               chenTest();
            }else{
                alert("余额不足,无法支付")
                return;
            }
     }
-/*
 
+    //输入支付密码
     function chenTest(){
-
-        alert("chenTest")
-        $.messager.alert('我的消息','这是一个提示信息','info');
-
-
-
-        /!*$.messager.prompt('您好!', '请输入密码：', function(r){
-            console.log(r);// 如果输入值,点确定:r=输入的值        取消:r=undefined
-                alert("hahahhaha")
-            /!*if (r!=undefined){
+        $.messager.prompt('您好!', '请输入支付密码：', function(r){
+            // 如果输入值,点确定:r=输入的值        取消:r=undefined
+            if (r!=undefined){
                 $.ajax({
                     url:"/zhifu/queryByPaypwd",
                     type:"POST",
                     data:{r:r},
                     success:function(result){
+                        if(result==1){
+                            payYue(yue,qian);//余额支付
+                        }else{
+                            $.messager.alert('Warning','支付密码错误');
+                        }
 
                     },
                     error:function(){
                         alert("ajax访问失败了,查看控制台");
                     }
                 });
-            }*!/
+            }
 
-        });*!/
+        });
     }
-*/
-
-
+        //走后台余额支付
         function payYue(yue,qian){
 
-            $.ajax({
-                url:"/zhifu/yuePay",
-                type:"POST",
-                data:{yue:yue,qian:qian},
-                success:function(result){
-                    if(result==1){
-                        alert("支付成功!")
+                $.ajax({
+                    url:"/zhifu/yuePay",
+                    type:"POST",
+                    data:{yue:yue,qian:qian},
+                    success:function(result){
+                        if(result==1){
+                            alert("支付成功!")
+                        }
+                    },
+                    error:function(){
+                        alert("失败了");
+                    },
+                    complete:function () {
+                        location.href="/toView?url=shouye";
                     }
-                },
-                error:function(){
-                    alert("失败了");
-                },
-                complete:function () {
-                    location.reload();
-                }
-        });
-
-}
+                });
+        }
 
 
     // 将所有.ui-choose实例化
