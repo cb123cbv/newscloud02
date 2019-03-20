@@ -16,10 +16,6 @@
         UPDATE t_jifen set yue=yue-#{qian} where userid=#{id}
     </update>
 
-    <!--充值余额 void addYue(@Param("qian") Integer qian,@Param("id")Integer id);-->
-    <update id="addYue">
-        UPDATE t_jifen set yue=yue+#{qian} where userid=#{id}
-    </update>
 
 
 </mapper>

@@ -56,9 +56,7 @@ public class VipStateServiceImpl implements VipStateService {
                 vipState1.setEndTime(ss+time);
                 vipStateMapper.upVip(vipState1);
             }else{
-                long aa= vipState1.getEndTime();
-                long count= aa+ss;
-                vipState1.setEndTime(count);
+                vipState1.setEndTime(vipState1.getEndTime()+ss);
                 vipStateMapper.upVip(vipState1);
             }
 

@@ -5,19 +5,14 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradePayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.jk.bean.Common;
 import com.jk.bean.Jifen;
-import com.jk.bean.Log;
 import com.jk.bean.Vip;
-import com.jk.bean.VipState;
-import com.jk.client.MongodbClient;
 import com.jk.config.AlipayConfig;
-import com.jk.service.MongodbLogService;
 import com.jk.service.PayService;
-import com.jk.service.VipStateService;
 import com.jk.utils.OrderCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,8 +20,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,11 +31,6 @@ public class AlipayController {
 
     @Resource
     private PayService payService;
-    @Resource
-    MongodbLogService mongodbLogService;
-
-    @Resource
-    private VipStateService vipStateService;
 
     @RequestMapping("toView")
     public String toView(String view){
@@ -66,17 +54,15 @@ public class AlipayController {
     /**
      * 支付请求
      */
-    String sss="";//钱
-    Integer zzz=null;//月 :1 3 6
-    Integer ccc=null;//充余额
+    String sss="";
+    Integer zzz=null;
     @RequestMapping("newsToPay")
-    public void pay(HttpServletRequest request, HttpServletResponse response,Common common) throws Exception {
-        zzz=common.getMonth();
-        sss=common.getMoney();
-        ccc=common.getPaystate();
+    public void pay(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "money")String money,@RequestParam(value = "month")Integer month) throws Exception {
+        zzz=month;
+        sss=money;
         // 模拟从前台传来的数据
         String orderNo = OrderCode.getOrderCode(); // 生成订单号
-        String totalAmount = sss; // 支付总金额
+        String totalAmount = money; // 支付总金额
         String subject = "orderName"; // 订单名称
         String body = "充值"; // 商品描述
 
@@ -142,33 +128,20 @@ public class AlipayController {
             }
 
 
+
             //-------------------------------------------------------------------------支付宝支付
-            Vip users = (Vip) session.getAttribute("user");
-            String type="";
-            if(zzz==null){//支付宝充值积分
+          if(zzz==null){//支付宝充值积分
+              Vip users = (Vip) session.getAttribute("user");
               payService.addjifen(users,qian);//
-                type="1";
-            }
-            if(zzz!=null){//支付宝充值vip
-                VipState vipState = new VipState();
-                vipState.setYue(zzz);
-                vipState.setUserid(users.getId());
-                vipStateService.addVipState(vipState);
-                type="2";
-            }
-            if(ccc!=null&&ccc==1){//支付宝充值余额
-                payService.addYue(users,qian);
-                type="3";
-            }
-            Log log=new Log();
-            log.setMoney(qian);
-            log.setText("充值成功");
-            log.setUserid(users.getId());
-            SimpleDateFormat sb=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            log.setDatetime(sb.format(new Date()));
-            mongodbLogService.addmongodbLog(log);
+          }
+        if(zzz!=null){//支付宝充值vip
+            Vip users = (Vip) session.getAttribute("user");
+            payService.addVip(users.getId(),zzz);
+        }
+
+            
             System.out.println("前往支付成功页面");
-            mav.setViewName("successReturn");
+            mav.setViewName("index");
 
         } else {
             System.out.println("前往支付失败页面");
@@ -237,12 +210,8 @@ public class AlipayController {
     @ResponseBody
     public String queryByPaypwd(HttpSession session,String r){
         Vip users = (Vip) session.getAttribute("user");
-       if(users.getVippassword().equals(r)){
-           return "1";//密码正确
-       }else{
-           return "0";//支付密码错误
-       }
+       // Jifen jf = payService.queryByPaypwd(users,jifen);
+
+        return "1";
     }
-
-
 }

@@ -9,6 +9,4 @@ public interface PayMapper {
     Jifen queryjifen(Integer id);
 
     void reduceYue(@Param("id")Integer id, @Param("yue") Integer yue, @Param("qian")Integer qian);
-
-    void addYue(@Param("qian") Integer qian,@Param("id")Integer id);
 }

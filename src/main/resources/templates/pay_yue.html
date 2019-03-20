@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>充值余额</title>
+    <title>Title</title>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <link rel="stylesheet" href="/chongzhi/css/amazeui.min.css">
     <link rel="stylesheet" href="/chongzhi/css/main.css">
@@ -79,7 +79,7 @@
                 </div>
                 <div class="tr_rechnum">
                     <span>应付金额：</span>
-                    <input id="moneyid"  class="rechnum" >
+                    <input id="moneyid" name = "money" class="rechnum" >
                 </div>
             </div>
             <div class="tr_paybox" id="yes">
@@ -119,10 +119,7 @@
         	},
         	error:function(){
         		alert("请先登录");
-        	},
-            complete:function(){
-               // location.href="/toView?url=Wopop";
-            }
+        	}
         });
     }
 
@@ -139,7 +136,7 @@
     //支付宝支付
     function toPay2(){
         money = $('.rechnum').val();
-        location.href="/zhifu/newsToPay?money="+money+"&paystate="+1;
+        location.href="/zhifu/newsToPay?money="+money+"&state"+1;
     }
 
     // 将所有.ui-choose实例化
