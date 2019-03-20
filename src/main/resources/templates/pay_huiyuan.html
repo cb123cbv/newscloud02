@@ -2,16 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>充值VIP</title>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <link rel="stylesheet" href="/chongzhi/css/amazeui.min.css">
     <link rel="stylesheet" href="/chongzhi/css/main.css">
 
     <!--引入easyui的样式 -->
-    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
-    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
-    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css">
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css">
 
 
 
@@ -74,7 +72,7 @@
                 </div>
                 <div class="tr_rechnum">
                     <span>应付金额：</span>
-                    <input id="moneyid" name = "money" class="rechnum" >
+                    <input id="moneyid"  readonly="readonly" class="rechnum" >
                 </div>
             </div>
             <div class="tr_paybox" id="yes">
@@ -88,6 +86,7 @@
 <script src="/chongzhi/js/jquery.min.js"></script>
 <script src="/chongzhi/js/ui-choose.js"></script>
 <script src="/chongzhi/js/amazeui.min.js"></script>
+<script src="/js/easyui1.5/jquery.easyui.min.js"></script>
 
 <script type="text/javascript" th:inline="none">
 
@@ -99,7 +98,7 @@
     var money = null;//支付的钱
     var month =0;//几个月
     var yue=0;//余额
-
+    var qian=0;//强转的钱
     function queryYue() {
         $.ajax({
         	url:"/zhifu/queryJifen",
@@ -111,7 +110,7 @@
 
         	},
         	error:function(){
-        		alert("请先登录");
+        		alert("失败了");
         	}
         });
     }
@@ -134,27 +133,53 @@
 
     //支付宝支付
     function toPay2(){
+
         money = $('.rechnum').val();
         month = $("input[name='docVlGender']:checked").val();
 
-        location.href="/zhifu/newsToPay?money="+money+"&month"+month;
+        window.location.href="/zhifu/newsToPay?money="+money+"&month="+month;
     }
 
     //余额支付
     function toPay1(){
+
         money = $('.rechnum').val();
         month = $("input[name='docVlGender']:checked").val();
-        var qian = parseInt(money);
-           if(yue<qian){
-               alert("余额不足,无法支付")
-               return;
-           }else{
-              payYue(yue,qian,month);//余额支付
-           }
+        qian = parseInt(money);
+            if(yue>qian){
+                chenTest();
+            }else{
+                alert("余额不足,无法支付")
+            }
     }
 
+    //输入支付密码
+    function chenTest(){
+        $.messager.prompt('您好!', '请输入支付密码：', function(r){
+            // 如果输入值,点确定:r=输入的值        取消:r=undefined
+            if (r!=undefined){
+                $.ajax({
+                    url:"/zhifu/queryByPaypwd",
+                    type:"POST",
+                    data:{r:r},
+                    success:function(result){
+                        if(result==1){
+                            payYue(qian,month);//余额支付
+                        }else{
+                            $.messager.alert('Warning','支付密码错误');
+                        }
+                    },
+                    error:function(){
+                        alert("ajax访问失败了,查看控制台");
+                    }
+                });
+            }
 
-        function payYue(yue,qian,month){
+        });
+    }
+
+        //后台余额支付接口
+        function payYue(qian,month){
 
             $.ajax({
                 url:"/member/addVipState",
@@ -169,7 +194,7 @@
                     alert("失败了");
                 },
                 complete:function () {
-                    location.reload();
+                    location.href="/toView?url=shouye";
                 }
              });
 

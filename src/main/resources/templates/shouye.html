@@ -165,7 +165,7 @@
                     $.each(result,function (val,obj) {
 
                         flag+=' <li >'
-                        flag+=' <a href="img/toshowInfo?tablename='+obj.tablename+'&titleid='+obj.titleid+'"><img width="640" height="410" src="'+obj.imgUrl+'"></a>'
+                        flag+=' <a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.titleid+'"><img width="640" height="410" src="'+obj.imgUrl+'"></a>'
                         flag+=' </li> '
                     })
                     $("#slider").html(flag);
@@ -185,13 +185,13 @@
                 data : {flag:flag},
                 success : function(result) {
                     $.each(result,function(index,obj){
-                        if(index<6){
-                            dd+=' <li >'
+                        if(index<20){
+                            dd+=' <li>'
                             dd+=' <i></i><a href='+obj.url+'>'+obj.title+'</a>'
                             dd+=' </li> '
                         }
-                        if(index>6&&index<=9){
-                            ff+=' <li >'
+                        if(index>20&&index<=23){
+                            ff+=' <li>'
                             ff+=' <i></i><a href='+obj.url+'>'+obj.title+'</a>'
                             ff+=' </li> '
                         }
@@ -208,22 +208,26 @@
         function pinjie(){
             var name=$("#vipname").val();
             var img=$("#vipheadimg").val();
+            var jifen = $("#jifen").val();
+            var yue = $("#yue").val();
             var div="";
             var div2='<img src="'+img+'" class="layui-nav-img">';
 
-            div +=  '<div class="logined" style="display: block;">'
+            div +=  '<div class="login-info" data-sudaclick="blog_user">'
+            div +=  '<div class="logined">'
             div +=  '<div class="logined-user-info">'
-
-            div +=  '<a href="http://blog.sina.com.cn/u/7029166002" suda-uatrack="key=2018_blog_index&amp;value=my_img" target="_blank"><img src="'+img+'" alt=""></a>'
-            div +=  '<a class="logined-name" target="_blank" suda-uatrack="key=2018_blog_index&amp;value=my_name" href="http://blog.sina.com.cn/u/7029166002">'+name+'</a>'
+            div +=  '<div>'
+            div +=  '<img src="'+img+'" alt="">'
+            div +=  '<a href="#"><font size="4px">'+name+'</font></a>'
             div +=  '<a class="logout-btn" suda-uatrack="key=2018_blog_index&amp;value=my_signout" href="javascript:clearSession();">退出</a>'
+            div +=  '</div>'
             div +=  '</div>'
             div +=  '<ul>'
             div +=  '<li>'
+            div +=  '<span>余额<a id="unreadnotices" suda-uatrack="key=2018_blog_index&amp;value=my_message" href="http://i.blog.sina.com.cn/blog_rebuild/profile/controllers/notelist.php?action=profilenotice" target="_blank">'+yue+'</a></span>'
             div +=  '</li>'
             div +=  '<li>'
-            div +=  '</li>'
-            div +=  '<li>'
+            div +=  '<span>积分<a id="user-point" suda-uatrack="key=2018_blog_index&amp;value=my_point" href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_list.php" target="_blank">'+jifen+'</a></span>'
             div +=  '</li>'
             div +=  '</ul>'
             div +=  '<div class="logined-bottom-btn">'
@@ -231,24 +235,41 @@
             div +=  '<a class="write-blog" target="_blank" suda-uatrack="key=2018_blog_index&amp;value=my_newblog" href="/toView?url=WriteWeibo" target="_blank">写博客</a>'
             div +=  '</div>'
             div +=  '</div>'
+            div +=  '</div>'
             $("#divid").html(div);
             $("#imgid").html(div2);
-        }
-        function denglu(){
 
+        }
+
+
+        function denglu(){
             $.ajax({
                 url:"/login/login",
                 type:"POST",
-                async:true,
+                async:false,
                 data:$("#newsBd").serialize(),
                 success:function(result){
                     if(result==2){
                         alert("账号或密码错误");
                     }
                     if(result==1){
-                        pinjie();
                         location.reload();
+                        pinjie();
                  }
+
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
+        }
+
+        function queryJifen(userid){
+            $.ajax({
+                url:"/page/queryJifen",
+                type:"POST",
+                data:{id:userid},
+                success:function(result){
 
                 },
                 error:function(){
@@ -271,7 +292,6 @@
             div += '</div>'
             div += '<div class="jfr">'
             div += '<input suda-uatrack="key=2018_blog_index&value=my_signin_save" id="auto" value="true" type="checkbox" name="auto" >'
-            div += '<label suda-uatrack="key=2018_blog_index&value=my_signin_save" for="auto"><span>下次自动登录</span></label>'
             div += '</div>'
             div += '</div>'
             div += '<div class="logined">'
@@ -283,12 +303,10 @@
         }
 
         function clearSession() {
-
             $.ajax({
                 url: "/login/clearSession",
                 type: "POST",
                 success: function (data) {
-
                     tcpinjie();
                 },
 
@@ -315,7 +333,7 @@
             		success:function(result){
             		    var count="";
             		    $.each(result,function(index,obj){
-            		        if(index<5){
+            		        if(index<4){
             		            count+='<li>';
             		            count+='<a href="javascript:void(0)">';
             		            count+='<img src="'+obj.vipheadimg+'" alt="'+obj.vipname+'"></a>';
@@ -507,11 +525,12 @@
             $.ajax({
                 url:"/title/queryTitle",
                 type:"POST",
+                async:false,
                 success:function(result){
                     var dh=""
                     $.each(result,function(index,obj){
 
-                        dh+='<li>';
+                        dh+='<li >';
                         if(obj.turl!=""){
                             dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
                         }else{
@@ -521,16 +540,14 @@
 
 
                     })
-                    dh+='<li class="sub-nav">' +
-                        '<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>' +
-                        '<ul class="down-list">' +
-                        '<li>' +
-                        '<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>' +
-                        '</li>' +
-                        '</ul>' +
-                        '</li>';
-
+                    dh+='<li class="sub-nav">';
+                    dh+='<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>';
+                    dh+='<ul class="down-list">';
+                    dh+='<li>';
+                    dh+='<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>';
+                    dh+='</li></ul></li>';
                     $("#daoHangId").html(dh);
+
                 },
                 error:function(){
                     alert("失败了");
@@ -540,6 +557,27 @@
 
         function to404() {
             alert("页面维护中...");
+        }
+
+        //充值跳转
+        function chongJump(flag){
+            var userid=$("#vipid").val();
+
+            if(userid==""){
+
+                layer.alert('请先登录', {icon: 6});
+            }else{
+                if(flag==1){
+                    location.href="/toView?url=pay_huiyuan";
+                }
+                if(flag==2){
+                    location.href="/toView?url=pay_jifen";
+                }
+                if(flag==3){
+                    location.href="/toView?url=pay_yue";
+                }
+            }
+
         }
     </script>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -563,11 +601,14 @@
 
 <body>
 <input type="hidden" th:value="${session.user?.vipaccount}" id="hid">
+<input type="hidden" th:value="${session.user?.id}" id="userid">
 <input type="hidden" th:value="${session.user?.vipname}" id="vipname">
+<input type="hidden" th:value="${session.jifen?.jifen}" id="jifen">
+<input type="hidden" th:value="${session.jifen?.yue}" id="yue">
 <input type="hidden" th:value="${session.user?.vipheadimg}" id="vipheadimg">
 <input type="hidden" th:value="${session.user?.id}" id="vipid">
 
-<input type="hidden" id="dsd">
+
 
 <script src="http://n.sinaimg.cn/blog/0977ce10/20180408/jsload.js"></script>
 <script>
@@ -639,6 +680,7 @@
         <div style="margin-left: 180px" >
         <ul class="nav-list" id="daoHangId">
 
+
         </ul>
         </div>
 
@@ -686,10 +728,12 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:void(0);">个人中心</a>
+                        <a href="javascript:void(0);">充值中心</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="/toView?url=pay_huiyuan"><font color="black">充VIP</font></a></dd>
-                            <dd><a href="/toView?url=pay_jifen"><font color="black">充积分</font></a></dd>
+                            <dd><a href="javascript:void(0)" onclick="chongJump(1)"><font color="black">充VIP</font></a></dd>
+                            <dd><a href="javascript:void(0)" onclick="chongJump(2)"><font color="black">充积分</font></a></dd>
+                            <dd><a href="javascript:void(0)" onclick="chongJump(3)"><font color="black">充余额</font></a></dd>
+
                         </dl>
                     </li>
 
@@ -697,6 +741,10 @@
             </div>
 
         </div>
+            <!------------------------------------>
+
+
+
         <div class="search">
            <!--公告-->
                 <marquee  id="marquee" style='height:50px' direction="left" onMouseOver="this.stop()" onMouseOut="this.start()" bgcolor=aaaaee >
@@ -794,7 +842,21 @@
                     <a class="right-arr" suda-uatrack="key=2018_blog_index&value=focus_slide" href="javascript:void(0);"></a>
                 </div>
                 <!-- 滚动区域结束 -->
+                <!--新闻区域-->
+                <div class="left-rec" data-sudaclick="blog_activity">
+                    <div class="l-title-1">
+                        <i class="l-line"></i>
+                        <h3 >热点新闻</h3>
+                        <i class="r-line"></i>
+                    </div>
+                    <ul id="redian">
+
+                    </ul>
+                </div>
+                <!--新闻区域结束-->
             </div>
+
+
             <div class="blog-right">
                 <!-- 登录信息 -->
                 <div id="divid">
@@ -809,7 +871,7 @@
                     </ul>
                 </div>
                 <!-- 每日图说 -->
-               <div class="week-hot-user" data-sudaclick="blog_weekhot">
+                <div class="week-hot-user" data-sudaclick="blog_weekhot">
                     <div class="l-title-1">
                         <i class="l-line"></i>
                         <h3>标题排行</h3>
@@ -820,7 +882,9 @@
                     </ul>
                 </div>
                 <!-- 每日图说结束 -->
+
             </div>
+
         </div>
 
         <div class="clearfix">
@@ -973,18 +1037,6 @@
                         }
                     }
                 </script>
-                <!-- 大话历史 -->
-                <div class="channel" data-sudaclick=rcmd_cul>
-                    <h3>热点新闻</h3>
-                    <div class="title">
-                        <a class="dahualishi" href="" target="_blank"></a>
-                        <a class="more" href="http://blog.sina.com.cn/lm/history/" target="_blank"></a>
-                    </div>
-                    <ul id="redian">
-
-                    </ul>
-                </div>
-                <!-- 大话历史 结束 -->
             </div>
         </div>
     </div>
@@ -994,7 +1046,6 @@
 <script type="text/javascript" src="http://mjs.sinajs.cn/blog/items/2018/blogIndex/js/manifest-0fea88.js"></script>
 <script type="text/javascript" src="http://mjs.sinajs.cn/blog/items/2018/blogIndex/js/vendor-46a2e2.js"></script>
 <script type="text/javascript" src="http://mjs.sinajs.cn/blog/items/2018/blogIndex/js/index-568c95.js"></script>
-
 
 </body>
 
