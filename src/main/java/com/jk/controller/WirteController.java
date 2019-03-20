@@ -66,6 +66,9 @@ public class WirteController {
     @RequestMapping("addWrite")
     public void addWrite(Common common) {
         if (common.getEndTime()=="") {
+            if(StringUtils.isEmpty(common.getJifen())){
+                common.setJifen(0);
+            }
             wirteService.addWrite(common);
         }
         if(!StringUtils.isEmpty(common.getEndTime())){
@@ -73,8 +76,11 @@ public class WirteController {
                 commons.add(common);
             }
             if (common.getTimeDate()==2) {
-                System.out.println("新增成功");
+                if(StringUtils.isEmpty(common.getJifen())){
+                    common.setJifen(0);
+                }
                 wirteService.addWrite(common);
+                System.out.println("新增成功");
             }
         }
 

@@ -22,6 +22,6 @@ public interface PlService {
 
  List<Huifu> queryHuiFu(Huifu huifu);
 
- void addpinglunState(Pl pl);
+
 
 }

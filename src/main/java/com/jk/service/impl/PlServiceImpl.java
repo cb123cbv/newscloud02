@@ -41,6 +41,7 @@ public class PlServiceImpl implements PlService {
     return "3";
   }else{
    plMapper.addPl(pl);
+   plMapper.addpinglunState(pl);
    return "1";
   }
  }
@@ -77,8 +78,5 @@ public class PlServiceImpl implements PlService {
   return plMapper.queryHuiFu(huifu);
  }
 
- @Override
- public void addpinglunState(Pl pl) {
-  plMapper.addpinglunState(pl);
- }
+
 }

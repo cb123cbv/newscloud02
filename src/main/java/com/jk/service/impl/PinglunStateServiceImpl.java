@@ -26,6 +26,8 @@ public class PinglunStateServiceImpl implements PinglunStateService {
             PingLun_State pingLun_state1 = pinglunStateMapper.queryTitleList(pingLun_state);
             pingLun_state.setTitle(pingLun_state1.getTitle());
         }
+        List<PingLun_State> pingLun_states = pinglunStateMapper.querySystemInfo(id);
+        list.addAll(pingLun_states);
         return list;
     }
 

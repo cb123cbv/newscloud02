@@ -286,7 +286,7 @@
         }
 
 
-        //查询评论
+        //查询评论状态
         function querypinglun() {
             var vipid = $("#vipid").val();
 
@@ -298,14 +298,21 @@
                     success:function(result){
                         if(result.length>0){
                             $.each(result,function(index,obj){
-                                console.log(obj);
-                                coun+='<dd style="width: 360px">'
-                                coun+='<img src="'+obj.vipheadimg+'" class="layui-nav-img">'///title/toshowInfo?name='+obj.tablename+'&id='+obj.id+'
-                                coun+='<font color="#a52a2a">'+obj.vipname+'</font><font color="black">评论了:</font><a href="/title/toshowInfo2?name='+obj.tablename+'&id='+obj.titleid+'&id2='+obj.id+'"><font color="blue">'+obj.title+'</font></a>';
-                                coun+='</dd>'
-                                coun+='<dd>'
-                                coun+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="black">评论内容:</font>&nbsp;<font color="green">'+obj.info+'</font>'
-                                coun+='</dd>'
+                                if(obj.pluserid!=0){
+                                    coun+='<dd style="width: 360px">'
+                                    coun+='<img src="'+obj.vipheadimg+'" class="layui-nav-img">'
+                                    coun+='<font color="#a52a2a">'+obj.vipname+'</font><font color="black">评论了:</font><a href="/title/toshowInfo2?name='+obj.tablename+'&id='+obj.titleid+'&id2='+obj.id+'"><font color="blue">'+obj.title+'</font></a>';
+                                    coun+='</dd>'
+                                    coun+='<dd>'
+                                    coun+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="black">评论内容:</font>&nbsp;<font color="green">'+obj.info+'</font>'
+                                    coun+='</dd>'
+                                }
+                                if(obj.pluserid==0){
+                                    coun+='<dd style="width: 360px">'
+                                    coun+='<font color="#ffd700">系统消息!!:</font><a href="javascript:SystemInfo('+obj.id+')" ><font color="blue">'+obj.info+'</font></a><font color="black">通过审核 +50积分</font>';
+                                    coun+='</dd>'
+                                }
+
                             })
                             $("#pinglunid").html(coun);
                         }else{
@@ -323,6 +330,23 @@
             }
         }
 
+        //点击系统消息，删除记录
+        function SystemInfo(id){
+            $.ajax({
+                url:"/title/deletePlState",
+                type : "POST",
+                data : {id:id},
+                success : function(result) {
+                    querypinglunCount();
+                    querypinglun();
+                },
+                error : function() {
+                    alert("失败了");
+                }
+            });
+
+
+        }
         //轮播图,查询url
         function queryImgInfo() {
             var flag="";

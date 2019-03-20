@@ -64,12 +64,12 @@ public class TitleController {
 
 
 
-    @RequestMapping("toshowInfo2")
+   /* @RequestMapping("toshowInfo2")
     public String toshowInfo2(String id, String name, Model model){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         return "showInfo";
-    }
+    }*/
 
 
     //文章支付积分，跳转页面的
@@ -112,16 +112,23 @@ public class TitleController {
         return "1";
     }
 
-
+    @ResponseBody
+    @RequestMapping("deletePlState")
+    public String deletePlState(String id){
+        pinglunStateService.deletes(id);
+        return "1";
+    }
 
     //评论专用
-    @RequestMapping("toshowInfo3")
+    @RequestMapping("toshowInfo2")
     public String toTitleInfo3(String id, String name,String id2, Model model){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         pinglunStateService.deletes(id2);
         return "showInfo";
     }
+
+
 
     //导航栏
     @RequestMapping("queryTitle")

@@ -17,4 +17,7 @@ public interface PinglunStateMapper {
     PingLun_State queryTitleList(PingLun_State pingLun_state);
 
     void deletes(String substring);
+
+    @Select("select * from t_pinglun_state s where s.vipid=#{id} and pluserid=0 ")
+    List<PingLun_State> querySystemInfo(Integer id);
 }
