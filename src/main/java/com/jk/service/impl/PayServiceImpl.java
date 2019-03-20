@@ -48,4 +48,10 @@ public class PayServiceImpl implements PayService {
         vipState.setYue(zzz);
         vipStateMapper.addVipState(vipState);
     }
+
+    @Override
+    public void addYue(Vip users, Integer qian) {
+        //添加余额
+        payMapper.addYue(qian,users.getId());
+    }
 }

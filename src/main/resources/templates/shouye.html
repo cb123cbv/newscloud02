@@ -50,7 +50,28 @@
             meizhourenqi();
             checkTime2();
             getddd();
+			queryTtph();
         })
+		//title大标题的排行
+        function queryTtph(){
+            var flag="";
+            $.ajax({
+                url: "/page/queryTtph",
+                type: "POST",
+                success: function (result) {
+                    $.each(result,function (index,obj) {
+                            flag+='<li><i class="top-bg">' + (index + 1) + '</i>'
+                            flag+='<span>'+obj.title+'</span>'
+                            flag+='<span>'+obj.ss+'</span>'
+                            flag+=' </li> '
+                    })
+                    $("#paihang").html(flag);
+                },
+                error: function () {
+                    alert("失败了");
+                }
+            });
+        }
         function getddd(){
             $.ajax({
             		url:"/getGGao",
@@ -788,18 +809,15 @@
                     </ul>
                 </div>
                 <!-- 每日图说 -->
-                <div class="b-img-talk" data-sudaclick=blog_pic_03 style="margin-top: 20px">
-                    <h3>
-                        <a href="http://blog.sina.com.cn/lm/pic/" target="_blank">每日图说</a>
-                        <a class="more" href="http://blog.sina.com.cn/lm/pic/" target="_blank"></a>
-                    </h3>
-                    <a  href="http://blog.sina.com.cn/s/blog_774dd74f0102zbrr.html?tj=1" target="_blank">
-                        <img  src="http://n.sinaimg.cn/blogapp/transform/520/w320h200/20190307/0T0b-htwhfzt1577409.jpg" />
-                    </a>
-                    <p class="title"><a href="http://blog.sina.com.cn/s/blog_774dd74f0102zbrr.html?tj=1" target="_blank">到成都不得不去的杜甫草堂</a>
-                    </p>
-                    <p class="des"><a href="http://blog.sina.com.cn/s/blog_774dd74f0102zbrr.html?tj=1" target="_blank">杜甫草堂是唐代大诗人杜甫流寓成都时的故居，杜甫先后在此居住4年，创作诗歌240首。</a>
-                    </p>
+               <div class="week-hot-user" data-sudaclick="blog_weekhot">
+                    <div class="l-title-1">
+                        <i class="l-line"></i>
+                        <h3>标题排行</h3>
+                        <i class="r-line"></i>
+                    </div>
+                    <ul id="paihang"class="art-list" data-sudaclick="blog_enthot">
+
+                    </ul>
                 </div>
                 <!-- 每日图说结束 -->
             </div>
