@@ -29,6 +29,7 @@
                     <img src="/chongzhi/images/ys_head2.jpg" />
                     <p>充值帐号：
                         <a><input type="hidden" id="zhanghaoId" th:value="${session.user?.vipname}">
+                            <input type="hidden" th:value="${session.user?.id}" id="vipid">
                             <span id="zhanghaoSpan"></span>
                         </a>
                     </p>
@@ -114,6 +115,8 @@
     var jifen=0;//积分
     var qian=0;//强转的钱
     function queryJifen() {
+
+
         $.ajax({
         	url:"/zhifu/queryJifen",
         	type:"POST",
@@ -126,11 +129,8 @@
 
         	},
         	error:function(){
-        		alert("请先登录");
-        	},
-            complete:function(){
-              //  location.href="/toView?url=Wopop";
-            }
+        		alert("失败了");
+        	}
         });
     }
 
@@ -161,12 +161,13 @@
 
         money = $('.rechnum').val();
         qian = parseInt(money);
-           if(yue>qian){
-               chenTest();
-           }else{
-               alert("余额不足,无法支付")
-               return;
-           }
+        if(yue>qian){
+            chenTest();
+        }else{
+            alert("余额不足,无法支付")
+        }
+
+
     }
 
     //输入支付密码

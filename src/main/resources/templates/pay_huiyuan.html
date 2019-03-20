@@ -110,11 +110,8 @@
 
         	},
         	error:function(){
-        		alert("请先登录");
-        	},
-            complete:function(){
-              //  location.href="/toView?url=Wopop";
-            }
+        		alert("失败了");
+        	}
         });
     }
 
@@ -153,7 +150,6 @@
                 chenTest();
             }else{
                 alert("余额不足,无法支付")
-                return;
             }
     }
 
