@@ -30,7 +30,7 @@
     <select id="blogRank" resultType="com.jk.bean.Common">
         select * from t_yule y, t_lanmu_biaoti lb,t_lanmu l
         where lb.biaotiid = y.id  and lb.lanmuid = l.id and l.id=#{flag}
-        and DATE_FORMAT(y.time, '%Y%m' ) = DATE_FORMAT(CURDATE( ) , '%Y%m' )
+        and YEARWEEK(date_format(y.time,'%Y-%m-%d')) = YEARWEEK(now())
         ORDER BY y.time desc LIMIT 10
     </select>
 <!--List<LanMu> queryLanmu();-->

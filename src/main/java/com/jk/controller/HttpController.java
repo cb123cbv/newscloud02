@@ -24,7 +24,7 @@ public class HttpController {
 
 
         params.put("type",flag);
-        params.put("key", "c6894764e93d72e3747c1ab039c9050e");
+        params.put("key", "be6460ae8aa48d63ec1a33b6eaf86f52");
         String result = HttpClient.sendGet("http://v.juhe.cn/toutiao/index",params);
 
         //result是一个json字符串  ,要把他转换成对象可以更好地取值

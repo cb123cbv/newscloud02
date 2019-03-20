@@ -17,7 +17,27 @@
         SELECT * FROM t_vip where id=#{userid}
     </select>
 
+    <!-- PayArticle queryPayArticle(PayArticle payArticle);-->
+    <select id="queryPayArticle" resultType="com.jk.bean.PayArticle">
+        SELECT * FROM t_payarticle where tablename=#{tablename} and userid=#{userid} and titleid=#{titleid} and endTime &gt;=#{endTime}
+    </select>
 
+    <!--Jifen queryjifen(Integer id);-->
+    <select id="queryjifen" resultType="com.jk.bean.Jifen">
+        SELECT * FROM t_jifen where userid=#{id}
+    </select>
+
+    <!-- void jianJiFen(PayArticle article);-->
+    <update id="jianJiFen">
+        update t_jifen set jifen=jifen-#{jifen} where userid=#{userid}
+    </update>
+
+    <!--void addPayArticle(PayArticle article);-->
+    <insert id="addPayArticle">
+        insert into t_payarticle(tablename,userid,startTime,endTime,jifen,titleid)values(
+        #{tablename},#{userid},#{startTime},#{endTime},#{jifen},#{titleid}
+        )
+    </insert>
 
 
 </mapper>

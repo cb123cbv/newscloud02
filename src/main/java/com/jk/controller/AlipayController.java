@@ -134,7 +134,7 @@ public class AlipayController {
                 e.printStackTrace();
             }
             //-------------------------------------------------------------------------支付宝支付
-            Vip users = (Vip) session.getAttribute("l");
+            Vip users = (Vip) session.getAttribute("user");
 
             if(zzz==null){//支付宝充值积分
               payService.addjifen(users,qian);//

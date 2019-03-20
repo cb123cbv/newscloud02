@@ -1,97 +1,172 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title>Wopop</title>
-
-<script src="/js/jquery-2.1.1.min.js"></script>
-<link href="/js/Wopop_files/style_log.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="/js/Wopop_files/style.css">
-<link rel="stylesheet" type="text/css" href="/js/Wopop_files/userpanel.css">
-<link rel="stylesheet" type="text/css" href="/js/Wopop_files/jquery.ui.all.css">
-<script type="text/javascript" th:inline="none">
-    function denglu(){
-        $.ajax({
-            url:"/login/login",
-            type:"POST",
-            async:true,
-            data:$("#login").serialize(),
-            success:function(result){
-                if(result==2){
-                    alert("账号或密码错误");
-                }
-                if(result==1){
-                    var href=document.referrer;
-                    if(href==""){
-                        location.href="/test/toView?url=index";
-                    }else{
-                        location.href=href;
-                    }
-                    alert("登陆成功");
-                }
-            },
-            error:function(){
-                alert("失败了");
-            }
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>系统用户登录</title>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
+    <link href="/css/login.css" rel="stylesheet" rev="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="/js/jQuery1.7.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery1.42.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.SuperSlide.js"></script>
+    <script type="text/javascript" src="/js/Validform_v5.3.2_min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var $tab_li = $('#tab ul li');
+            $tab_li.hover(function(){
+                $(this).addClass('selected').siblings().removeClass('selected');
+                var index = $tab_li.index(this);
+                $('div.tab_box > div').eq(index).show().siblings().hide();
+            });
         });
-    }
-</script>
+    </script>
 
+    <script type="text/javascript">
+        $(function(){
+            $(".screenbg ul li").each(function(){
+                $(this).css("opacity","0");
+            });
+            $(".screenbg ul li:first").css("opacity","1");
+            var index = 0;
+            var t;
+            var li = $(".screenbg ul li");
+            var number = li.size();
+            function change(index){
+                li.css("visibility","visible");
+                li.eq(index).siblings().animate({opacity:0},3000);
+                li.eq(index).animate({opacity:1},3000);
+            }
+            function show(){
+                index = index + 1;
+                if(index<=number-1){
+                    change(index);
+                }else{
+                    index = 0;
+                    change(index);
+                }
+            }
+            t = setInterval(show,8000);
+            //根据窗口宽度生成图片宽度
+            var width = $(window).width();
+            $(".screenbg ul img").css("width",width+"px");
+        });
+    </script>
+    <script type="text/javascript">
+        function login(){
+                $.ajax({
+                    url:"/login/login",
+                    type:"POST",
+                    data:$("form").serialize(),
+                    success:function(result){
+                        if(result==2){
+                           layer.msg("账号或密码错误");
+                        }
+                        if(result==1){
+                            var href=document.referrer;
+                            if(href==""){
+                                location.href="/toView?url=index";
+                            }else{
+                                location.href=href;
+                            }
+                            layer.msg("登陆成功");
+                        }
+                    },
+                    error:function(){
+                        alert("失败了");
+                    }
+                })
+        }
+
+
+        QC.Login({
+                btnId:"qqLoginTest",
+            }, function(dt, opts){
+                //登录成功
+                token();
+                QC.Login.fillUserInfo(opts['btnId'], dt);
+                showQCK();
+                QC.Console.log("IN:OO");
+
+            }
+        );
+
+        function token() {
+
+            if(QC.Login.check()){//如果已登录
+                QC.Login.getMe(function(openId, accessToken){
+
+                    var opens= openId;
+                   console.log(opens)
+                    /*ajax   start*/
+                    $.ajax({
+                        url:"/login/toLoginByQQ?opens="+opens,
+                        type:"POST",
+
+
+                        success:function(result){
+                            if(result==1) {
+                                window.location.href = "/toView?url=index";
+                            }
+                        },
+                        error:function(){
+                            layer.msg("ajax失败");
+                        },complete:function(){
+                            layer.close(ii);
+                        }
+                    });
+                    /*ajax   end*/
+                });
+
+            }
+        }
+    </script>
 
 </head>
 
-<body class="login" mycollectionplug="bind">
-<div class="login_m">
-<div class="login_boder">
+<body>
+<div id="tab">
+    <ul class="tab_menu">
+        <li class="selected">用户登录</li>
+    </ul>
+    <div class="tab_box">
+        <!-- 学生登录开始 -->
+        <div>
+            <div class="stu_error_box"></div>
+            <form  >
+                <div id="username">
+                    <label>账&nbsp;&nbsp;&nbsp;号：</label>
+                    <input type="text" id="stu_username_hide" name="vipaccount"  placeholder='输入账号' nullmsg="账号不能为空！" datatype="s6-18" errormsg="学号范围在6~18个字符之间！" sucmsg="账号验证通过！"/>
+                    <!--ajaxurl="demo/valid.jsp"-->
+                </div>
+                <div id="password">
+                    <label>密&nbsp;&nbsp;&nbsp;码：</label>
+                    <input type="password" id="stu_password_hide" name="vippassword" placeholder="输入密码" nullmsg="密码不能为空！" datatype="*6-16" errormsg="密码范围在6~16位之间！" sucmsg="密码验证通过！"/>
+                </div>
+                <div id="code">
+                    <label>验证码：</label>
+                    <input type="text" id="stu_code_hide" name="code"  placeholder="输入验证码" nullmsg="验证码不能为空！" datatype="*4-4" errormsg="验证码有4位数！" sucmsg="验证码验证通过！"/>
+                    <img src="/images/captcha.jpg" title="点击更换" alt="验证码占位图"/> </div>
 
-<div class="login_padding" id="login_model">
-    <form id="login">
-  <h2>USERNAME</h2>
-  <label>
-    <input type="text" id="vipaccount"name="vipaccount" class="txt_input txt_input2">
-  </label>
-  <h2>PASSWORD</h2>
-  <label>
-    <input type="password" name="vippassword" id="userpwd" class="txt_input">
-  </label>
-    </form>
-  <div class="rem_sub">
-  <div class="rem_sub_l">
+            </form>
+            <div >
+                <button type="button"  onclick="login()">登录</button>
+            </div>
+            <div class="box_down_1">
+                <span id="qqLoginTest"></span>
+            </div>
+        </div>
 
-   </div>
-    <label>
-      <input type="button" class="sub_button" value="登录" onclick="denglu()" style="opacity: 0.7;">
-    </label>
-      <span id="qqLoginBtn"></span>
-  </div>
+        <!-- 学生登录结束-->
+    </div>
 </div>
+<div class="bottom">©2014 Leting <a href="javascript:;" target="_blank">关于</a> <span>京ICP证030173号</span>  More Templates <a href="http://www.cssmoban.com/" target="_blank" ></a> - Collect from <a href="http://www.cssmoban.com/"  target="_blank"></a><img width="13" height="16" src="/images/copy_rignt_24.png" /></div>
+<div class="screenbg">
+    <ul>
 
-
-<div id="forget_model" class="login_padding" style="display:none">
-<br>
-
-   <h1>Forgot password</h1>
-   <br>
-   <div class="forget_model_h2">(Please enter your registered email below and the system will automatically reset users’ password and send it to user’s registered email address.)</div>
-    <label>
-    <input type="text" id="usrmail" class="txt_input txt_input2">
-   </label>
-
- 
-  <div class="rem_sub">
-  <div class="rem_sub_l">
-   </div>
-    <label>
-     <input type="submit" class="sub_buttons" name="button" id="Retrievenow" value="Retrieve now" style="opacity: 0.7;">
-     　　　
-     <input type="submit" class="sub_button" name="button" id="denglou" value="Return" style="opacity: 0.7;">　　
-    
-    </label>
-  </div>
+        <li><a href="javascript:;"><img src="/images/1.jpg"></a></li>
+        <li><a href="javascript:;"><img src="/images/2.jpg"></a></li>
+    </ul>
 </div>
-</div>
-</div>
- <br> <br>
-
-
-
-</body></html>
+</body>
+</html>

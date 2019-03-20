@@ -17,6 +17,21 @@
     <link rel="stylesheet" href="/js/lunbotu/css/style.css">
     <!-- 导入 jquery包  -->
     <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--引入easyui的样式 -->
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-table/bootstrap-table.min.css" >
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" >
+    <link href="/js/bootstrap-3.3.7-dist/bootstrap-select-1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/uploadify/uploadify.css" />
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-select-1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="/js/uploadify/jquery.uploadify.js"></script>
     <link rel="stylesheet" href="/js/uploadify/uploadify.css">
     <script src="/js/layer/layer.js"></script>
     <!--layui-->
@@ -30,6 +45,7 @@
                 location.href = 'http://blog.sina.cn';
             }
         })();
+
         $(function(){
             querypinglunCount();
             querypinglun();
@@ -48,11 +64,11 @@
             getcaijing2();
             gettiyu2();
             meizhourenqi();
-            checkTime2();
-            getddd();
-			queryTtph();
+            queryTtph();
+
         })
-		//title大标题的排行
+
+        //title大标题的排行
         function queryTtph(){
             var flag="";
             $.ajax({
@@ -71,32 +87,6 @@
                     alert("失败了");
                 }
             });
-        }
-        function getddd(){
-            $.ajax({
-            		url:"/getGGao",
-            		type:"POST",
-            		success:function(result){
-            		   	if(result.text!=undefined){
-                            layer.open({
-                                type: 1
-                                ,title: false //不显示标题栏
-                                ,closeBtn: false
-                                ,area: '500px;'
-                                ,shade: 0.8
-                                ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                                ,resize: false
-                                ,btn: ['关闭']
-                                ,btnAlign: 'c'
-                                ,moveType: 1 //拖拽模式，0或者1
-                                ,content: '<div id="ddd" style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"><font color=\'red\' size=\'5px\'>重大公告</font>:<br>&nbsp&nbsp'+result.text+'</div>'
-                            });
-                        }
-            		},
-            		error:function(){
-            			alert("失败了");
-            		}
-            		})
         }
 
         //查询评论数量
@@ -154,6 +144,7 @@
                 $("#pinglunid").html(coun);
             }
         }
+
         //轮播图,查询url
         function queryImgInfo() {
             var flag="";
@@ -490,36 +481,7 @@
             		})
         }
         /*每周人气榜结束*/
-        /*公告*/
-        function checkTime(){
-            $.ajax({
-            		url:"/getGongGao",
-            		type:"POST",
-            		success:function(result){
-            		    if(result!=null){
-                            $("#gonggao").html(result.text);
-                        }
 
-            		},
-            		error:function(){
-            			//alert("失败了");
-            		}
-            		})
-        }
-        setInterval("checkTime()","5000");
-
-        function checkTime2(){
-            $.ajax({
-            		url:"/getGGao",
-            		type:"POST",
-            		success:function(result){
-            		},
-            		error:function(){
-            			//alert("失败了");
-            		}
-            		})
-        }
-        setInterval("checkTime2()","5000");
         //导航栏
         function queryDaoHang() {
             $.ajax({
@@ -611,6 +573,7 @@
 
 
 <script src="http://n.sinaimg.cn/blog/0977ce10/20180408/jsload.js"></script>
+<script>document.domain = "sina.com.cn";</script>
 <script>
     var __scope__ = {
         updateBrowserLink : 'http://dl.pconline.com.cn/download/51614-1.html'//浏览器推荐下载地址
@@ -746,12 +709,33 @@
 
 
         <div class="search">
-           <!--公告-->
-                <marquee  id="marquee" style='height:50px' direction="left" onMouseOver="this.stop()" onMouseOut="this.start()" bgcolor=aaaaee >
-                    <font  size="5px" id="gonggao" face='楷体'>
-
-                    </font>
-                </marquee>
+            <div class="row">
+                <div id='search-type-selector' data-val="article" class="label">
+                    <span>博文</span><i></i>
+                    <ul class="sub-label">
+                        <li data-val="article">
+                            <span>博文</span>
+                        </li>
+                        <li data-val="title">
+                            <span>标题</span>
+                        </li>
+                        <li data-val="author">
+                            <span>作者</span>
+                        </li>
+                        <li data-val="tag">
+                            <span>标签</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search-input">
+                    <input id="search" type="text" placeholder="搜索内容" autocomplete="off"><i suda-uatrack="key=2018_blog_index&value=blog_nav_search"></i>
+                    <ul class="sub-input first-view-search">
+                        <!-- 首屏热搜 -->
+                    </ul>
+                    <ul class="sub-input sec-view-search">
+                        <!-- 用户检索联想 -->
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

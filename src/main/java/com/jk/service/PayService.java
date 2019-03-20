@@ -10,7 +10,6 @@ public interface PayService {
 
     void yuePay(Vip users, Jifen jifen, Integer qian);
 
-    void addVip(Integer id, Integer zzz);
 
-    void addYue(Vip users, Integer qian);
+    void addYue(Vip users,Integer qian);
 }

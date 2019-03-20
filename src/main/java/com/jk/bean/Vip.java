@@ -26,5 +26,5 @@ public class Vip {
     private Integer zt=0;
     Integer status;
 
-    private String  qqid;
+    private String  opens;
 }

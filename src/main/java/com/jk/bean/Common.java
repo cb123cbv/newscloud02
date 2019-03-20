@@ -9,6 +9,8 @@ public class Common {
 
     private String title;
 
+    private String ss;
+
     private Integer vipid;
 
     private String time;
@@ -27,6 +29,8 @@ public class Common {
     Integer djl;//数量
     private String tlink;//推荐文章的链接
 
+    private Integer jifen;//推荐文章的链接
+
     //-----------------新增微博
     private String name;//标题
     private String textName;//编辑器内容
@@ -41,10 +45,9 @@ public class Common {
 
 
     private String site;//定位的地址
+
     private String money;//钱
     private Integer month;//月
     private Integer paystate;//充余额
-
-
 
 }

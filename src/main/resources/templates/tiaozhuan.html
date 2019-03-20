@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--jquery-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+
+</head>
+
+<body>
+<input type="hidden" id="titleid" th:value="${titleid}">
+<input type="hidden" id="tablename" th:value="${tablename}">
+<input type="hidden" id="vipid" th:value="${vipid}">
+<input type="hidden" id="authorid" th:value="${authorid}">
+<input type="hidden" id="jiage" th:value="${jiage}">
+<input type="hidden" id="vipjifen" th:value="${vipjifen}"><!--用户剩余积分-->
+<input type="hidden" id="payState" th:value="${payState}"><!--查看用户是否已经支付1:支付 0:未支付-->
+
+
+</body>
+<script type="text/javascript" th:inline="none">
+
+    $(function () {
+        panduan();
+    })
+
+    function panduan() {
+        var vipid = $("#vipid").val();//登录用户的id
+        var authorid = $("#authorid").val();//文章作者id
+        var titleid = $("#titleid").val();
+        var tablename = $("#tablename").val();
+        var jiage = $("#jiage").val();
+        var vipjifen = $("#vipjifen").val();
+        var payState = $("#payState").val();
+
+        if(jiage==0){//文章不收费
+            window.location.href="/title/toshowInfo2?id="+titleid+"&name="+tablename;
+        }
+       if(jiage>0){
+           if(vipid==null||vipid==""){
+               var truthBeTold = window.confirm("需要您登陆");
+
+               if(truthBeTold){
+                   window.location.href="/toView?url=Wopop"
+               }else{
+                   window.location.href="/toView?url=shouye"
+               }
+           }
+
+           if(vipid!=null&&vipid!=""){
+                if(vipid==authorid){//作者本人查看
+
+                    window.location.href="/title/toshowInfo2?id="+titleid+"&name="+tablename;
+                }
+               if(vipid!=authorid){//需要用户付费
+
+                   if (payState==1){
+
+                       window.location.href="/title/toshowInfo2?id="+titleid+"&name="+tablename;
+                   }
+
+                   if (payState==0){
+
+
+                       var truthBeTold = window.confirm("收费文章,需要您支付"+jiage+"积分,有效时间10分钟");
+                       if(truthBeTold){
+                         var num= vipjifen-jiage;
+                           if(num>=0){//去减积分
+                               $.ajax({
+                                   url:"/title/jianJiFen",
+                                   type:"POST",
+                                   async:false,
+                                   data:{jifen:jiage,tablename:tablename,titleid:titleid},
+                                   success:function(pageUtil){
+                                       if(pageUtil==1){
+                                           alert("支付成功");
+                                           window.location.href="/title/toshowInfo2?id="+titleid+"&name="+tablename;
+                                       }
+                                   },
+                                   error:function(){
+                                       alert("支付失败");
+                                   }
+                               });
+
+                               //减用户积分，加消费记录
+                               //window.location.href="/title/jianJiFen?jifen="+jiage+"&name="+tablename+"&titleid="+titleid;
+                               //window.location.href="/title/toshowInfo2?id="+titleid+"&name="+tablename;
+                           }
+                           if(num<0){//余额不足，去充值界面
+
+                               var truthBeTold = window.confirm("您的余额不足,请去充值！");
+                               if(truthBeTold){
+                                   window.location.href="/toView?url=pay_jifen"
+                               }else{
+                                   window.location.href="/toView?url=shouye"
+                               }
+                           }
+
+                       }else{
+                           window.location.href="/toView?url=shouye"
+                       }
+                   }
+               }
+           }
+       }
+    }
+
+
+
+</script>
+</html>
