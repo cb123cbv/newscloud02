@@ -22,7 +22,6 @@ public class ArticleRankServiceImpl implements ArticleRankService {
             pageView.setUserid(0);
         }
 
-
         articleRankMapper.addArticle(pageView);
     }
 

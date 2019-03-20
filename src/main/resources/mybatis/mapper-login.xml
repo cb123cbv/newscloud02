@@ -7,7 +7,7 @@
         select * from t_vip where vipaccount=#{vipaccount} and vippassword = #{vippassword}
     </select>
 
-    <select id="getUserByQQ" resultType="com.jk.bean.Vip">
-        select * from t_vip
+    <select id="toLoginByQQ" resultType="com.jk.bean.Vip">
+        select * from t_vip where opens=#{opens}
     </select>
 </mapper>

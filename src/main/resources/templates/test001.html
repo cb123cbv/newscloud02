@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--jquery-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+
+</head>
+
+<body>
+
+
+</body>
+<script type="text/javascript" th:inline="none">
+
+    $(function () {
+        panduan();
+    })
+
+    function panduan() {
+
+        var truthBeTold = window.confirm("收费文章,需要您支付积分,有效时间10分钟");
+        alert(truthBeTold);
+        if(truthBeTold){
+           alert(1111);
+
+            }else{//余额不足，去充值界面
+            alert(2222);
+            }
+
+    }
+
+
+
+</script>
+</html>

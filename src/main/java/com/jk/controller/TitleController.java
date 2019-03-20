@@ -64,16 +64,59 @@ public class TitleController {
 
 
 
-    @RequestMapping("toshowInfo")
-    public String toTitleInfo(String id, String name, Model model){
+    @RequestMapping("toshowInfo2")
+    public String toshowInfo2(String id, String name, Model model){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         return "showInfo";
     }
 
+
+    //文章支付积分，跳转页面的
+    @RequestMapping("toshowInfo")//需要当前对象
+    public String toshowInfo(String id, String name, Model model,HttpSession session){
+
+        Vip user = (Vip) session.getAttribute("user");
+        Common common = titleService.queryTitleOne(id, name);
+        model.addAttribute("jiage",common.getJifen());
+        model.addAttribute("titleid",id);
+        model.addAttribute("tablename",name);
+        if (user==null) {
+            return "tiaozhuan";
+        }
+        PayArticle payArticle = new PayArticle();
+        payArticle.setUserid(user.getId());
+        payArticle.setTablename(name);
+        payArticle.setTitleid(id);
+        PayArticle payArticle1 = titleService.queryPayArticle(payArticle);
+        Jifen queryjifen = titleService.queryjifen(user.getId());//查询剩余积分
+        if (payArticle1==null) {//支付状态
+            model.addAttribute("payState",0);
+        }else{
+            model.addAttribute("payState",1);
+        }
+        model.addAttribute("vipid",user.getId());//用户剩余积分
+        model.addAttribute("authorid",common.getVipid());
+        model.addAttribute("vipjifen",queryjifen.getJifen());//用户剩余积分
+
+        return "tiaozhuan";
+    }
+
+    @ResponseBody
+    @RequestMapping("jianJiFen")//需要当前对象
+    public String jianJiFen(PayArticle article,HttpSession session){
+        Vip user = (Vip) session.getAttribute("user");
+        article.setUserid(user.getId());
+        titleService.jianJiFen(article);
+        titleService.addPayArticle(article);
+        return "1";
+    }
+
+
+
     //评论专用
-    @RequestMapping("toshowInfo2")
-    public String toTitleInfo2(String id, String name,String id2, Model model){
+    @RequestMapping("toshowInfo3")
+    public String toTitleInfo3(String id, String name,String id2, Model model){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         pinglunStateService.deletes(id2);

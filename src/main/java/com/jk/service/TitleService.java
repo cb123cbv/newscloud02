@@ -1,9 +1,7 @@
 package com.jk.service;
 
 
-import com.jk.bean.Common;
-import com.jk.bean.QueryParam;
-import com.jk.bean.TitleInfo;
+import com.jk.bean.*;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 
@@ -20,4 +18,16 @@ public interface TitleService {
 
 
     List<TitleInfo> queryTitle();
+
+    Common queryTitleOne(String id, String name);
+
+
+
+    PayArticle queryPayArticle(PayArticle payArticle);
+
+    Jifen queryjifen(Integer id);
+
+    void jianJiFen(PayArticle article);
+
+    void addPayArticle(PayArticle article);
 }
