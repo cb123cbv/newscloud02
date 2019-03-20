@@ -192,7 +192,7 @@
 
                 },
                 error : function() {
-                    alert("ajax访问失败了,查看控制台");
+                    alert("今日httpClient访问次数用完");
                 }
             });
         }
@@ -487,11 +487,12 @@
             $.ajax({
                 url:"/title/queryTitle",
                 type:"POST",
+                async:false,
                 success:function(result){
                     var dh=""
                     $.each(result,function(index,obj){
 
-                        dh+='<li>';
+                        dh+='<li >';
                         if(obj.turl!=""){
                             dh+='<a target="_blank" href="/toView?url='+obj.turl+'">'+obj.tname+'</a>';
                         }else{
@@ -501,16 +502,14 @@
 
 
                     })
-                    dh+='<li class="sub-nav">' +
-                        '<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>' +
-                        '<ul class="down-list">' +
-                        '<li>' +
-                        '<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>' +
-                        '</li>' +
-                        '</ul>' +
-                        '</li>';
-
+                    dh+='<li class="sub-nav">';
+                    dh+='<a class="rank-nav" href="javascript:void(0);">排行榜<i></i></a>';
+                    dh+='<ul class="down-list">';
+                    dh+='<li>';
+                    dh+='<a target="_blank" href="/toView?url=index"><span>博文排行</span></a>';
+                    dh+='</li></ul></li>';
                     $("#daoHangId").html(dh);
+
                 },
                 error:function(){
                     alert("失败了");
@@ -623,6 +622,7 @@
         <div style="margin-left: 180px" >
         <ul class="nav-list" id="daoHangId">
 
+
         </ul>
         </div>
 
@@ -666,18 +666,27 @@
                         <div style="float: left;margin-left: 25px"><a href="javascript:;">评论</a></div>
                         <dl class="layui-nav-child" id="pinglunid">
 
-                          <dd><img src="http://p5.sinaimg.cn/1510039900/180/01541361605077" class="layui-nav-img"><font color="black">张三评论了你：这是一个很好看的文章... </font></dd>
-                            <dd><font color="black">  评论内容：很过分的会计师购房... </font></dd>
+
                         </dl>
                     </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:void(0);">充值中心</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/toView?url=pay_huiyuan"><font color="black">充VIP</font></a></dd>
+                            <dd><a href="/toView?url=pay_jifen"><font color="black">充积分</font></a></dd>
+                            <dd><a href="/toView?url=pay_yue"><font color="black">充余额</font></a></dd>
+
+                        </dl>
+                    </li>
+
                 </ul>
             </div>
 
-
+        </div>
             <!------------------------------------>
 
 
-        </div>
+
         <div class="search">
             <div class="row">
                 <div id='search-type-selector' data-val="article" class="label">

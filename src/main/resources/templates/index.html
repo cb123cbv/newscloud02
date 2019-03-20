@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
+
     <!--引入easyui的样式 -->
     <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
     <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
@@ -1086,6 +1088,8 @@
                 <div class="sHLinks">
                     <a href="javascript:void(0)">你好,<span id="username"></span></a>
                     &nbsp;|&nbsp;
+                    <a href="javascript:QC.Login.signOut();" style="margin-left:6px;">QQ退出</a>
+                    &nbsp;|&nbsp;
                     <a href="/login/toLogin">用户登录</a>
                     &nbsp;|&nbsp;
                     新浪首页<!--超连接-->
@@ -1445,7 +1449,7 @@
                 $("#ggw1").html(count);
             },
             error:function(){
-                alert("失败了");
+                alert("广告1失败了");
             }
         });
     }
@@ -1474,7 +1478,7 @@
                 $("#ggw2").html(count);
             },
             error:function(){
-                alert("失败了");
+                alert("广告2失败了");
             }
         });
     }
@@ -1503,7 +1507,7 @@
                 $("#ggw3").html(count);
             },
             error:function(){
-                alert("失败了");
+                alert("广告3失败了");
             }
         });
     }
@@ -1532,7 +1536,7 @@
                 $("#ggw4").html(count);
             },
             error:function(){
-                alert("失败了");
+                alert("广告4失败了");
             }
         });
     }

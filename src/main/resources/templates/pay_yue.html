@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>充值余额</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="/chongzhi/css/amazeui.min.css">
+    <link rel="stylesheet" href="/chongzhi/css/main.css">
+
+    <!--引入easyui的样式 -->
+    <script src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css">
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css">
+
+
+</head>
+<body>
+
+<div class="pay">
+    <!--主内容开始编辑-->
+    <div class="tr_recharge">
+        <div class="tr_rechtext">
+            <p class="te_retit"><img src="/chongzhi/images/coin.png" alt="" />充值余额</p>
+            <p>Tip:积分与人民币换算为1：1，你可以选择支付宝付款方式来进行充值，10元起充。</p>
+        </div>
+        <form  class="am-form" id="doc-vld-msg">
+            <div class="tr_rechbox">
+                <div class="tr_rechhead">
+                    <img src="/chongzhi/images/ys_head2.jpg" />
+                    <p>充值帐号：
+                        <a><input type="hidden" id="zhanghaoId" th:value="${session.user?.vipname}">
+                            <span id="zhanghaoSpan"></span>
+                        </a>
+                    </p>
+                    <div class="tr_rechheadcion" style="margin-left: 20px">
+                        <img src="/chongzhi/images/coin.png" alt="" />
+                        <span>当前余额：<span id="yueSpan"></span></span>
+                    </div>
+                </div>
+                <div class="tr_rechli am-form-group">
+                    <ul class="ui-choose am-form-group" id="uc_01">
+                        <li>
+                            <label class="am-radio-inline">
+                                <input type="radio"  value="" name="docVlGender" required data-validation-message="请选择一项充值额度"> 10￥
+                            </label>
+                        </li>
+                        <li>
+                            <label class="am-radio-inline">
+                                <input type="radio" name="docVlGender" data-validation-message="请选择一项充值额度"> 20￥
+                            </label>
+                        </li>
+
+                        <li>
+                            <label class="am-radio-inline">
+                                <input type="radio" name="docVlGender" data-validation-message="请选择一项充值额度"> 50￥
+                            </label>
+                        </li>
+                        <li>
+                            <label class="am-radio-inline">
+                                <input type="radio" name="docVlGender" data-validation-message="请选择一项充值额度"> 其他金额
+                            </label>
+                        </li>
+                    </ul>
+                    <!--<span>10积分=1元 10元起充</span>-->
+                </div>
+                <div class="tr_rechoth am-form-group">
+                    <span>其他金额：</span>
+                    <input type="number" min="10" max="10000" value="10.00元" class="othbox" data-validation-message="充值金额范围：10-10000元" />
+                    <!--<p>充值金额范围：10-10000元</p>-->
+                </div>
+                <div class="tr_rechcho am-form-group">
+                    <span>充值方式：</span>
+                    <label class="am-radio">
+
+                    </label>
+                    <label class="am-radio" style="margin-right:30px;">
+                        <input type="radio" name="radio1" value="2" onclick="wayZhi()" data-am-ucheck data-validation-message="请选择一种充值方式"><img src="/chongzhi/images/zfbpay.png">
+                    </label>
+                </div>
+                <div class="tr_rechnum">
+                    <span>应付金额：</span>
+                    <input id="moneyid"  class="rechnum" >
+                </div>
+            </div>
+            <div class="tr_paybox" id="yes">
+                <input type="submit" value="确认支付" class="tr_pay am-btn" />
+                <span>温馨提示：遇到问题请拨打联系电话。</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/chongzhi/js/jquery.min.js"></script>
+<script src="/chongzhi/js/ui-choose.js"></script>
+<script src="/chongzhi/js/amazeui.min.js"></script>
+
+<script type="text/javascript" th:inline="none">
+
+    $(function(){
+       var vipname = $("#zhanghaoId").val();
+         $("#zhanghaoSpan").html(vipname);
+        queryJifen();
+
+    })
+    var money = null;//支付的钱
+    var yue=0;//余额
+    var jifen=0;//积分
+    function queryJifen() {
+        $.ajax({
+        	url:"/zhifu/queryJifen",
+        	type:"POST",
+        	success:function(result){
+
+        	    $("#jifenSpan").html(result.jifen);//积分
+                $("#yueSpan").html(result.yue);//余额
+
+                yue = result.yue;//余额
+
+        	},
+        	error:function(){
+        		alert("请先登录");
+        	},
+            complete:function(){
+               // location.href="/toView?url=Wopop";
+            }
+        });
+    }
+
+
+
+    //支付宝提交
+    function wayZhi() {
+        var tmp2="";
+            tmp2+='<input type="button" value="确认支付"  onclick="toPay2()" class="tr_pay am-btn" />';
+            tmp2+='<span>温馨提示：遇到问题请拨打联系电话。</span>'
+        $("#yes").html(tmp2);
+    }
+
+    //支付宝支付
+    function toPay2(){
+        money = $('.rechnum').val();
+        location.href="/zhifu/newsToPay?money="+money+"&paystate="+1;
+    }
+
+    // 将所有.ui-choose实例化
+    $('.ui-choose').ui_choose();
+    // uc_01 ul 单选
+    var uc_01 = $('#uc_01').data('ui-choose'); // 取回已实例化的对象
+    uc_01.click = function(index, item) {
+        console.log('click', index, item.text())
+    }
+    uc_01.change = function(index, item) {
+        console.log('change', index, item.text())
+    }
+    $(function() {
+        $('#uc_01 li:eq(3)').click(function() {
+            $('.tr_rechoth').show();
+            $('.tr_rechoth').find("input").attr('required', 'true')
+            $('.rechnum').val(10);
+        })
+        $('#uc_01 li:eq(0)').click(function() {
+            $('.tr_rechoth').hide();
+            $('.rechnum').val(10);
+            $('.othbox').val('');
+        })
+        $('#uc_01 li:eq(1)').click(function() {
+            $('.tr_rechoth').hide();
+            $('.rechnum').val(20);
+            $('.othbox').val('');
+        })
+        $('#uc_01 li:eq(2)').click(function() {
+            $('.tr_rechoth').hide();
+            $('.rechnum').val(50);
+            $('.othbox').val('');
+        })
+        $(document).ready(function() {
+            $('.othbox').on('input propertychange', function() {
+                var num = $(this).val();
+                $('.rechnum').val(num);
+            });
+        });
+    })
+
+    $(function() {
+        $('#doc-vld-msg').validator({
+            onValid: function(validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+            },
+            onInValid: function(validity) {
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if(!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                    appendTo($group);
+                }
+                $alert.html(msg).show();
+            }
+        });
+
+
+    });
+
+
+
+</script>
+
+
+
+</body>
+</html>

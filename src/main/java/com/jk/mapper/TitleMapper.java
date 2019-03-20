@@ -1,9 +1,7 @@
 package com.jk.mapper;
 
 
-import com.jk.bean.Common;
-import com.jk.bean.TitleInfo;
-import com.jk.bean.Vip;
+import com.jk.bean.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -24,4 +22,12 @@ public interface TitleMapper {
 
     @Select("select * from t_titleInfo")
     List<TitleInfo> queryTitle();
+
+    PayArticle queryPayArticle(PayArticle payArticle);
+
+    Jifen queryjifen(Integer id);
+
+    void jianJiFen(PayArticle article);
+
+    void addPayArticle(PayArticle article);
 }

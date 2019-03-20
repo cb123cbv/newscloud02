@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +95,24 @@ public class WirteController {
     System.out.println(message);
     searchClient.addInfo(message);
    }
+
+    @RequestMapping("tomap")
+    public String tomap(HttpSession session,Common common){
+        session.setAttribute("common",common);
+
+        return "map";
+    }
+
+
+    @RequestMapping("toWirte")
+    public String toWirte(String site,HttpSession session){
+        Common common = (Common) session.getAttribute("Common");
+        common.setSite(site);
+        session.setAttribute("common",common);
+        return "WriteWeibo";
+    }
+
+
 
 
 }

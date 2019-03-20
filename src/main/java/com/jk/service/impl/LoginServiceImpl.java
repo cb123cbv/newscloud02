@@ -16,4 +16,15 @@ public class LoginServiceImpl implements LoginService {
 
         return LoginMapper.getLogin(vip);
     }
+
+    @Override
+    public Vip getUserByQQ(Vip vip) {
+
+        return  LoginMapper.getUserByQQ(vip);
+    }
+
+    @Override
+    public Vip toLoginByQQ(Vip vip) {
+        return LoginMapper.toLoginByQQ(vip);
+    }
 }

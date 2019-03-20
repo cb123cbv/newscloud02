@@ -9,9 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jk</groupId>
-    <artifactId>mall-reception</artifactId>
+    <artifactId>cloundnews-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mall-reception</name>
+    <name>cloundnews-web</name>
+
+
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -23,6 +25,14 @@
     </properties>
 
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
 
         <!--汉字转拼音  pinyin4j -->
         <dependency>
@@ -73,6 +83,9 @@
         </dependency>
 
         <!--跳转视图-->
+        <!--Thymeleaf依赖包含了spring-boot-starter，
+        spring-boot-starter又包含了 spring-boot-starter-logging
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -150,6 +163,12 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
             <version>1.10.18.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

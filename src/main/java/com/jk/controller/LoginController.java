@@ -44,4 +44,23 @@ public class LoginController {
     session.invalidate();
     return "1";
   }
+  @ResponseBody
+  @RequestMapping("getUserByQQ")
+  public Vip getUserByQQ(Vip vip){
+
+    Vip user= loginService.getUserByQQ(vip);
+    return user;
+  }
+
+  @ResponseBody
+  @RequestMapping("toLoginByQQ")
+  public String toLoginByQQ(Vip vip, HttpSession session){
+    Vip usersFromdb =  loginService.toLoginByQQ(vip);
+    if(usersFromdb==null){
+      return "2";
+    }
+    session.setAttribute("user",usersFromdb);
+    return "1";
+  }
+
 }

@@ -18,11 +18,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
-public class TitleServiceImpl implements TitleService
-{
+public class TitleServiceImpl implements TitleService {
 
     @Resource
     private TitleMapper titleMapper;
@@ -57,6 +57,41 @@ public class TitleServiceImpl implements TitleService
     @Override
     public List<TitleInfo> queryTitle() {
         return titleMapper.queryTitle();
+    }
+
+    @Override
+    public Common queryTitleOne(String id, String name) {
+        return titleMapper.toTitleInfo(id,name);
+    }
+
+
+    @Override
+    public PayArticle queryPayArticle(PayArticle payArticle) {
+        Date date = new Date();
+        long time = date.getTime();
+        //long ss=1000*60*10;
+        payArticle.setEndTime(time);
+        return titleMapper.queryPayArticle(payArticle);
+    }
+
+    @Override
+    public Jifen queryjifen(Integer id) {
+        return titleMapper.queryjifen(id);
+    }
+
+    @Override
+    public void jianJiFen(PayArticle article) {
+        titleMapper.jianJiFen(article);
+    }
+
+    @Override
+    public void addPayArticle(PayArticle article) {
+        Date date = new Date();
+        long time = date.getTime();
+        long ss=1000*60*10;
+        article.setEndTime(time+ss);
+        article.setStartTime(time);
+        titleMapper.addPayArticle(article);
     }
 
 

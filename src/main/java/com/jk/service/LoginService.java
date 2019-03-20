@@ -4,4 +4,8 @@ import com.jk.bean.Vip;
 
 public interface LoginService {
     Vip getLogin(Vip vip);
+
+    Vip getUserByQQ(Vip vip);
+
+    Vip toLoginByQQ(Vip vip);
 }

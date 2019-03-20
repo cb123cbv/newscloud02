@@ -14,6 +14,8 @@ public class PayServiceImpl implements PayService {
     @Resource
     private PayMapper payMapper;
 
+
+
     @Override
     public void addjifen(Vip users, Integer qian) {
         payMapper.addjifen(users.getId(),qian);
@@ -27,12 +29,19 @@ public class PayServiceImpl implements PayService {
     @Override
     public void yuePay(Vip users, Jifen jifen, Integer qian) {
 
-
-
         //扣余额
         payMapper.reduceYue(users.getId(),jifen.getYue(),qian);
 
         //加积分
         payMapper.addjifen(users.getId(),qian);
     }
+
+    @Override
+    public void addYue(Vip users, Integer qian) {
+
+        //添加余额
+        payMapper.addYue(qian,users.getId());
+    }
+
+
 }

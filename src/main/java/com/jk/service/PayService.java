@@ -9,4 +9,7 @@ public interface PayService {
     Jifen queryjifen(Vip users);
 
     void yuePay(Vip users, Jifen jifen, Integer qian);
+
+
+    void addYue(Vip users,Integer qian);
 }
