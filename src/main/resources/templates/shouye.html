@@ -526,7 +526,8 @@
             var userid=$("#vipid").val();
 
             if(userid==""){
-                alert("请登录")
+
+                layer.alert('请先登录', {icon: 6});
             }else{
                 if(flag==1){
                     location.href="/toView?url=pay_huiyuan";
