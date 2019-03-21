@@ -50,7 +50,7 @@
             querypinglunCount();
             querypinglun();
             queryImgInfo();
-            news1("娱乐");
+            //news1("娱乐");
             queryDaoHang();//导航栏
          var ss=$("#hid").val();
           if(ss==''){
@@ -83,7 +83,6 @@
                 $("#rewen").show();
                 $("#denglu").show();
                 $("#jianyi").show();
-                $("#tushuo").show();
                 $("#lunbo").show();
             }
             if(status==2){
@@ -91,7 +90,6 @@
                 $("#rewen").hide();
                 $("#denglu").hide();
                 $("#jianyi").hide();
-                $("#tushuo").hide();
                 $("#lunbo").hide();
             }
         }
@@ -159,21 +157,6 @@
                 }
             });
 
-        }
-        <!--每日图说-->
-        function getTushuoStaus(){
-            $.ajax({
-                url:"/getRenqiStatus",
-                type:"POST",
-                data:{divId:'tushuo'},
-                success:function(pageUtil){
-
-                    divShow(pageUtil.status)
-                },
-                error:function(){
-                    alert("失败了");
-                }
-            });
         }
         <!--轮播图-->
         function getLunboStaus(){
@@ -417,10 +400,10 @@
             div +=  '</div>'
             div +=  '<ul>'
             div +=  '<li>'
-            div +=  '<span>余额<a id="unreadnotices" suda-uatrack="key=2018_blog_index&amp;value=my_message" href="http://i.blog.sina.com.cn/blog_rebuild/profile/controllers/notelist.php?action=profilenotice" target="_blank">'+yue+'</a></span>'
+            div +=  '<span>余额<a id="unreadnotices" suda-uatrack="key=2018_blog_index&amp;value=my_message" href="http://i.blog.sina.com.cn/blog_rebuild/profile/controllers/notelist.php?action=profilenotice" target="_blank">'+(yue==''?0:yue)+'</a></span>'
             div +=  '</li>'
             div +=  '<li>'
-            div +=  '<span>积分<a id="user-point" suda-uatrack="key=2018_blog_index&amp;value=my_point" href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_list.php" target="_blank">'+jifen+'</a></span>'
+            div +=  '<span>积分<a id="user-point" suda-uatrack="key=2018_blog_index&amp;value=my_point" href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_list.php" target="_blank">'+(jifen==''?0:jifen)+'</a></span>'
             div +=  '</li>'
             div +=  '</ul>'
             div +=  '<div class="logined-bottom-btn">'
@@ -474,7 +457,7 @@
             var div =""
             div += '<div class="login-info" data-sudaclick=blog_user>'
             div += '<div class="not-login">'
-            div += '<p>新浪博友，欢迎回来！</p>'
+            div += '<p>Hi!博友，欢迎回来！</p>'
             div += '<form id="newsBd">'
             div += '<input id="loginName" type="text" name="vipaccount" autocomplete="off" placeholder="微博/博客/邮箱/手机号">'
             div += '<input id="loginPassword" type="password" name="vippassword" autocomplete="off" placeholder="请输入密码">'

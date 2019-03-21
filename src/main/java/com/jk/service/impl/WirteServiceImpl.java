@@ -5,10 +5,9 @@ import com.jk.bean.Blog_Info;
 import com.jk.bean.Common;
 import com.jk.bean.Info;
 import com.jk.client.MongodbClient;
-import com.jk.client.SendESClient;
+import com.jk.client.SearchClient;
 import com.jk.mapper.WirteMapper;
 import com.jk.service.WirteService;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class WirteServiceImpl implements WirteService {
     @Autowired
     private MongodbClient mongodbClient;
     @Autowired
-    SendESClient sendESClient;
+    SearchClient searchClient;
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -42,7 +41,12 @@ public class WirteServiceImpl implements WirteService {
         info.setInfo(common.getTextName());
         String string = JSONObject.toJSONString(info);
         amqpTemplate.convertAndSend("1807B-SendEs", string);*/
-        sendESClient.sendES(common);
+        Blog_Info info2=new Blog_Info();
+        info2.setTitleinfo(common.getTitle());
+        info2.setTablename("t_"+common.getSelectName());
+        info2.setInfo(common.getTextName());
+        String string = JSONObject.toJSONString(info2);
+        searchClient.addInfo(string);
         common.setSelectName("t_"+common.getSelectName());
         wirteMapper.addwrite(common);
         Info info=new Info();

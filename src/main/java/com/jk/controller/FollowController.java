@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+
 @Controller
 @RequestMapping("follow")
 public class FollowController {
 
-    @Autowired
+    @Resource
     private FollowService followService;
 
     @RequestMapping("queryList")

@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Controller
 public class TreeController {
- @Autowired
+ @Resource
  TreeService treeService;
  @ResponseBody
  @RequestMapping("getTree")

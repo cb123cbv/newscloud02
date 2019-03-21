@@ -95,13 +95,6 @@ public class WirteController {
 
         return commons;
     }
- //  @RabbitListener(queues = "1807B-SendEs")
-   public void addEs(String message){
-
-    System.out.println(message);
-    searchClient.addInfo(message);
-   }
-
     @RequestMapping("tomap")
     public String tomap(HttpSession session,Common common){
         session.setAttribute("common",common);
