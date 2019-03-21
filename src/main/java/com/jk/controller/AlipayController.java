@@ -5,14 +5,13 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradePayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.jk.bean.Common;
-import com.jk.bean.Jifen;
-import com.jk.bean.Vip;
-import com.jk.bean.VipState;
+import com.jk.bean.*;
 import com.jk.config.AlipayConfig;
 import com.jk.service.PayService;
 import com.jk.service.VipStateService;
 import com.jk.utils.OrderCode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +21,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,6 +35,8 @@ public class AlipayController {
     @Resource
     private PayService payService;
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
     @Resource
     private VipStateService vipStateService;
 
@@ -135,21 +138,39 @@ public class AlipayController {
             }
             //-------------------------------------------------------------------------支付宝支付
             Vip users = (Vip) session.getAttribute("user");
-
+            Integer flag=0;
             if(zzz==null){//支付宝充值积分
-              payService.addjifen(users,qian);//
+                flag=1;//支付宝充积分
+                payService.addjifen(users,qian);//
             }
             if(zzz!=null){//支付宝充值vip
+                flag=2;//支付宝充值vip
                 VipState vipState = new VipState();
                 vipState.setYue(zzz);
                 vipState.setUserid(users.getId());
                 vipStateService.addVipState(vipState);
             }
             if(ccc!=null&&ccc==1){//支付宝充值余额
+                flag=3;//支付宝充值余额
                 payService.addYue(users,qian);
             }
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+            Log log = new Log();
+            log.setDatetime(sdf.format(new Date()));
+            log.setMoney(sss);
+            log.setUserid(users.getId());
+            if(flag==1){
+                log.setText("支付宝充值积分");
+            }
+            if(flag==2){
+                log.setText("支付宝充值vip,充值"+zzz+"个月");
+            }
+            if(flag==3){
+                log.setText("支付宝充值余额");
+            }
+            mongoTemplate.insert(log);
 
             System.out.println("前往支付成功页面");
             mav.setViewName("successReturn");

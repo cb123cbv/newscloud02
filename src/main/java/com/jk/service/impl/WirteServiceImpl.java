@@ -46,7 +46,7 @@ public class WirteServiceImpl implements WirteService {
         info2.setTablename("t_"+common.getSelectName());
         info2.setInfo(common.getTextName());
         String string = JSONObject.toJSONString(info2);
-        searchClient.addInfo(string);
+        //searchClient.addInfo(string);
         common.setSelectName("t_"+common.getSelectName());
         wirteMapper.addwrite(common);
         Info info=new Info();
