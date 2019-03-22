@@ -24,6 +24,7 @@
             <p>Tip:积分与人民币换算为1：1，你可以选择支付宝付款方式来进行充值，10元起充。</p>
         </div>
         <form  class="am-form" id="doc-vld-msg">
+
             <div class="tr_rechbox">
                 <div class="tr_rechhead">
                     <img src="/chongzhi/images/ys_head2.jpg" />
@@ -138,6 +139,7 @@
 
     //支付宝支付
     function toPay2(){
+        money = $('.rechnum').val();
         money = $('.rechnum').val();
         location.href="/zhifu/newsToPay?money="+money+"&paystate="+1;
     }

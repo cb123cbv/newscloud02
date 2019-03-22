@@ -3,6 +3,7 @@ package com.jk.mapper;
 import com.jk.bean.Huifu;
 import com.jk.bean.MInGanCi;
 import com.jk.bean.Pl;
+import com.jk.bean.VipState;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface PlMapper {
 
 
     void addpinglunState(Pl pl);
+   @Select("select * from t_vipstate where userid=#{id}")
+    VipState getaaa(Integer id);
 }

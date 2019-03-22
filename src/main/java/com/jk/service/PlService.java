@@ -2,6 +2,7 @@ package com.jk.service;
 
 import com.jk.bean.Huifu;
 import com.jk.bean.Pl;
+import com.jk.bean.VipState;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 
@@ -23,5 +24,5 @@ public interface PlService {
  List<Huifu> queryHuiFu(Huifu huifu);
 
 
-
+    VipState getaaa(Integer id);
 }

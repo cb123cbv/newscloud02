@@ -95,6 +95,9 @@ public class WirteController {
 
         return commons;
     }
+ //  @RabbitListener(queues = "1807B-SendEs")
+  
+
     @RequestMapping("tomap")
     public String tomap(HttpSession session,Common common){
         session.setAttribute("common",common);

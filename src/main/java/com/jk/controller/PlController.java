@@ -8,6 +8,7 @@ package com.jk.controller;/**
 import com.jk.bean.Huifu;
 import com.jk.bean.Pl;
 import com.jk.bean.Vip;
+import com.jk.bean.VipState;
 import com.jk.service.PlService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
@@ -30,7 +31,8 @@ public class PlController {
  @RequestMapping("addPl")
  public String addPl(Pl pl,HttpSession session){
   Vip user = (Vip) session.getAttribute("user");
-  if(user.getStatus()==0){
+  VipState v=plService.getaaa(user.getId());
+  if(v!=null&&v.getVipState()!=1){
    return "2";
   }else{
    return plService.addPl(pl);

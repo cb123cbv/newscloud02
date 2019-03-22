@@ -2,7 +2,6 @@ package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.jk.bean.*;
-import com.jk.client.MongodbClient;
 import com.jk.mapper.TitleMapper;
 import com.jk.service.TitleService;
 import com.jk.utils.ReceivePage;
@@ -22,9 +21,8 @@ public class TitleServiceImpl implements TitleService {
 
     @Resource
     private TitleMapper titleMapper;
-    @Autowired
-    private MongodbClient mongodbClient;
-    @Autowired
+
+    @Resource
     private MongoTemplate mongoTemplate;
 
     @Override

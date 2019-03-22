@@ -60,13 +60,15 @@
                 type:"post",
 
                 success:function (result) {
+
                     var  info="";
                     var  ina="";
                     if(result!=null&&result!="") {
                         $.each(result, function (index, obj) {
                             var tttt = obj.info.substring(0, 20);
+
                             info += '<div class="box-result clearfix" data-sudaclick="blk_blog_1_index">';
-                            info += ' <h2 class="r-info-blog-tit"><a href="javascript:void(0)"  onclick=querytite("'+obj.titleinfo+'")><span style="color:#C03"  >' + obj.titleinfo + '</span></a></h2>'
+                            info += ' <h2 class="r-info-blog-tit"><a  ><span style="color:#C03"  >' + obj.titleinfo + '</span></a></h2>'
                             info += ' <div class="clearfix">';
                             info += ' <div class="r-info r-info-blog r-info-blog-full">';
                             info += '<p class="content"><span style="line-height: 18.2px;">' + tttt + '...</span></p><p>'
@@ -85,6 +87,7 @@
                 }
             })
         }
+
     </script>
     <script type="text/javascript">
         <!--//--><![CDATA[//><!--

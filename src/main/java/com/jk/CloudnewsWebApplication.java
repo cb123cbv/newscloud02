@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient//去注册中心注册
 @EnableFeignClients//可以调用服务中心的项目
 @MapperScan("com.jk.mapper")
-public class  CloudnewsWebApplication {
+public class CloudnewsWebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CloudnewsWebApplication.class, args);

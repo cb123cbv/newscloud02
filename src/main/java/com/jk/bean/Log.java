@@ -20,5 +20,5 @@ public class Log {
   String text;
   Integer userid;
   String datetime;
-  Integer money;
+  String money;
 }

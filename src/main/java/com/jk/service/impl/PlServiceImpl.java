@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.jk.bean.Huifu;
 import com.jk.bean.MInGanCi;
 import com.jk.bean.Pl;
+import com.jk.bean.VipState;
 import com.jk.mapper.PlMapper;
 import com.jk.service.PlService;
 import com.jk.utils.ReceivePage;
@@ -76,6 +77,11 @@ public class PlServiceImpl implements PlService {
  @Override
  public List<Huifu> queryHuiFu(Huifu huifu) {
   return plMapper.queryHuiFu(huifu);
+ }
+
+ @Override
+ public VipState getaaa(Integer id) {
+  return plMapper.getaaa(id);
  }
 
 

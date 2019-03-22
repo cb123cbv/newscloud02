@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -22,13 +21,13 @@ import java.util.List;
 @RequestMapping("title")
 public class TitleController {
 
-   @Resource
+    @Autowired
     private TitleService titleService;
 
-    @Resource
+    @Autowired
     private PinglunStateService pinglunStateService;
 
-    @Resource
+    @Autowired
     private ArticleRankService articleRankService;
 
 

@@ -50,7 +50,7 @@
             querypinglunCount();
             querypinglun();
             queryImgInfo();
-            //news1("娱乐");
+            news1("娱乐");
             queryDaoHang();//导航栏
          var ss=$("#hid").val();
           if(ss==''){
@@ -71,28 +71,52 @@
             getRewenStaus();
             getDengluStaus();
             getJianyiStaus();
-            getTushuoStaus();
             getLunboStaus();
         })
         //人气排行模块显示隐藏
         <!--人气排行-->
-        function divShow(status){
-
+        function divRenqiShow(status){
             if(status==1){
                 $("#renqi").show();
-                $("#rewen").show();
-                $("#denglu").show();
-                $("#jianyi").show();
-                $("#lunbo").show();
             }
             if(status==2){
                 $("#renqi").hide();
+            }
+        }
+        function divReWenShow(status){
+            if(status==1){
+                $("#rewen").show();
+            }
+            if(status==2){
                 $("#rewen").hide();
+            }
+        }
+        function divDengLuShow(status){
+            if(status==1){
+                $("#denglu").show();
+            }
+            if(status==2){
                 $("#denglu").hide();
+            }
+        }
+        function divJianYiShow(status){
+            if(status==1){
+                $("#jianyi").show();
+            }
+            if(status==2){
                 $("#jianyi").hide();
+            }
+        }
+
+        function divLunBoShow(status){
+            if(status==1){
+                $("#lunbo").show();
+            }
+            if(status==2){
                 $("#lunbo").hide();
             }
         }
+
 
         function getRenqiStaus(){
             $.ajax({
@@ -101,7 +125,7 @@
                 data:{divId:'renqi'},
                 success:function(pageUtil){
 
-                    divShow(pageUtil.status)
+                    divRenqiShow(pageUtil.status)
                 },
                 error:function(){
                     alert("失败了");
@@ -118,7 +142,7 @@
                 data:{divId:'rewen'},
                 success:function(pageUtil){
 
-                    divShow(pageUtil.status)
+                    divReWenShow(pageUtil.status)
                 },
                 error:function(){
                     alert("失败了");
@@ -134,7 +158,7 @@
                 data:{divId:'denglu'},
                 success:function(pageUtil){
 
-                    divShow(pageUtil.status)
+                    divDengLuShow(pageUtil.status)
                 },
                 error:function(){
                     alert("失败了");
@@ -150,13 +174,28 @@
                 data:{divId:'jianyi'},
                 success:function(pageUtil){
 
-                    divShow(pageUtil.status)
+                    divJianYiShow(pageUtil.status)
                 },
                 error:function(){
                     alert("失败了");
                 }
             });
 
+        }
+        <!--每日图说-->
+        function getTushuoStaus(){
+            $.ajax({
+                url:"/getRenqiStatus",
+                type:"POST",
+                data:{divId:'tushuo'},
+                success:function(pageUtil){
+
+                    divShow(pageUtil.status)
+                },
+                error:function(){
+                    alert("失败了");
+                }
+            });
         }
         <!--轮播图-->
         function getLunboStaus(){
@@ -166,7 +205,7 @@
                 data:{divId:'lunbo'},
                 success:function(pageUtil){
 
-                    divShow(pageUtil.status)
+                    divLunBoShow(pageUtil.status)
                 },
                 error:function(){
                     alert("失败了");
@@ -339,7 +378,7 @@
                 success: function (result) {
 
                     $.each(result,function (val,obj) {
-
+                        console.log(obj.imgUrl)
                         flag+=' <li >'
                         flag+=' <a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.titleid+'"><img width="640" height="410" src="'+obj.imgUrl+'"></a>'
                         flag+=' </li> '
@@ -400,10 +439,10 @@
             div +=  '</div>'
             div +=  '<ul>'
             div +=  '<li>'
-            div +=  '<span>余额<a id="unreadnotices" suda-uatrack="key=2018_blog_index&amp;value=my_message" href="http://i.blog.sina.com.cn/blog_rebuild/profile/controllers/notelist.php?action=profilenotice" target="_blank">'+(yue==''?0:yue)+'</a></span>'
+            div +=  '<span>余额<a id="unreadnotices" suda-uatrack="key=2018_blog_index&amp;value=my_message" href="http://i.blog.sina.com.cn/blog_rebuild/profile/controllers/notelist.php?action=profilenotice" target="_blank">'+yue+'</a></span>'
             div +=  '</li>'
             div +=  '<li>'
-            div +=  '<span>积分<a id="user-point" suda-uatrack="key=2018_blog_index&amp;value=my_point" href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_list.php" target="_blank">'+(jifen==''?0:jifen)+'</a></span>'
+            div +=  '<span>积分<a id="user-point" suda-uatrack="key=2018_blog_index&amp;value=my_point" href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_list.php" target="_blank">'+jifen+'</a></span>'
             div +=  '</li>'
             div +=  '</ul>'
             div +=  '<div class="logined-bottom-btn">'
@@ -457,7 +496,7 @@
             var div =""
             div += '<div class="login-info" data-sudaclick=blog_user>'
             div += '<div class="not-login">'
-            div += '<p>Hi!博友，欢迎回来！</p>'
+            div += '<p>新浪博友，欢迎回来！</p>'
             div += '<form id="newsBd">'
             div += '<input id="loginName" type="text" name="vipaccount" autocomplete="off" placeholder="微博/博客/邮箱/手机号">'
             div += '<input id="loginPassword" type="password" name="vippassword" autocomplete="off" placeholder="请输入密码">'
@@ -892,8 +931,8 @@
 
         <div class="search">
             <!--公告-->
-            <marquee  id="marquee" style='height:50px' direction="left" onMouseOver="this.stop()" onMouseOut="this.start()" bgcolor=aaaaee >
-                <font  size="5px" id="gonggao" face='楷体'>
+            <marquee  id="marquee" style='height:40px' direction="left" onMouseOver="this.stop()" onMouseOut="this.start()">
+                <font  size="3px" id="gonggao" face='楷体'>
 
                 </font>
             </marquee>
