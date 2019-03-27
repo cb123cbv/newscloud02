@@ -2,8 +2,10 @@ package com.jk.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Vip {
+public class Vip implements Serializable {
 
     private Integer id;
 

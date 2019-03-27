@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**   
@@ -24,7 +25,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor//全部参数的构造方法
 @NoArgsConstructor//一定要写无参的构造方法
-public class SendPage {
+public class SendPage implements Serializable {
 
 	
 	private Integer total;
