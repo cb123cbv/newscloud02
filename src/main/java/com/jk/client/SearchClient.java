@@ -12,5 +12,6 @@ public interface SearchClient {
     @RequestMapping("getInfoAndTileInfo")
     List<Blog_Info> getInfoAndTileInfo(@RequestParam(value = "queryString")String queryString,@RequestParam(value = "status")Integer status);
 
-
+    @RequestMapping("addInfo")
+    void addInfo(@RequestParam(value = "string")String string);
 }

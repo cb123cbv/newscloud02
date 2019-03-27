@@ -47,7 +47,7 @@ $("#uploadify").uploadify({
   //插件自带  不可忽略的参数                                  
 	'swf': '<%=request.getContextPath()%>/js/uploadify/uploadify.swf',
 	//前台请求后台的url 不可忽略的参数                          //*****要修改路经
-	'uploader': '<%=request.getContextPath()%>/test/upload.do',
+	'uploader': '<%=request.getContextPath()%>/MyThread/upload.do',
   //给div的进度条加背景 不可忽略
   'queueID': 'fileQueue',
   //上传文件文件名
