@@ -27,4 +27,6 @@ public class Vip {
     Integer status;
 
     private String  opens;
+
+    private Integer pwdcount=0;//支付密码次数
 }

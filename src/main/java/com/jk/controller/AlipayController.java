@@ -131,12 +131,13 @@ public class AlipayController {
         // 返回界面
         if (signVerified) {
 
-            Integer qian=0;
+            Double qian=0.00;
             try {
-                qian = Integer.parseInt(sss);
+                qian = Double.parseDouble(sss);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
+
             //-------------------------------------------------------------------------支付宝支付
             Vip users = (Vip) session.getAttribute("user");
             System.out.println(users);
@@ -234,24 +235,36 @@ public class AlipayController {
     //余额支付
     @RequestMapping("yuePay")
     @ResponseBody
-    public String yuePay(HttpSession session,Jifen jifen,Integer qian){
+    public String yuePay(HttpSession session,Jifen jifen,Double qian){
         Vip users = (Vip) session.getAttribute("user");
+
         payService.yuePay(users,jifen,qian);
 
         return "1";
     }
 
+
     //确认支付密码是否正确
     @RequestMapping("queryByPaypwd")
     @ResponseBody
-    public String queryByPaypwd(HttpSession session,String r){
+    public String queryByPaypwd(HttpSession session,String r) {
         Vip users = (Vip) session.getAttribute("user");
-       if(users.getVippassword().equals(r)){
-           return "1";//密码正确
-       }else{
-           return "0";//支付密码错误
-       }
-    }
+        Integer count = payService.getPwdcountByUserId(users.getId());
 
+        if (count < 3) {//比对密码
+            Vip vipFromDb = payService.queryByUserIdAndPaypwd(users.getVipaccount(), r);
+            if (vipFromDb == null) {
+                payService.updateCount(users.getId()); //输错密码 count+1
+                return "0";//支付密码错误
+            } else {
+                if(vipFromDb.getPwdcount()!=0){
+                    payService.updateCountToNormal(users.getId());
+                }
+                return "1";//密码正确
+            }
+        }
+            return "2";//账号异常
+
+    }
 
 }
