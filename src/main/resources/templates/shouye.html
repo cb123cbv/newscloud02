@@ -17,27 +17,10 @@
     <link rel="stylesheet" href="/js/lunbotu/css/style.css">
     <!-- 导入 jquery包  -->
     <script src="/js/jquery-2.1.1.min.js"></script>
-    <!--引入easyui的样式 -->
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-table/bootstrap-table.min.css" >
-    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" >
-    <link href="/js/bootstrap-3.3.7-dist/bootstrap-select-1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/js/uploadify/uploadify.css" />
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="/js/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="/js/bootstrap-3.3.7-dist/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="/js/bootstrap-3.3.7-dist/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/js/bootstrap-3.3.7-dist/bootstrap-select-1.12.4/js/bootstrap-select.min.js"></script>
-    <script src="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/js/bootstrap-3.3.7-dist/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script src="/js/uploadify/jquery.uploadify.js"></script>
-    <link rel="stylesheet" href="/js/uploadify/uploadify.css">
     <script src="/js/layer/layer.js"></script>
     <!--layui-->
     <script src="/layui/layui.js" charset="utf-8"></script>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all">
-
     <script type="text/javascript" >
         ;(function(){
             var ua = navigator.userAgent;
@@ -47,6 +30,7 @@
         })();
 
         $(function(){
+
             querypinglunCount();
             querypinglun();
             queryImgInfo();
@@ -67,13 +51,16 @@
             gettiyu2();
             meizhourenqi();
             queryTtph();
-            checkTime2();
             getddd();
             getRenqiStaus();
             getRewenStaus();
             getDengluStaus();
             getJianyiStaus();
             getLunboStaus();
+            checkTime2();
+            if($("#userid").val()!=''){
+                queryJifen($("#userid").val());
+            }
         })
         //人气排行模块显示隐藏
         <!--人气排行-->
@@ -380,7 +367,6 @@
                 success: function (result) {
 
                     $.each(result,function (val,obj) {
-                        console.log(obj.imgUrl)
                         flag+=' <li >'
                         flag+=' <a href="/title/toshowInfo?name='+obj.tablename+'&id='+obj.titleid+'"><img width="640" height="410" src="'+obj.imgUrl+'"></a>'
                         flag+=' </li> '
@@ -427,6 +413,8 @@
             var img=$("#vipheadimg").val();
             var jifen = $("#jifen").val();
             var yue = $("#yue").val();
+            console.log(jifen);
+            console.log(yue);
             var div="";
             var div2='<img src="'+img+'" class="layui-nav-img">';
 
@@ -487,7 +475,9 @@
                 type:"POST",
                 data:{id:userid},
                 success:function(result){
-
+                    console.log(result);
+                    $("#unreadnotices").html(result.yue);
+                    $("#user-point").html(result.jifen);
                 },
                 error:function(){
                     alert("失败了");
@@ -535,7 +525,6 @@
             var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
             //监听导航点击
             element.on('nav(demo)', function(elem){
-                //console.log(elem)
                 layer.msg(elem.text());
             });
         });
@@ -558,7 +547,6 @@
                         count+='<div><input type="text" class="form-control" name=\'text\' placeholder="输入建议" style="width: 250px;height: 30px">\n' +
                             '<button type="button" class="btn btn-success" onclick="addJIanYi()" style="width: 62px;height: 34px">发送</button> </div>';
                         $("#ul2").html(count);
-            		   	console.log(result);
             		},
             		error:function(){
             			alert("失败了");
@@ -571,7 +559,6 @@
           		url:"/getYuLe2",
           		type:"POST",
           		success:function(result){
-          		    console.log(result);
           		    var count="";
           		    $.each(result,function(index,obj){
           		        if(index<5){
@@ -593,7 +580,6 @@
           		url:"/gettiyu2",
           		type:"POST",
           		success:function(result){
-          		    console.log(result);
                     var count="";
                     $.each(result,function(index,obj) {
                         if (index < 5) {
@@ -616,7 +602,6 @@
           		type:"POST",
           		data:$("form").serialize(),
           		success:function(result){
-          		    console.log(result);
                     var count="";
                     $.each(result,function(index,obj) {
                         if (index < 5) {
@@ -640,7 +625,6 @@
           		type:"POST",
           		data:$("form").serialize(),
           		success:function(result){
-          		    console.log(result);
                     var count="";
                     $.each(result,function(index,obj) {
                         if (index < 5) {
@@ -665,6 +649,7 @@
                     data:{text:$("[name='text']").val()},
             		success:function(result){
             		    if(result==1){
+                            layer.msg("发送成功，等待管理员审核");
                             location.reload()
                         }else if(result==3){
             		        layer.msg("包含敏感字符")
@@ -688,6 +673,7 @@
             		url:"/meizhourenqi",
             		type:"POST",
             		success:function(result){
+            		    console.log(result);
             		    var count='';
             		    $.each(result,function(index,obj){
                           count+='<li><i class="top-bg">'+(index+1)+'</i>';
@@ -788,15 +774,14 @@
 <input type="hidden" th:value="${session.user?.vipaccount}" id="hid">
 <input type="hidden" th:value="${session.user?.id}" id="userid">
 <input type="hidden" th:value="${session.user?.vipname}" id="vipname">
-<input type="hidden" th:value="${session.jifen?.jifen}" id="jifen">
-<input type="hidden" th:value="${session.jifen?.yue}" id="yue">
+<input type="hidden"  id="jifen">
+<input type="hidden"  id="yue">
 <input type="hidden" th:value="${session.user?.vipheadimg}" id="vipheadimg">
 <input type="hidden" th:value="${session.user?.id}" id="vipid">
 
 
 
 <script src="http://n.sinaimg.cn/blog/0977ce10/20180408/jsload.js"></script>
-<script>document.domain = "sina.com.cn";</script>
 <script>
     var __scope__ = {
         updateBrowserLink : 'http://dl.pconline.com.cn/download/51614-1.html'//浏览器推荐下载地址

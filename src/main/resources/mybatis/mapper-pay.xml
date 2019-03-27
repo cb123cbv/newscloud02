@@ -21,5 +21,20 @@
         UPDATE t_jifen set yue=yue+#{qian} where userid=#{id}
     </update>
 
-
+    <!--Integer getPwdcountByUserId(Integer id);-->
+    <select id="getPwdcountByUserId" resultType="int">
+        select pwdcount from t_vip where id=#{id}
+    </select>
+    <!--void updateCount(Integer id);-->
+    <update id="updateCount">
+        UPDATE t_vip set pwdcount=pwdcount+1 where id=#{id}
+    </update>
+    <!--Vip queryByUserIdAndPaypwd(@Param("account") String account, @Param("r")String r);;-->
+    <select id="queryByUserIdAndPaypwd" resultType="com.jk.bean.Vip">
+        select * from t_vip where vipaccount=#{account} and vippassword=#{r}
+    </select>
+    <!--void updateCountToNormal(Integer id);-->
+    <update id="updateCountToNormal">
+        update t_vip set pwdcount=0 where id=#{id}
+    </update>
 </mapper>

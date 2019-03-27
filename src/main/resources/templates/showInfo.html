@@ -137,7 +137,7 @@
                     <a href="javascript:getyeshu('1')">上一页</a>
                     <input id="cc" style="width: 20px;text-align: center" disabled value="1">
                     <a href="javascript:getyeshu('2')">下一页</a>
-                    <br>总<span id="yeshu"></span>条
+                    <input id="yeshu" type="hidden">
                 </div>
                 <div class="clearit"></div>
             </div>
@@ -292,8 +292,10 @@
                 }
             }
             if (type == 2) {
-                var yeshu = $("#yeshu").html();
+                var yeshu = $("#yeshu").val();
                 var ys = Math.ceil(parseInt(yeshu) / 10);
+                console.log(yeshu);
+                console.log(ys);
                 if (ys == count) {
                     alert("已经是尾页了")
                 } else {
@@ -312,7 +314,7 @@
                  async:false,
                  data:{page:yeshu,rows:10,tablename:tablename,titleid:titleid},
         		success:function(result){
-        		   	console.log(result)
+                    $("#yeshu").val(result.total);
                     var count='';
                     $.each(result.rows,function(index,obj){
                        count+='<li class="SG_j_linedot1" id="li'+index+'">';

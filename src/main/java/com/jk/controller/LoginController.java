@@ -30,7 +30,7 @@ public class LoginController {
     }
     session.setAttribute("user",usersFromdb);
     Jifen jifen =  PageService.queryJifen(usersFromdb.getId());
-    session.setAttribute("jifen",jifen);
+    //session.setAttribute("jifen",jifen);
     return "1";
   }
   @RequestMapping("toLogin")

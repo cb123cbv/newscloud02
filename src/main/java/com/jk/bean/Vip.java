@@ -2,8 +2,10 @@ package com.jk.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Vip {
+public class Vip implements Serializable {
 
     private Integer id;
 
@@ -27,4 +29,6 @@ public class Vip {
     Integer status;
 
     private String  opens;
+
+    private Integer pwdcount=0;//支付密码次数
 }
